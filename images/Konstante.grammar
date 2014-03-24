@@ -1,0 +1,2 @@
+((Bezeichner "::" 'Typ Erg') "LF" | "")
+Bezeichner "=" (Wert | Ausdruck) "LF"

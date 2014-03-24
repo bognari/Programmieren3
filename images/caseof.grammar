@@ -1,0 +1,3 @@
+"=" "case" Variable "of" "LF" 
+('erwarteter Wert' "->" Ausdruck "LF")+
+("\\_" "->" 'default Ausdruck')?

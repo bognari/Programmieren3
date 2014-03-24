@@ -1,0 +1,2 @@
+((Bezeichner "::" ('Typ Para' "->")* 'Typ Erg') "LF" | "")
+(Bezeichner ('Bezeichner Para')* "=" (Wert | Ausdruck) "LF")+

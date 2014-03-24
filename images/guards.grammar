@@ -1,0 +1,2 @@
+("|" 'boolescher Term' "=" Ausdruck "LF")+
+"otherwise" "=" 'default Ausdruck'

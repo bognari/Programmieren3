@@ -1,0 +1,3 @@
+"module" Name "where" "LF"
+"import" Name ("," Name)*
+Funktionendefinitionen

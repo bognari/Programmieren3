@@ -1,0 +1,634 @@
+\subtitle{Tag zwei - etwas mehr} 
+\date{25.03.2014}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+\section{Currying - allgemein}
+\begin{frame}
+\frametitle{Deklaration von Funktionen in $\lambda$ Notation}
+\only<1-3>{
+\vspace*{-2ex}
+	\begin{block}{Lambda Currying}
+	\begin{center}
+	$f = \lambda x_1 \to \lambda x_2 \to \dots \lambda x_n \to e$
+	\end{center}
+	\end{block}
+}
+\only<2-3>{
+\vspace*{-3ex}
+	\begin{exampleblock}{Funkion Currying}
+	\begin{center}
+	\scalebox{0.6}{\input{images/FunktionCurry.tex}}
+	\end{center}
+	\end{exampleblock}
+}
+\only<3>{
+\vspace*{-3ex}
+	\begin{exampleblock}{Lambda Currying}
+	\begin{center}
+	\scalebox{0.6}{\input{images/FunktionLambdaCurry.tex}}
+	\end{center}
+	\end{exampleblock}
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Deklaration von Funktionen in $\lambda$ Notation}
+\only<1-3>{
+\vspace*{-2ex}
+	\begin{block}{Lambda Uncurrying}
+	\begin{center}
+	$f = \lambda(x_1, x_2, \dots, x_n) \to e$
+	\end{center}
+	\end{block}
+}
+\only<2-3>{
+\vspace*{-3ex}
+	\begin{exampleblock}{Funkion Uncurrying}
+	\begin{center}
+	\scalebox{0.6}{\input{images/FunktionUncurry.tex}}
+	\end{center}
+	\end{exampleblock}
+}
+\only<2>{
+	\begin{alertblock}{ABER}
+	Das Tupel $(x_1, x_2, \dots, x_n)$ ist ein eigener Datentyp
+	\end{alertblock}
+}
+\only<3>{
+\vspace*{-3ex}
+	\begin{exampleblock}{Lambda Uncurrying}
+	\begin{center}
+	\scalebox{0.6}{\input{images/FunktionLambdaUncurry.tex}}
+	\end{center}
+	\end{exampleblock}
+}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Deklaration von Funktionen} 	
+%\begin{block}{\vspace*{-3ex}}
+\begin{lstlisting}
+plus :: Int -> Int -> Int
+plus a b = a + b
+\end{lstlisting}
+%\end{block}
+\only<1>{
+	\begin{exampleblock}{\vspace*{-3ex}}
+	\begin{center}
+	\scalebox{0.6}{\input{images/FunktionCurry.tex}}
+	\end{center}
+	\end{exampleblock}
+}
+\only<2-3>{
+\begin{exampleblock}{Aufruf}
+\lstinline|plus 6 7|
+\end{exampleblock}}
+\only<3>{
+\begin{exampleblock}{Ausgabe}
+\lstinline|13|
+\end{exampleblock}}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Deklaration von Funktionen} 	
+%\begin{block}{\vspace*{-3ex}}
+\begin{lstlisting}
+plus' :: (Int, Int) -> Int
+plus' (a, b) = a + b
+\end{lstlisting}
+%\end{block}
+\only<1>{
+\vspace*{-3ex}
+	\begin{exampleblock}{\vspace*{-3ex}}
+	\begin{center}
+	\scalebox{0.6}{\input{images/FunktionUncurry.tex}}
+	\end{center}
+	\end{exampleblock}
+}
+\only<2-3>{
+\begin{exampleblock}{Aufruf}
+\lstinline|plus' (6, 7)|
+\end{exampleblock}}
+\only<3>{
+\begin{exampleblock}{Ausgabe}
+\lstinline|13|
+\end{exampleblock}}
+\end{frame}
+
+\section{Gültigkeitsbereiche}
+\subsection{Block}
+\begin{frame}
+\frametitle{Block}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Definitionen im Block sind immer nur eine Stufe höher sichtbar
+  \item Im Block ist alles Äußere sichtbar
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Block - Einrückungen}
+\begin{block}{\vspace*{-3ex}}
+In Haskell spielt das Layout des Quellcodes eine Rolle!
+\begin{itemize}
+  \item Blöcke werden durch gleiche Einrückungstiefe kenntlich gemacht
+  \item Einzelne Deklarationen werden durch Zeilenumbrüche getrennt
+  \item Beginnt eine neue Zeile gegenüber dem aktuellen Block \\
+  \begin{itemize}
+    \item Rechts eingerückt: aktuelle Zeile wird fortgesetzt
+    \item Links eingerückt: aktueller Block wird beendet
+    \item Direkt an seinem "`linken Rand darunter"', so wird der Block fortgesetzt bzw. eine neue Deklaration eingeleitet 
+  \end{itemize}
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Block} 
+\begin{lstlisting}
+outer a b =
+  let inner c = a + b + c
+  in inner 1
+\end{lstlisting}
+\end{frame}
+\subsection{Module}
+\begin{frame}
+\frametitle{Module}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Das Programm kann in Module aufgeteilt werden
+  \item Der Standard Modulname ist Main
+  \item Module müssen mit einem Großbuchstaben beginnen
+  \item Vorteile: \\
+    \begin{itemize}
+      \item Vereinfachung des Programmdesigns, Strukturierung
+      \item Einfachere Isolation von Fehlern
+      \item Einfaches Ändern von Teilkomponenten ohne Einfluss auf andere Teile
+      \item Wiederverwendung von Code
+    \end{itemize}
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Module}
+\begin{block}{\vspace*{-3ex}}
+\begin{center}
+\scalebox{1}{\input{images/Module.tex}}
+\end{center}
+\end{block} 
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Module} 
+\begin{lstlisting}
+module Wurf where
+weite :: Double -> Double -> Double
+weite v0 phi = ((square v0) / 9.81) * sin (2 * phi)
+square :: Double -> Double
+square x = x * x
+\end{lstlisting}
+\begin{lstlisting}
+module Foo where
+import Wurf
+foo ... = ... (weite v w) ...
+bar ... = ... (square a) ...
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+\frametitle{Module - Interfaces}
+\only<1>{
+\begin{block}{Import}
+\begin{center}
+\scalebox{1}{\input{images/ModuleImport.tex}}
+\end{center}
+\end{block}
+}
+\only<2>{
+\begin{block}{Selektiver Import}
+\begin{center}
+\scalebox{0.7}{\input{images/ModuleImportSelektiv.tex}}
+\end{center}
+am Ende steht natürlich kein Komma
+\end{block}
+}
+\only<3>{
+\begin{block}{Negativ selektiver Import}
+\begin{center}
+\scalebox{0.7}{\input{images/ModuleImportNSelektiv.tex}}
+\end{center}
+am Ende steht natürlich kein Komma
+\end{block}
+}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Module - Interfaces} 
+\begin{lstlisting}
+module Wurf where
+weite :: Double -> Double -> Double
+weite v0 phi = ((square v0) / 9.81) * sin (2 * phi)
+square :: Double -> Double
+square x = x * x
+\end{lstlisting}
+\begin{lstlisting}
+module Foo where
+import Wurf(weite)
+foo ... = ... (weite v w) ...
+bar ... = ... (square a) ...
+\end{lstlisting}
+\begin{alertblock}{Achtung}
+\lstinline|square| ist für \lstinline|bar| nicht definiert!
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Module - Interfaces} 
+\begin{lstlisting}
+module Wurf where
+weite :: Double -> Double -> Double
+weite v0 phi = ((square v0) / 9.81) * sin (2 * phi)
+square :: Double -> Double
+square x = x * x
+\end{lstlisting}
+\begin{lstlisting}
+module Foo where
+import Wurf hiding (weite)
+foo ... = ... (weite v w) ...
+bar ... = ... (square a) ...
+\end{lstlisting}
+\begin{alertblock}{Achtung}
+\lstinline|weite| ist für \lstinline|foo| nicht definiert!
+\end{alertblock}
+\end{frame}
+
+\begin{frame}
+\frametitle{Module - Sichtbarkeit}
+\begin{block}{\vspace*{-3ex}}
+Module können festlegen was importiert werden darf
+\end{block}
+\begin{block}{\vspace*{-3ex}}
+\begin{center}
+\scalebox{0.7}{\input{images/ModuleExport.tex}}
+\end{center}
+Am Ende steht natürlich kein Komma
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Module - Sichtbarkeit} 
+\begin{lstlisting}
+module Wurf(weite) where
+weite :: Double -> Double -> Double
+weite v0 phi = ((square v0) / 9.81) * sin (2 * phi)
+square :: Double -> Double
+square x = x * x
+\end{lstlisting}
+\begin{lstlisting}
+module Foo where
+import Wurf
+foo ... = ... (weite v w) ...
+bar ... = ... (square a) ...
+\end{lstlisting}
+\begin{alertblock}{Achtung}
+In \lstinline|Wurf| ist nur \lstinline|weite| sichtbar
+\end{alertblock}
+\end{frame}
+
+\section[Bezeichner]{Überladung und Auflösung von Namen}
+\begin{frame}
+\frametitle{Überladung von Namen}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Funktionen können in Haskell nicht im selben Modul überladen werden
+  \item Funktionen können nur flach in Blöcken überdeckt werden
+  \item Überladene Funktionen müssen mit dem Modul Bezeichner angesprochen werden.
+  \item Für Polymorphie werden Typklassen verwendet
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Überladung von Namen} 
+\begin{lstlisting}
+maximum :: Int -> Int -> Int
+maximum a b | a < b 	= b
+            | otherwise = a
+
+maximum :: Bool -> Bool -> Bool
+maximum a b = a || b
+\end{lstlisting}
+\begin{alertblock}{Fehler}
+Mehrfach-Definitionen sind unzulässig
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Überladung von Namen} 
+\begin{lstlisting}
+maximum :: Int -> Int -> Int
+maximum a b | a < b 	= b
+            | otherwise = a
+
+max :: Bool -> Bool -> Bool
+max a b = 
+  let maximum a b = a || b
+  in maximum a b
+\end{lstlisting}
+\begin{alertblock}{Achtung}
+\lstinline|Prelude.max| für das durch \lstinline|Prelude| definierte oder \lstinline|Modulname.max| für unser \lstinline|max|
+\end{alertblock}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Auflösen von Namen}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Ohne Modul Angabe werden Funktionen nur im "`Import"' gesucht
+  \item Prelude wird immer Importiert 
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+
+\section{Ausdrücke}
+\subsection{Ausdrücke allgemein}
+\begin{frame}
+\frametitle{Ausdrücke - Wiederholung} 
+\begin{exampleblock}{Elementarer Ausdruck}
+\lstinline|plus = 10 + 30|
+\end{exampleblock}
+\begin{exampleblock}{Ausdruck}
+\lstinline|plus' a b = a + b|
+\end{exampleblock}
+\begin{exampleblock}{Lambda ($\lambda$)-Ausdruck}
+\lstinline|plus'' =  \a -> \b -> a + b|
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+\frametitle{Ausdrücke allgemein}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item In Haskell besteht ein Ausdruck aus nur wenigen Grundelementen
+  \begin{itemize}
+    \item Konstante Werte
+    \item Variablen Werte (Variablen)
+    \item Funktionen
+    \item Verzweigungen wie:\\Guards, If-Then-Else, Case-Of \ldots
+  \end{itemize}
+  \item Jeder Operator ist eine Funktion, die umdefiniert werden kann
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Primitive Ausdrücke}
+\begin{block}{\vspace*{-3ex}}
+sind benannte bzw. unbenannte (anonyme) Funktionen mit konstanten Ergebnissen
+\end{block}
+\begin{lstlisting}
+pi :: Double
+pi = 3.14
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Ausdrücke}
+\begin{block}{\vspace*{-3ex}}
+sind "`Berechnungen"' mit Variablen\\
+besitzen "`fest"' definierte Parameter
+\end{block}
+\begin{lstlisting}
+plus :: Int -> Int -> Int
+plus a b = a + b
+\end{lstlisting}
+\end{frame}
+
+\subsection{Lambda - Ausdrck}
+\begin{frame}[fragile]
+\frametitle{Lambda - Ausdruck}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Sind fast dasselbe wie normale Ausdrücke
+  \item Parameter bzw. Variablen werden in $\lambda$-Notation angegeben
+\end{itemize}
+\end{block}
+\begin{lstlisting}
+let f = \x y -> x + y
+\end{lstlisting}
+\only<1-2>{
+\begin{exampleblock}{Aufruf}
+\lstinline|f 31 11|
+\end{exampleblock}}
+\only<2>{
+\begin{exampleblock}{Ausgabe}
+\lstinline|42|
+\end{exampleblock}}
+\end{frame}
+
+\subsection{Strukturierte Anweisungen}
+\begin{frame}
+\frametitle{Strukturierte Anweisungen}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item If-Then-Else
+  \item Case-Of
+  \item Pattern-Matching
+  \item Guards als erweitertes Pattern-Matching
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{If-Then-Else}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Setzt das gewohnte If-Then-Else im Funktionsrumpf um
+  \item Kann verschachtelt werden
+\end{itemize}
+\begin{center}
+\scalebox{0.7}{\input{images/ifthenelse.tex}}
+\end{center}
+\end{block}
+%\pause
+\begin{lstlisting}
+sum :: [Int] -> Int
+sum []     = 0
+sum (x:xs) = if mod x 2 == 1 && x > 20 
+             then x + sum xs
+             else sum xs
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Case-Of}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+	\item Setzt das gewohnte Case-Of innerhalb von Funktionsrümpfen um
+	\item Erster "`Treffer"' gewinnt
+\end{itemize}
+\only<1>{\begin{center}
+\scalebox{0.7}{\input{images/caseof.tex}}
+\end{center}}
+\end{block}
+\pause
+\begin{lstlisting}
+not :: Bool -> Bool
+not a = case a of 
+        True  -> False
+        False -> True 
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Pattern-Matching}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Testen auf erwartete Werte
+  \item Erster "`Treffer"' gewinnt
+\end{itemize}
+\only<1>{\begin{center}
+\scalebox{0.7}{\input{images/pattern.tex}}
+\end{center}}
+\end{block}
+\pause
+\begin{lstlisting}
+xor :: Bool -> Bool -> Bool
+xor True  True  = False
+xor False False = False
+xor _     _     = True
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Pattern-Matching}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Testen auf erwartete Struktur
+  \item Aufspalten des Datentypes
+  \item Erster "`Treffer"' gewinnt
+\end{itemize}
+\only<1>{\begin{center}
+\scalebox{0.65}{\input{images/pattern2.tex}}
+\end{center}}
+\end{block}
+\pause
+\begin{lstlisting}
+sum :: [Int] -> Int
+sum []     = 0
+sum (x:xs) = x + sum xs
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Guards}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Erweitern das Pattern-Matching um boolesche Auswertungen in der Funktionsdefinition
+  \item Erster "`Treffer"' gewinnt
+\end{itemize}
+\only<1>{\begin{center}
+\scalebox{0.7}{\input{images/guards.tex}}
+\end{center}}
+\end{block}
+\pause
+\begin{lstlisting}
+sum :: [Int] -> Int
+sum []     = 0
+sum (x:xs) | mod x 2 == 1 && x > 20 = x + sum xs
+           | otherwise              = sum xs
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Sturkturierte Anweisungen Beispiel \lstinline|ggt a b|}
+\begin{block}{If-Then-Else}
+\begin{lstlisting}
+ggT a b = if b == 0 then a else ggT b (mod a b)
+\end{lstlisting}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Sturkturierte Anweisungen Beispiel \lstinline|ggt a b|}
+\begin{block}{If-Then-Else}
+\begin{lstlisting}
+ggT a b = if b == 0 then a else ggT b (mod a b)
+\end{lstlisting}
+\end{block}
+\begin{block}{Case-Of}
+\begin{lstlisting}
+ggT' a b = case b of 
+                0 -> a
+                _ -> ggT' b (mod a b)
+\end{lstlisting}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Sturkturierte Anweisungen Beispiel \lstinline|ggt a b|}
+\begin{block}{If-Then-Else}
+\begin{lstlisting}
+ggT a b = if b == 0 then a else ggT b (mod a b)
+\end{lstlisting}
+\end{block}
+\begin{block}{Pattern-Matching}
+\begin{lstlisting}
+ggT'' a 0 = a
+ggT'' a b = ggT'' b (mod a b)
+\end{lstlisting}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Sturkturierte Anweisungen Beispiel \lstinline|ggt a b|}
+\begin{block}{If-Then-Else}
+\begin{lstlisting}
+ggT a b = if b == 0 then a else ggT b (mod a b)
+\end{lstlisting}
+\end{block}
+\begin{block}{Guards}
+\begin{lstlisting}
+ggT''' a b | b == 0    = a
+           | otherwise = ggT''' b (mod a b) 
+\end{lstlisting}
+\end{block}
+\end{frame}
+
+\subsection{Iterationsanweisungen}
+\begin{frame}[fragile]
+\frametitle{Iterationsanweisungen}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item In Haskell existieren keine Schleifen wie
+  \item while, while do, for, repeat until \ldots
+  \item Jede "`Schleife"' muss über rekursive Funktionen realisiert werden
+  \item Hierzu werden Funktionen höherer Ordnung benötigt
+\end{itemize}
+\end{block}
+\begin{lstlisting}
+filter :: (Int -> Bool) -> [Int] -> [Int]
+filter do []     = 0
+filter do (x:xs) | do x       = x : filter do xs
+                 | otherwise  = filter do xs
+\end{lstlisting}
+\vspace*{-3ex}
+\begin{block}{\vspace*{-3ex}}
+Wendet \lstinline|do| auf jedes Element der Liste an.
+\end{block}
+\end{frame}
+
+\subsection{Sprunganweisungen}
+\begin{frame}
+\frametitle{Sprunganweisungen}
+\begin{block}{\vspace*{-3ex}}
+Es existieren keine Sprunganweisungen.
+\end{block}
+\end{frame}

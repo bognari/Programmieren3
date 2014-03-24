@@ -1,0 +1,427 @@
+\subtitle{Tag vier - ein bisschen noch} 
+\date{28.03.2014}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\section{Das Array}
+\begin{frame}
+\frametitle{das Array}
+\begin{itemize}
+	\item in Haskell existieren nicht nur Listen zur Speicherung und Verarbeitung von Daten sondern auch zwei Array Formen
+	\item Arrays in Haskell besitzen immer eine feste Größe die bei der Erstellung angegeben wird
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{statische Arrays}
+\begin{itemize}
+	\item es muss das Modul $Data.Array.IArray$ importiert werden
+	\item die einzelnen Elemente eines Arrays werden mit dem $!$ Operator angesprochen\\ z.B. $a!5$ gibt das Element mit dem Index $5$ aus dem Array $a$ wieder
+	\item erstellt werden Arrays mit $(listArray (<Start>,<Ende>) <Liste>) :: Array <IndexTyp> <ElemTyp>$
+	\\als Array Index kann jeder Datentyp verwendet werden, welcher die Typklasse $Ix$ implementiert 
+	\item oder mit $(array (<Start>, <Ende>) [Liste\;mit\;Tupeln]) :: Array <IndexTyp> <ElemTyp>$
+	\\ in diesem Fall wird dem Array eine Liste mit Tupeln übergeben bei dem das erste Element der "`Primarykey"' ist
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{statische Arrays}
+\begin{lstlisting}
+listArray :: (Ix i, IArray a e) => (i, i) 
+    -> [e] -> a i e
+myArray1 = (listArray ('a','e') [10..15]) 
+    :: Array Char Int
+\end{lstlisting}	
+\pause
+\begin{lstlisting}
+array :: (Ix i, IArray a e) => (i, i) 
+    -> [(i, e)] -> a i e
+myArray2 = (array (1,5) [(k,k*2)| 
+    k <- [1..5]):: Array Int Int
+\end{lstlisting}
+\begin{alertblock}{Achtung}
+Die Anzahl der Listen Elemente und der Platz müssen nicht übereinstimmen, solange das Array nicht ausgegeben ($show\; a$) wird. 
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{statische Arrays}
+\begin{lstlisting}
+accumArray :: (IX i, IArray a e) => (e -> e' -> e) 
+   -> e -> (i,i) -> [(i, e')] -> a i e
+
+myArray3 = (accumArray (+) 0 (0,4) [(i `mod` 5
+   , 1) | i <- [1..123]]) :: Array Int Int
+\end{lstlisting}	
+\pause
+\begin{align*}
+array\; (0,4) [(0,24),(1,25),(2,25),(3,25),(4,24)]
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\frametitle{wichtige Array Funktionen}
+\begin{itemize}
+\item $amap$ ist die Array-Form der $map$ Funktion für Listen
+\item $elems$ wandelt das Array in eine Liste um (nur die Werte)
+\item $assocs$ wandelt das Array in eine Liste von Tupeln der Form $(k, v)$ um
+\item der $\backslash\backslash$ Operator (update) ändert in einem Array die gegebenen Wertpaare.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{statische vs. dynamische Arrays}
+\begin{itemize}
+\item bei einem Update mit dem $\backslash\backslash$ Operator (update) wird bei statischen das gesamte Array kopiert und die Änderungen vorgenommen
+\item somit dauert es bei statischen länger als bei dynamischen
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{dynamische Arrays}
+\begin{itemize}
+\item import von $Data.Array.Diff$
+\item Funktionen heißen gleich nur Typ ist $DiffArray$ statt $Array$
+\item besitzen zwar eine Konstante Zeit beim Update
+\item aber erhöhte Zugriffszeit beim Lesen
+\item durch geschickte Array Konstruktion kann jedoch fast vollständig auf Updates verzichtet werden
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Haskell API}
+\begin{itemize}
+\item für weitere Datentypen und deren Funktionen siehe:\\
+haskell.org/hoogle
+\end{itemize}
+\end{frame}
+
+\section{Monaden}
+\begin{frame}
+\frametitle{Monaten}
+\begin{itemize}
+\item Monaden sind ein mathematisches Konzept aus der Kategorientheorie
+\item werden eingesetzt um Funktionen miteinander zu kombinieren 
+\item ist in Haskell eine polymorphe Datenstrucktur mit speziellen Funktionen
+\item das Prinzip ist:
+\begin{itemize}
+\item Sequenzialisierung gemäß des Continuation-style Programming \\
+	der Kontrollfluss kehrt nicht zum Aufrufer zurück sondern geht zur Nachfolgefunktion 
+\item Darstellung und Transformation eines versteckten Zustands (Hiding)
+\item Sicherung von Single-Threadedness dadurch, weil keine dagegen verstoßende Funktion benutzt werden kann
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Monaden - Klasse}
+\begin{lstlisting}
+class  Monad m  where
+    -- verbinden zweiter Funktionen
+    -- Ergebnis ist Argument der zweiten Funktion
+    (>>=)   :: forall a b. m a -> (a -> m b) -> m b
+    -- verbindet zwei Funktionen aber verwirft jedes 
+    -- Ergebnis (wie in Imperativen Sprachen)
+    (>>)    :: forall a b. m a -> m b -> m b
+    m >> k  = m >>= \_ -> k
+    -- fuegt einen Wert in den Monaden Typ ein
+    return  :: a -> m a
+    -- gibt eine Fehlernachricht zurueck
+    fail    :: String -> m a
+    fail    = error
+\end{lstlisting}	
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Monaden - Klasse}
+\begin{lstlisting}
+add :: Maybe Int -> Maybe Int -> Maybe Int
+add mA mB = case mA of
+    Nothing -> Nothing
+    Just a    -> case mB of
+                 Nothing -> Nothing
+                 Just b  -> Just (a + b)
+\end{lstlisting}	
+\pause
+\begin{lstlisting}
+add' :: Maybe Int -> Maybe Int -> Maybe Int
+add' mA mB = mA >>= (\a ->
+              mB >>= (\b ->
+                return (a + b)))
+\end{lstlisting}	
+\end{frame}
+
+\begin{frame}
+\frametitle{do-Notation}
+\begin{itemize}
+\item mit der do-Notation werden Monaden ($>>=$) zusammengefasst \\ pro Zeile
+\item somit ist es syntaktischer Zucker
+\item für die Verwendung der do-Notation sind 4 Regeln zu beachten
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{do-Notation - Regel 1}
+\begin{itemize}
+\item einzelne Anweisungen benötigen keine Umformung.
+\item das $do$ wird einfach weggelassen.
+\end{itemize}
+\begin{lstlisting}
+do 
+  e
+\end{lstlisting}	
+\pause
+\begin{lstlisting}
+e
+\end{lstlisting}	
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{do-Notation - Regel 2}
+\begin{itemize}
+\item wird der Rückgabewert nicht benötigt
+\item dann wird die Anweisung nach vorne gezogen
+\end{itemize}
+\begin{lstlisting}
+do 
+  e
+  <Anweisung>
+\end{lstlisting}	
+\pause
+\begin{lstlisting}
+e >>= \_ -> do
+  <Anweisungen>
+\end{lstlisting}	
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{do-Notation - Regel 3}
+\begin{itemize}
+\item wird der Rückgabewert mit Pattern-Matching ausgewertet
+\item dann muss eine Hilfsfunktion dies übernehmen
+\end{itemize}
+\begin{lstlisting}
+do 
+  pattern <- e
+  <Anweisungen>
+\end{lstlisting}	
+\pause
+\begin{lstlisting}
+let ok pattern = do 
+    <Anweisungen>
+  ok _ = fail "Fehler" 
+in e >>= ok
+\end{lstlisting}	
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{do-Notation - Regel 4}
+\begin{itemize}
+\item wird ein Wert mit let gespeichert, kann dies vor das $do$ gezogen werden
+\item das $in$ ist im do-Block optional
+\end{itemize}
+\begin{lstlisting}
+do 
+  let <Deklaration>
+  in <Anweisungen>
+\end{lstlisting}	
+\pause
+\begin{lstlisting}
+let <Deklaration>
+in do
+      <Anweisungen>
+\end{lstlisting}	
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{do-Notation - If-Then-Else}
+wir erwarten:
+\begin{lstlisting}
+f = do 
+  if <irgendwas> then
+    <Anweisungen>
+  else 
+    <Anweisungen>
+\end{lstlisting}	
+Aber !
+\begin{lstlisting}
+f = do 
+  if <irgendwas> then do
+    <Anweisungen>
+  else do 
+    <Anweisungen>
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{do-Notation - Beispiel}
+\begin{lstlisting}
+add' :: Maybe Int -> Maybe Int -> Maybe Int
+add' mA mB = mA >>= (\a ->
+              mB >>= (\b ->
+                return (a + b)))
+\end{lstlisting}	
+\pause
+\begin{lstlisting}
+add :: Maybe Int -> Maybe Int -> Maybe Int
+add mA mB = do
+  a <- mA
+  b <- mB
+  return (a + b)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+\frametitle{vordefinierte Monaden}
+\begin{itemize}
+\item Writer - für Debug / Logging / Tracing
+\item Reader - zum Lesen von gemeinsamen Zuständen (global)
+\item State - Verknüpfung von Writer und Reader für gemeinsame Zustände
+\\ für zustandsbasierte Rechnungen
+\end{itemize}
+\end{frame}
+
+\section{IO}
+
+\begin{frame}[fragile]
+\frametitle{Hangman}
+\begin{lstlisting}
+import Data.Char
+import System.IO
+
+w = "Lambda"
+maxI = 5
+
+hangman :: String -> Int -> IO ()
+hangman cs i | i > maxI = putStrLn "\nverloren"
+             | all (`elem` cs) (map toLower w) = 
+               putStrLn "\ngewonnen"
+\end{lstlisting}	
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Hangman}
+\begin{lstlisting}
+hangman cs i = 
+  do
+    putStrLn " "
+    printWord cs
+    putStrLn "\nWelcher Buchstabe?"
+    c <- getChar >>= (return.toLower)
+    if (c `elem` (map toLower w)) then
+      hangman (c:cs) i 
+    else do
+      putStrLn $ "\n" ++ (show (i+1)) ++ " falsch\n"
+      hangman cs (i+1)
+\end{lstlisting}	
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Hangman}
+\begin{lstlisting}
+printWord :: String -> IO ()
+printWord cs = mapM_ pC w 
+  where
+    pC x  | toLower x `elem` cs = putChar x
+          | otherwise = putChar '_'
+
+          
+main = do
+  hSetBuffering stdin NoBuffering
+  hangman " " 0
+\end{lstlisting}	
+\end{frame}
+
+\begin{frame}
+\frametitle{das O in IO}
+\begin{itemize}
+  \item $print \;::\; Show\; a \Rightarrow a \to IO\;()$ \\ gibt jeden Datentyp der $Show$ implementiert aus
+  \item $putChar\; :: \; Char \to IO \;()$ \\ gibt ein Char aus
+  \item $putStr\; :: \; String \to IO\;()$\\ gibt einen String aus \\
+  $putStr = sequence_.map\; putChar$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{das O in IO}
+\begin{itemize}
+  \item $writeFile \;::\; FilePath \to String \to IO\;()$ 
+  \item $type \; Filepath = String$
+  \item schreibt den "`String"' mittels Textstrom in eine Datei
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{das I in IO}
+\begin{itemize}
+  \item $readLn\; ::\; Read \;a => IO \;a$ \\liest jeden Datentyp der $Read$ implementiert ein
+  \item $getChar \; :: \; IO \;Char$ \\ liest ein Char ein
+  \item $getLine \; :: \; IO \;String$\\ liest die ganze Zeile ein als String
+  \item die Pufferung der Eingaben ist über $hSetBuffering$ einstellbar\\ für Windows bekommt es der GHC trotzdem nicht hin :(
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{das O in IO}
+\begin{itemize}
+  \item $readFile \;:: \;FilePath \to IO\;String$ 
+  \item $type \; Filepath = String$
+  \item liest die Datei als String ein
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Hangman}
+\begin{lstlisting}
+isInfix :: String -> String -> Maybe String
+isInfix [] _ = Nothing
+isInfix t w | w == take (length w) t = Just t
+            | otherwise = isInfix (tail t) w
+\end{lstlisting}	
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Hangman}
+\begin{lstlisting}
+main = do
+  putStrLn "Dateipfad: "
+  filepath <- getLine
+  putStrLn "gesuchtes Wort: "
+  w <- getLine
+  c <- readFile filepath
+  case (isInfix c w) of
+    Nothing -> putStrLn "nicht enthalten"
+    Just s -> putStrLn $
+        "an Stelle " ++ (take 100 s)
+\end{lstlisting}	
+\end{frame}
+
+\section*{Zusammenfassung}
+
+\begin{frame}
+\frametitle{Zusammenfassung}
+
+\begin{itemize}
+  \item ab jetzt seid ihr auf dem Wissenstand, auf dem ich bin
+\end{itemize}
+
+% The following outlook is optional.
+\vskip0pt plus.5fill
+\begin{itemize}
+  \item nun seid ihr dran
+  \begin{itemize}
+    \item stellt Fragen
+    \item schlagt auf www.haskell.org/hoogle nach 
+    \item oder vergesst alles schnell wieder
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+
+%\begin{frame}
+%\begin{center}
+%\rotatebox{30}{\textcolor{red}{{\fontsize{100}{40} \selectfont Ende}}}
+%\end{center}
+%\end{frame}

@@ -1,0 +1,66 @@
+\begin{tikzpicture}[
+      nonterminal/.style={
+         rectangle,
+         minimum size=5.0mm,
+         very thick,
+         draw=blue!50!black!50,
+         top color=white,
+         bottom color=blue!50!black!20,
+         font=\itshape\scriptsize,
+         %text height=1.5ex,
+         %text depth=.25ex
+      },
+      terminal/.style={
+         rounded rectangle,
+         minimum size=5.0mm,
+         very thick,draw=black!50,
+         top color=white,bottom color=black!20,
+         font=\ttfamily\scriptsize,
+         %text height=1.5ex,
+         %text depth=.25ex
+      },
+      skip loop/.style={
+         to path={-- ++(0,#1) -| (\tikztotarget)}
+      },
+      point/.style={coordinate},>=stealth',thick,draw=black!50,
+      tip/.style={->,shorten >=0.007pt},every join/.style={rounded corners},
+      hv path/.style={to path={-| (\tikztotarget)}},
+      vh path/.style={to path={|- (\tikztotarget)}},
+      %text height=1.5ex,text depth=.25ex
+    ]
+    \matrix[column sep=5.0mm, row sep=3.0mm] {
+\node (n11) [circle, draw, inner sep=0pt, minimum size=0.75ex] {}; & \node (n12) [terminal] {=}; & \node (n13) [terminal] {if}; & \node (n14) [nonterminal] {Bool Ausdruck}; & \node (n15) [terminal] {then}; & \node (n16) [nonterminal] {Ausdruck}; & \node (n17) [terminal] {else}; & \node (n18) [nonterminal] {Ausdruck}; & \node (n19) [circle, draw, inner sep=0pt, minimum size=0.75ex] {};\\
+    };
+  { [start chain]
+       \chainin (n11);
+       \chainin (n12)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n12);
+       \chainin (n13)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n13);
+       \chainin (n14)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n14);
+       \chainin (n15)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n15);
+       \chainin (n16)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n16);
+       \chainin (n17)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n17);
+       \chainin (n18)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n18);
+       \chainin (n19)    [join=by tip];
+  }
+\end{tikzpicture}

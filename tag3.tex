@@ -1,0 +1,753 @@
+\subtitle{Tag drei - noch etwas mehr} 
+\date{26.03.2014}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\section{Typkonstruktoren}
+\subsection{Eigene Datentypen}
+\frame{
+\frametitle{Typkonstruktoren - Aufzählungstyp}
+\only<1>{
+\begin{block}{\vspace*{-3ex}}
+Aufzählungstypen sind mit Enums aus C bzw. C++ zu vergleichen und fassen inhaltlich Elemente zusammen
+\end{block}
+}
+\only<1-2>{
+\begin{block}{\lstinline|data|}
+\begin{center}
+\scalebox{0.6}{\input{images/data5.tex}}
+\end{center}
+\end{block}}
+\only<2>{
+\begin{block}{Konstruktor}
+\begin{center}
+\scalebox{0.6}{\input{images/data2.tex}}
+\end{center}
+\end{block}
+}
+}
+
+\begin{frame}[fragile]
+\frametitle{Typkonstruktoren - Aufzählungstyp} 
+\begin{block}{\vspace*{-3ex}}
+\lstinline!data Color = Blue | Cyan | Yellow | Orange | Green!
+\end{block}
+\pause
+\only<2>{Wie werden die Konstuktoren aussehen ?}
+\pause
+Konstruktoren:
+\begin{lstlisting}
+Blue   :: Color
+Cyan   :: Color
+Yellow :: Color
+Orange :: Color
+Green  :: Color
+\end{lstlisting}
+\end{frame}
+
+\frame{
+\frametitle{Typkonstruktoren - Produkttyp}
+\only<1>{
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Produkttyp ist ein Tupel der einzelnen Attribute
+  \item Tupel fassen Gruppen von Daten zusammen, die logisch zusammen gehören und gemeinsam etwas Neues und Eigenständiges bilden
+\end{itemize}
+\end{block}
+}
+
+\only<1-3>{
+\begin{block}{\lstinline|data| mit allen Angaben}
+\begin{center}
+\scalebox{0.6}{\input{images/data1.tex}}
+\end{center}
+\end{block}}
+\only<2>{
+\begin{block}{Konstruktor}
+\begin{center}
+\scalebox{0.6}{\input{images/data2.tex}}
+\end{center}
+\end{block}}
+\only<3>{
+\begin{block}{Selektor (bei allen Angaben automatisch erstellt)}
+\begin{center}
+\scalebox{0.6}{\input{images/data3.tex}}
+\end{center}
+\end{block}}
+}
+
+\begin{frame}[fragile]
+\frametitle{Typkonstruktoren - Produkttyp} 
+\begin{block}{\vspace*{-3ex}}
+\lstinline|data Point = Point{x :: Double, y :: Double}|
+\end{block}
+\only<2>{
+\begin{block}{Kurz}
+\lstinline|data Point = Point Double Double|
+\end{block}
+\vspace*{-3ex}
+}
+
+\begin{block}{\vspace*{-3ex}}
+\lstinline|data Circle = Circle{center :: Point, radius :: Double}|
+\end{block}
+\only<2>{
+\begin{block}{Kurz}
+\lstinline|data Circle = Circle Point Double|
+\end{block}
+}
+
+\only<2>{\begin{alertblock}{Kurz Schreibweise}
+Bei der kurz Schreibweise werden keine Selektoren erstellt
+\end{alertblock}}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Typkonstruktoren - Produkttyp}
+\begin{block}{\vspace*{-3ex}}
+\lstinline|data Point = Point{x :: Double, y :: Double}|
+\lstinline|data Circle = Circle{center :: Point, radius :: Double}|
+\end{block} 
+Konstruktorfunktionen: 
+\only<1>{?}\pause
+\begin{lstlisting}
+Point :: Double -> Double -> Point
+Circle :: Point -> Double -> Circle
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Typkonstruktoren - Produkttyp} 
+\begin{block}{\vspace*{-3ex}}
+\lstinline|data Point = Point{x :: Double, y :: Double}|
+\lstinline|data Circle = Circle{center :: Point, radius :: Double}|
+\end{block} 
+Selektorfunktionen: 
+\only<1>{?}\pause
+\begin{lstlisting}
+x :: Point -> Double
+y :: Point -> Double
+center :: Circle -> Point
+radius :: Circle -> Double
+\end{lstlisting}
+\end{frame}
+
+\frame{\frametitle{Typkonstruktoren - Summentyp}
+\only<1>{
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+\item Summentypen fassen inhaltlich verwandte (aber struktuell verschiedene) Elemente zusammen
+\item Sind eine Fusion von Aufzählungs- und Produkttyp
+\end{itemize}
+\end{block}
+}
+\only<1-3>{
+\begin{block}{\lstinline|data| mit allen Angaben}
+\begin{center}
+\scalebox{0.6}{\input{images/data4.tex}}
+\end{center}
+\end{block}}
+\only<2>{
+\begin{block}{Konstruktor}
+\begin{center}
+\scalebox{0.6}{\input{images/data2.tex}}
+\end{center}
+\end{block}}
+\only<3>{
+\begin{block}{Selektor (bei allen Angaben automatisch erstellt)}
+\begin{center}
+\scalebox{0.6}{\input{images/data3.tex}}
+\end{center}
+\end{block}}
+}
+
+\begin{frame}[fragile]
+\frametitle{Typkonstruktoren - Summentyp} 
+\begin{lstlisting}
+data Point = Point{x :: Double, y :: Double}
+
+data Shape = Circle{center :: Point, 
+    radius :: Double}
+  | Rectangle{point :: Point, width :: Double, 
+    height :: Double}
+  | Triangle{point1 :: Point, point2 :: Point, 
+    point3 :: Point}
+\end{lstlisting}
+
+\begin{alertblock}{Frage}
+Was sind hier Selektoren und Konstruktoren?
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Typkonstruktoren - Summentyp} 
+\begin{lstlisting}
+data Shape = Circle{center :: Point, radius :: Double}
+  | Rectangle{point :: Point, width :: Double, 
+    height :: Double}
+  | Triangle{point1 :: Point, point2 :: Point, 
+    point3 :: Point}
+\end{lstlisting}
+Konstruktoren: \only<1>{?}\pause
+\begin{lstlisting}
+Point :: Double -> Double -> Point
+Circle :: Point -> Double -> Shape
+Rectangle :: Point -> Double -> Double -> Shape
+Triangle :: Point -> Point -> Point -> Shape
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Typkonstruktoren - Summentyp}
+\begin{lstlisting}
+data Shape = Circle{center :: Point, radius :: Double}
+  | Rectangle{point :: Point, width :: Double, 
+    height :: Double}
+  | Triangle{point1 :: Point, point2 :: Point, 
+    point3 :: Point}
+\end{lstlisting} 
+Selektoren: \only<1>{?}\pause
+\begin{lstlisting}
+x :: Point -> Double
+y :: Point -> Double
+center :: Shape -> Point
+radius :: Shape -> Double
+point :: Shape -> Point
+width :: Shape -> Double
+...
+\end{lstlisting}
+\end{frame}
+\subsection{Typ-Synonyme}
+\frame{\frametitle{Typ-Synonyme}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Typ-Synonyme sind keine eigenen Typen sondern führen nur neue Namen für bekannte Typen ein
+  \item Vorteile:
+    \begin{itemize}
+      \item Verbesserte Lesbarkeit
+      \item Intern wird bei \lstinline|type Euro = Int| wieder \lstinline|Int|
+    \end{itemize}
+\end{itemize}
+\end{block}
+\begin{block}{\vspace*{-3ex}}
+\begin{center}
+\scalebox{0.8}{\input{images/typsynonym.tex}}
+\end{center}
+\end{block}
+}
+
+\begin{frame}[fragile]
+\frametitle{Typ-Synonyme} 
+\begin{lstlisting}
+type Euro = Int
+type Cent = Int
+type Preis = (Euro, Cent)
+
+type Tupel = (Int, Int)
+\end{lstlisting}
+\begin{alertblock}{Achtung}
+\lstinline|Preis| und \lstinline|Tupel| sind für uns und intern \lstinline|(Int, Int)|
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Typ-Synonyme} 
+\begin{lstlisting}
+type Euro = Int
+type Cent = Int
+
+add :: Euro -> Euro -> Euro
+add a b = a + b
+
+add' :: Euro -> Cent -> Int
+add' a b = a + b
+\end{lstlisting}
+\begin{alertblock}{Achtung}
+\lstinline|add' 5 (add 5 8)| funktioniert
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Typ-Synonyme mit Typsicherheit} 
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+\item \lstinline|newtype| wird statt \lstinline|type| verwendet, wenn Typsicherheit benötigt wird
+\item \lstinline|newtype| verhält sich somit geauso wie \lstinline|data|
+\item Jedes \lstinline|newtype| kann durch \lstinline|data| ersetzt werden
+\item Jedoch \lstinline|data| kann nur in Ausnahmefällen durch \lstinline|newtype| ersetzt werden
+\end{itemize}
+\end{block}
+\only<1>{
+\begin{block}{\vspace*{-3ex}}
+\begin{center}
+\scalebox{0.8}{\input{images/newtypsynonym.tex}}
+\end{center}
+\end{block}
+}\pause
+\begin{lstlisting}
+newtype Euro = Euro Int
+newtype Cent = Cent Int
+\end{lstlisting}
+\begin{alertblock}{Achtung}
+\lstinline|Euro| und \lstinline|Cent| sind nicht kompatibel
+\end{alertblock}
+\end{frame}
+
+\subsection{Rekursive Datenstrukturen}
+\frame{\frametitle{Rekursive Datenstrukturen}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Datenstrukturen können auf sich selbst verweisen
+  \item Es sind "`unendliche"' Rekursionen erlaubt, solange der Arbeitsspeicher mitspielt
+\end{itemize}
+\end{block}
+}
+
+\begin{frame}[fragile]
+\frametitle{Rekursive Datenstrukturen} 
+\begin{lstlisting}
+data List = []
+          | Cons {head :: Int, tail :: List}
+
+data Tree = Nil
+          | Tree {left :: Tree, value :: Int,
+            right :: Tree}
+          
+data Nat = Zero
+         | Succ {pred :: Nat}
+
+\end{lstlisting}
+\end{frame}
+
+\subsection{Listen}
+\begin{frame}[fragile]
+\frametitle{Listen}
+\begin{lstlisting}
+data [a] = []
+         | Cons {head :: a, tail :: [a]}
+\end{lstlisting}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Listen sind Folgen von Elementen gleichen Types
+  \item \lstinline|a| ist hier der Platzhalter für einen Typ\\
+  		somit kann das \lstinline|a| für \lstinline|Int|, \lstinline|Integer| usw stehen
+\end{itemize}
+\end{block}  		
+Konstruktoren: \only<1>{?}
+\pause
+\begin{lstlisting}
+[] :: [a]
+Cons :: a -> [a] -> [a]
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Listen}
+\begin{lstlisting}
+data [a] = []
+         | Cons {head :: a, tail :: [a]}
+\end{lstlisting}
+Selektoren: \only<1>{?}
+\pause
+\begin{lstlisting}
+head :: [a] -> a
+tail :: [a] -> [a]
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Listen in Funktionen}
+\begin{lstlisting}
+lenght :: [Int] -> Int
+lenght []     = 0
+lenght (_:xs) = 1 + lenght xs
+
+append :: [Int] -> [Int] -> [Int]
+append []     ys = ys
+append (x:xs) ys = x : append xs ys
+
+sum :: [Int] -> Int
+sum []     = 0
+sum (x:xs) = x + sum xs
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Listen in Funktionen}
+\begin{lstlisting}
+filter :: [Int] -> [Int]
+filter []     = []
+filter (x:xs) | ok x      = x : filter xs
+              | otherwise = filter xs
+              where
+                ok x = (mod x 2) == 1
+\end{lstlisting}
+\vspace*{-3ex}
+\begin{block}{\vspace*{-3ex}}
+Was macht diese Funktion?\\
+Was ist der Funktionskopf von \lstinline|ok|?\\
+\only<1>{\begin{center}
+\scalebox{0.7}{\input{images/guards.tex}}
+\end{center}}
+\end{block}
+\pause
+\begin{lstlisting}
+ok :: Int -> Bool
+ok      x =  (mod x 2) == 1
+\end{lstlisting}
+\end{frame}
+
+\frame{\frametitle{Listen Generatoren}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Für Listen existieren Generatoren
+  \item Sonst müsste jedes Element von Hand aufgeschrieben werden
+  \item \lstinline|[0..]| generiert eine unendliche Liste
+  \item Warum es unendliche Listen geben kann kommt später
+  \item \lstinline|[0..10]| generiert \lstinline|[0,1,2,3,4,5,6,7,8,9,10]|
+  %\item {}[<Ausdruck>| <Variable> <- <Liste>, <Filter>]
+\end{itemize}
+\begin{center}
+\scalebox{0.7}{\input{images/listgenerator.tex}}
+\end{center}
+\end{block}
+}
+
+\begin{frame}[fragile]
+\frametitle{Listen Generatoren}
+\begin{lstlisting}
+[x * x| x <- [1..5]]
+[(i,j)|i <- [1,2], j <- [1..4]]
+
+[y | y <- [1..], even y]
+[a * a | a <- [1..], odd a]
+[square x | x <- [0..], square x < 10]
+\end{lstlisting}
+\begin{block}{\vspace*{-3ex}}
+\begin{center}
+\scalebox{0.7}{\input{images/listgenerator.tex}}
+\end{center}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Listen Generatoren}
+\begin{block}{Berechnung aller Primzahlen}
+\begin{lstlisting}
+primes = sieves [2..]
+  where
+    sieves (p:xs) = p:sieves [x|x<- xs, mod x p > 0]
+\end{lstlisting}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Wichtige Liste} 
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Ihr erinnert euch noch an \lstinline|Char|?
+  \item Ihr erinnert euch noch an \lstinline|type|?
+  \item Wie wird wohl \lstinline|String| definiert sein?
+\end{itemize}
+\end{block}
+\pause
+\begin{lstlisting}
+type String = [Char]
+\end{lstlisting}
+\end{frame}
+
+\frame{\frametitle{String}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Strings sind Listen von Chars
+  \item Alle Funktionen die generisch für Listen definiert sind, sind auch für Strings definiert
+  \item Strings werden intern nicht anders als normale Listen behandelt
+  \item Also kein Stringspool, keine Unabänderbarkeit von Strings usw. \ldots
+\end{itemize}
+\end{block}
+}
+
+\begin{frame}[fragile]
+\frametitle{String} 
+\begin{lstlisting}
+wochenTag :: Int -> String
+wochenTag 1 = "Montag"
+wochenTag 2 = "Dienstag"
+wochenTag 3 = "Mittwoch"
+wochenTag 4 = "Donnerstag"
+wochenTag 5 = "Freitag"
+wochenTag 6 = "Samstag"
+wochenTag 7 = "Sonntag"
+wochenTag _ = undefined
+\end{lstlisting}
+\begin{alertblock}{"`Bottom Element"'}
+jeder Wert außer 1, 2, 3, 4, 5, 6, 7 führt zum "`Bottom Element"' und führt zu einer \lstinline|Prelude.undefined| Exception
+\end{alertblock}
+\end{frame}
+
+\section{Typüberprüfung und -berechnung}
+\frame{\frametitle{Typüberprüfung}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Es sind nur Typengleich, welche auch gleich sind!
+  \item \lstinline|Int| ist kompatibel zu \lstinline|Int|
+  \item Aber \lstinline|Int| ist nicht kompatibel zu \lstinline|Integer|
+\end{itemize}
+\end{block}
+}
+
+\frame{\frametitle{Typüberprüfung}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Typ-Synonyme sind gleich, wenn sie auf den gleichen Typ abbilden
+  \item \lstinline|type Euro = Int|
+  \item \lstinline|type Laenge = Int|
+  \item Zwischen beiden Typen gibt es keinen Unterschied
+\end{itemize}
+\end{block}
+}
+
+\frame{\frametitle{Typberechnung}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Wenn keine Typen angegeben wurden, wird der passende Typ berechnet
+  \item Bei Eingaben im GHCi wird der richtige Typ "`erraten"'
+  \only<2>{\item Ok statt "`raten"' wird der Typcheck Algorithmus von Robin Milner verwendet}
+\end{itemize}
+\end{block}
+}
+
+\section{Typkonversion (Cast Anweisungen)}
+\frame{\frametitle{Typkonversion}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item In Haskell existieren keine Cast Anweisungen wie in Java
+  \item Jeder Cast wird über eine Funktion realisiert
+  \item \lstinline|toInteger :: a -> Integer|
+  \item \lstinline|fromInteger :: Integer -> a|
+  \item \ldots
+\end{itemize}
+\end{block}
+}
+
+\section{Polymorphismus}
+\subsection{Typparameter}
+\frame{\frametitle{Polymorphismus}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Bisher hatten wir nur Funktionen für genau einen Typ
+  \item Nun lernen wir Typklassen und Typparameter kennen
+\end{itemize}
+\end{block}
+}
+
+\begin{frame}[fragile]
+\frametitle{Typparameter}
+\begin{block}{Erinnert ihr euch noch an Listen?}
+\begin{lstlisting}
+data List = []
+          | Cons {head :: Int, tail :: List}
+\end{lstlisting}
+\end{block}
+\pause[1]
+\begin{block}{Damit wir nicht für jeden Datentyp eine neue Liste definieren müssen\\
+\lstinline|Cons| ist nun \lstinline|(:)|}
+\begin{lstlisting}
+data List a = []
+            | (:) {head :: a, tail :: List a}
+\end{lstlisting}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Typparameter}
+\begin{block}{Erinnert ihr euch noch an Listen?}
+\begin{lstlisting}
+data List = []
+          | Cons {head :: Int, tail :: List}
+\end{lstlisting}
+\end{block}
+%\pause
+\begin{block}{kurz:}
+\begin{lstlisting}
+data [a] = []
+         | (:) {head :: a, tail :: [a]}
+\end{lstlisting}
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Typparameter}
+\begin{block}{Genauso in Funktionen}
+\begin{lstlisting}
+append :: [Int] -> [Int] -> [Int]
+append []     ys = ys
+append (x:xs) ys = x : append xs ys
+\end{lstlisting}
+\end{block}
+\pause
+\begin{block}{Damit wir nicht für jeden Datentyp eine neue Funktion definieren müssen}
+\begin{lstlisting}
+append :: [a] -> [a] -> [a]
+append []     ys = ys
+append (x:xs) ys = x : append xs ys
+\end{lstlisting}
+\end{block}
+\end{frame}
+\subsection{Typklassen}
+\frame{\frametitle{Typklassen}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Typklassen fassen Typen zusammen, die ähnliche Operationen unterstützen
+  \item Alle Ausprägungen einer Funktion einer Typklassen tragen dann den gleichen Namen.
+  \item $\to$ Overloading, d.h. der gleiche Funktionsname steht für unterschiedliche Implementierungen
+\end{itemize}
+\end{block}
+}
+
+\frame{\frametitle{Typklassen}
+\begin{block}{Zu allgemein}
+\lstinline|(+) :: a -> a -> a|
+\end{block}
+\pause
+\begin{block}{Zu speziell}
+\lstinline|(+) :: Int -> Int -> Int|
+\end{block}
+\pause
+\begin{block}{Genau richtig}
+\lstinline|(+) :: Num a => a -> a -> a|
+\end{block}
+}
+
+\begin{frame}[fragile]
+\frametitle{Typklassen}
+\begin{block}{Nutzung von Typklassen}
+\begin{lstlisting}
+summe :: Num a => [a] -> a
+summe []     = 0
+summe (x:xs) = x + summe xs
+\end{lstlisting}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Typklassen}
+\begin{block}{Eigene Datentypen mit Typklassen}
+\begin{lstlisting}
+data Point = Point{x :: Double, y :: Double}
+  deriving (Eq, Show)
+
+data Circle = Circle{center :: Point, 
+  radius :: Double}
+  deriving (Eq, Show)
+\end{lstlisting}
+mit \lstinline|deriving| wird geraten wie die Implementierung von \lstinline|Eq|, \lstinline|Ord|, \lstinline|Show| usw. sein sollen
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Typklassen}
+%\includegraphics[scale=0.8]{Classes1.png}
+\begin{figure}
+\includegraphics[scale=0.75]{images/Classes1.png}
+\caption{Typklassen Teil 1 \copyright wikibooks.org}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Typklassen}
+%\includegraphics[scale=0.8]{Classes2.png}
+\begin{figure}
+\includegraphics[scale=0.75]{images/Classes2.png}
+\caption{Typklassen Teil 2 \copyright wikibooks.org}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Typklassen}
+\begin{block}{Die \lstinline|Eq| Typklasse}
+\begin{lstlisting}
+class Eq a where
+  (==), (/=) :: a -> a -> Bool
+  x == y = not (x /= y)
+  x /= y = not (x == y)
+\end{lstlisting}
+\end{block}
+\begin{alertblock}{Achtung}
+Die Definition ist zirkulär!
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Typklassen}
+\begin{block}{Die \lstinline|Ord| Typklasse}
+\begin{lstlisting}
+class (Eq a) => Ord a where
+  (<), (<=), (>=), (>) :: a -> a -> Bool
+  max, min             :: a -> a -> a
+\end{lstlisting}
+\end{block}
+\begin{alertblock}{Achtung}
+Die Definition ist zirkulär!
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Typklassen}
+\begin{block}{Instance von \lstinline|Eq| und \lstinline|Ord| für Buch}
+\begin{lstlisting}
+data Buch = Buch Int [String] String deriving (Show)
+
+instance Eq Buch where 
+  (Buch isbn1 _ _) == (Buch isbn2 _ _) 
+    = isbn1 == isbn2
+  
+instance Ord Buch where
+   (Buch isbn1 _ _) `compare` (Buch isbn2 _ _) 
+     = isbn1 `compare` isbn2
+\end{lstlisting}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Typklassen}
+\begin{block}{Instance von \lstinline|Eq|}
+\begin{lstlisting}
+instance Eq Buch where 
+  (Buch isbn1 _ _) == (Buch isbn2 _ _) 
+    = isbn1 == isbn2
+\end{lstlisting}
+\end{block}
+\begin{block}{Aufruf}
+\lstinline|Buch 123 ["ich", "du"] "Hallo" == Buch 123 ["du"] "keiner"|
+\end{block}
+\only<2>{\begin{block}{Ausgabe}
+\lstinline|True|
+\end{block}}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Typklassen}
+\begin{block}{Instance von \lstinline|Ord|}
+\begin{lstlisting}
+instance Ord Buch where
+   (Buch isbn1 _ _) `compare` (Buch isbn2 _ _) 
+     = isbn1 `compare` isbn2
+\end{lstlisting}
+\end{block}
+\begin{block}{Aufruf}
+\lstinline|Buch 123 ["ich", "du"] "Hallo" < Buch 123 ["du"] "keiner"|
+\end{block}
+\only<2>{\begin{block}{Ausgabe}
+\lstinline|False|
+\end{block}}
+\end{frame}
+
+%\begin{frame}
+%\begin{center}
+%\rotatebox{30}{\textcolor{red}{{\fontsize{100}{40} \selectfont Ende}}}
+%\end{center}
+%\end{frame}

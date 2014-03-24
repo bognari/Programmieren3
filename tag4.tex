@@ -1,0 +1,329 @@
+\subtitle{Tag vier - ein bisschen noch} 
+\date{27.03.2014}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\section{Lazy}
+\begin{frame}[fragile]
+\frametitle{Lazy}
+\begin{block}{Betrachte folgende Funktion}
+\begin{lstlisting}
+rechne :: Double -> Double -> Double
+rechne a b = if a > 10 
+             then a + b
+             else a
+\end{lstlisting}
+\end{block}
+\only<1>{\begin{block}{Was erwartet ihr beim Aufruf von}
+\lstinline|rechne 12 6|
+\end{block}}
+\only<2>{\begin{block}{und bei}
+\lstinline|rechne 9 (10 / 0)|
+\end{block}}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Lazy}
+\begin{block}{Wir betrachten}
+\begin{lstlisting}
+prims :: [Integer]-> Int -> [Integer]
+prims _ 0 		= []
+prims (p:xs) i 	= (:) p $prims 
+                [x|x<- xs, mod x p > 0] $i + 1
+\end{lstlisting}
+Terminiert die Funktion?
+\end{block}
+\pause 
+\begin{block}{Terminiert die Funktion auch bei der Eingabe von}
+\lstinline|primes [2..] 1|
+\end{block}
+\end{frame}
+
+\frame{\frametitle{Lazy}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Haskell verwendet die Lazy-Evaluation für Ausdrücke 
+  \item Lazy $\equiv$ Call-by-Need
+  \item Dadurch sind Funktionen nicht strikt
+\end{itemize}
+\end{block}
+}
+
+\frame{\frametitle{Lazy - unendliche Listen}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Es werden vom Start an eine bestimmte Anzahl an Elemente erstellt
+  \item Wenn weitere Elemente benötigt werden, werden diese neu Erstellt
+  \item Wird immer nur ein Abschnitt benötigt wird der Start wieder gelöscht\\
+  		stellt es euch als "`Ringpuffer"' vor
+  \item Wenn jedoch alle Elemente benötigt werden $\to$ bis Speicher voll 
+\end{itemize}
+\end{block}
+}
+
+\frame{\frametitle{Lazy - Parameter und Ausdrücke}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Haskell verwendet Call-by-need
+  \item Call-by-need ist Form es Call-by-name
+\end{itemize}
+\end{block}
+}
+
+\frame{\frametitle{Lazy - Call-by-name}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Ausdrücke werden nicht sofort ausgewertet sondern nur übergeben
+  \item \lstinline|max (4 + 6) (10 / 0)|
+  \only<2-5>{\item $\Rightarrow$ \lstinline|if (4 + 6) > (10 / 0) then (4 + 6) else (10 / 0)|}
+  \only<3-5>{\item $\Rightarrow$ \lstinline|(4 + 6) > (10 / 0)|}
+  \only<4-5>{\item $\Rightarrow$ \lstinline|10 > (10 / 0)|}
+  \only<5>{\item $\Rightarrow \lightning$}
+\end{itemize}
+\end{block}
+}
+
+
+\frame{\frametitle{Lazy - Call-by-need}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Bei Call-by-need erweitert Call-by-name um Sharing
+  \item Sharing: gleiche Ausdrücke werden nur einmal ausgewertet
+\end{itemize}
+\end{block}
+}
+
+\section{Funktionen höherer Ordnung (HOF)}
+\subsection{Allgemeines zu HOF}
+\frame{\frametitle{Funktionen höherer Ordnung (HOF)}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+	\item Funktionen können als Parameter nicht nur Ausdrücke sondern auch Funktionen erhalten
+	\item Dieses wird im Funktionskopf angegeben
+\end{itemize}
+\begin{center}
+\scalebox{0.6}{\input{images/hof.tex}}
+\end{center}
+\end{block}
+}
+
+\begin{frame}[fragile]
+\frametitle{Funktionen höherer Ordnung (HOF)}
+\begin{lstlisting}
+filter :: (Int -> Bool) -> [Int] -> [Int]
+filter do []     = 0
+filter do (x:xs) | do x      = x : filter do xs
+                 | otherwise = filter do xs
+\end{lstlisting}
+\end{frame}
+
+\subsection{Funktionskomposition}
+\begin{frame}[fragile]
+\frametitle{Funktionskomposition}
+\begin{block}{Wie vermeiden wir am besten "`Klammerungswirrwarr"'}
+\lstinline|f (f (f (f (f (f (f (f (f x))))))))|
+\end{block}
+\pause
+\begin{block}{Mit dem "`Punkt"'-Operator können wir Funktionen verbinden}
+\lstinline|(f.f.f.f.f.f.f.f.f) x|
+\end{block}
+\pause
+\begin{block}{Oder dem \lstinline|$|-Operator die Auswertungsreihenfolge verändern}
+\lstinline|f $ f $ f $ f $ f $ f $ f $ f $ f x|
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Funktionskomposition}
+\begin{block}{Der "`Punkt"'-Operator ist definiert mit}
+\begin{lstlisting}
+(.) :: (b -> c) -> (a -> b) -> a -> c
+(.) outerFunc innerFunc x = outerFunc (innerFunc x)
+\end{lstlisting}
+Das Resultat der inneren Funktion wird auf die äußere angewendet.
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Funktionskomposition}
+\begin{block}{Der \lstinline|$|-Operator ist definiert mit}
+\begin{lstlisting}
+($) :: (a -> b) -> a -> b
+($) func x = func x
+\end{lstlisting}
+Die Funktion wird auf das Resultat von dem Ausdruck der "`rechts"' vom Operator steht angewandt.
+\end{block}
+\end{frame}
+
+\section{Currying - für Fortgeschrittene}
+\begin{frame}
+\frametitle{Currying}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Currying bzw. Schönfinkeln ist das Zusammenfassen von Argumenten
+  \item Wird in Sprachen und Kalkülen verwendet, in dem nur ein Argument erlaubt ist.\\
+  		z.B. in der $\lambda$-Notation
+  \item Die Form und Art des Zusammenfassens ist unterschiedlich 
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Currying in der Lambda-Notation}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item $\lambda\;x\;y\;z\;.\;x\;y\;z$
+  \item wird aufgespalten zu
+  \item <2-7> $\lambda\;x\;.\;\lambda\;y\;.\;\lambda\;z\;.\;x\;y\;z$
+  \item <3-7> wird ausgewertet mit den Argumenten $a\;b\;c$
+  \item <4-7> $(\lambda\;x\;.\;\lambda\;y\;.\;\lambda\;z\;.\;x\;y\;z) a\;b\;c$
+  \item <5-7> $(\lambda\;y\;.\;\lambda\;z\;.\;a\;y\;z) b\;c$
+  \item <6-7> $(\lambda\;z\;.\;a\;b\;z) c$
+  \item <7> $(a\;b\;c)$
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Currying in Haskell}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Auch wenn wir in Haskell Funktionen mehrere Argumente übergeben können
+  \item Intern hat jede Funktion nur ein oder kein Argument!
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Currying in Haskell}
+\begin{block}{Aufruf}
+\lstinline|:t xor True|
+\end{block}
+\begin{block}{Ausgabe}
+\lstinline|xor True :: Bool -> Bool|
+\end{block}
+\only<1>{\begin{block}{Aufruf}
+\lstinline|(xor True) False|
+\end{block}
+\begin{block}{Ausgabe}
+\lstinline|True|
+\end{block}}
+\only<2>{\begin{block}{Aufruf}
+\lstinline|(xor True) False|
+\end{block}
+\begin{block}{Ausgabe}
+\lstinline|False|
+\end{block}}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Currying in Haskell}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Currying erleichtert das Arbeiten mit Funktionen höherer Ordnung
+  \item Sehen wir uns folgendes Beispiel an
+\end{itemize}
+\end{block}
+\begin{lstlisting}
+map :: (a -> b) -> [a] -> [b]
+map _ []     = []
+map f (x:xs) = f x : map f xs
+\end{lstlisting}
+\begin{block}{Wie würdet ihr \lstinline|map| aufrufen um jedes Element einer Liste um 2 zu erhöhen?}
+\only<2>{\lstinline|map (+ 2) [1..10]|}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Currying in Haskell}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Soll Currying unterbunden werden, so muss die Anzahl der Argumente von Anfang an $\leq 1$ sein
+  \item <1-3> \lstinline|f :: Int -> Int -> Int|
+  \item <1-3> Hier für kommen Tupel ins Spiel
+  \item <2-3> \lstinline|f' :: (Int, Int) -> Int|
+  \item <2-3> Dieses "`Abändern"' ist jedoch nur bei eigenen Funktionen möglich
+  \item <3> Funktionen können dies jedoch für uns übernehmen
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Currying in Haskell}
+\begin{block}{\lstinline|curry|}
+\begin{lstlisting}
+curry :: ((a, b) -> c) a -> b -> c
+curry f x y = f (x, y)
+\end{lstlisting}
+\end{block}
+\pause
+\begin{block}{\lstinline|uncurry|}
+\begin{lstlisting}
+uncurry :: a -> b -> c -> ((a, b) -> c)
+uncurry f t = f (fst t) (snd t)
+\end{lstlisting}
+\end{block}
+\pause
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item \lstinline|fst t| gibt das erste Element aus \lstinline|t|
+  \item \lstinline|snd t| gibt das zweite Element aus \lstinline|t|
+\end{itemize}
+\end{block}
+\end{frame}
+
+\section{Lambda Ausdrücke}
+\begin{frame}
+\frametitle{Anonyme Funktionen}
+\begin{block}{\vspace*{-3ex}}
+\begin{itemize}
+  \item Haskell unterstützt anonyme Funktionen in Form von $\lambda$-Ausdrücken
+  \item das $\lambda$-Symbol wird durch "`$\backslash$"' repräsentiert.\\ $\lambda x \leadsto$ \lstinline|\x|
+  \item Aufbau: \\
+  %\item {} $\backslash <Parameter_1> \ldots <Parameter_n>\; ->\; <Ausdruck>$
+  \item durch das currying können $\lambda$-Ausdrücke mehrere Argumente besitzen
+  \item es gelten alle bekannten Regeln für die $\lambda$-Notation
+\end{itemize}
+\begin{center}
+\scalebox{0.8}{\input{images/lambda.tex}}
+\end{center}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Beispiele - Lambda-Ausdrücke}
+\begin{lstlisting}
+plus = \x -> \y -> x + y
+
+istKleiner = \x -> \y ->  x < y
+
+g = \x -> \y -> (\y -> \x -> (y,x)) y x
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Beispiele - Lambda-Ausdrücke}
+\begin{lstlisting}
+-- y "Operator"
+y f = f (y f)
+
+fac = y (\f n -> if n > 0 then n * f (n - 1) else 1)
+\end{lstlisting}
+\only<2-3>{
+\begin{exampleblock}{Aufruf}
+\lstinline|fac 5|
+\end{exampleblock}}
+\only<3>{
+\begin{exampleblock}{Ausgabe}
+\lstinline|120|
+\end{exampleblock}}
+\end{frame}
+
+%\begin{frame}
+%\begin{center}
+%\rotatebox{30}{\textcolor{red}{{\fontsize{100}{40} \selectfont Ende}}}
+%\end{center}
+%\end{frame}

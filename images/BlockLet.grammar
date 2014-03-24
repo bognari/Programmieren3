@@ -1,0 +1,3 @@
+Funktion (Parameter)+ "=" "LF"
+("Tab" "let" "LF" (Hilfsfunktion (Parameter)+ "=" (Ausdruck | TiefereHilfsfunktion)+ "LF")+)
+"in" (Ausdruck | Hilfsfunktion)

@@ -1,0 +1,2 @@
+Funktion (Parameter)+ "=" (Ausdruck | Hilfsfunktion)+ "LF"
+("Tab" "where" "LF" (Hilfsfunktion (Parameter)+ "=" (Ausdruck | Hilfsfunktion)+ "LF")+)+

@@ -1,0 +1,197 @@
+\begin{tikzpicture}[
+      nonterminal/.style={
+         rectangle,
+         minimum size=5.0mm,
+         very thick,
+         draw=blue!50!black!50,
+         top color=white,
+         bottom color=blue!50!black!20,
+         font=\itshape\scriptsize,
+         %text height=1.5ex,
+         %text depth=.25ex
+      },
+      terminal/.style={
+         rounded rectangle,
+         minimum size=5.0mm,
+         very thick,draw=black!50,
+         top color=white,bottom color=black!20,
+         font=\ttfamily\scriptsize,
+         %text height=1.5ex,
+         %text depth=.25ex
+      },
+      skip loop/.style={
+         to path={-- ++(0,#1) -| (\tikztotarget)}
+      },
+      point/.style={coordinate},>=stealth',thick,draw=black!50,
+      tip/.style={->,shorten >=0.007pt},every join/.style={rounded corners},
+      hv path/.style={to path={-| (\tikztotarget)}},
+      vh path/.style={to path={|- (\tikztotarget)}},
+      %text height=1.5ex,text depth=.25ex
+    ]
+    \matrix[column sep=5.0mm, row sep=3.0mm] {
+ &  &  & \node (n14) [point] {}; &  &  &  &  &  &  &  &  &  &  &  &  &  & \\
+\node (n21) [circle, draw, inner sep=0pt, minimum size=0.75ex] {}; & \node (n22) [nonterminal] {Funktion}; & \node (n23) [point] {}; & \node (n24) [nonterminal] {Parameter}; & \node (n25) [point] {}; & \node (n26) [terminal] {=}; & \node (n27) [terminal] {LF}; & \node (n28) [point] {}; &  &  &  &  &  &  &  &  &  & \\
+ &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \\
+ &  &  &  &  &  &  &  &  &  & \node (n411) [point] {}; &  &  &  &  &  &  & \\
+ &  &  &  &  &  &  &  &  &  &  &  & \node (n513) [point] {}; &  &  &  &  & \\
+ &  &  &  &  &  &  & \node (n68) [point] {}; &  &  &  &  & \node (n613) [nonterminal] {Ausdruck}; &  &  &  &  & \\
+\node (n71) [point] {}; & \node (n72) [terminal] {Tab}; & \node (n73) [terminal] {let}; & \node (n74) [terminal] {LF}; & \node (n75) [point] {}; & \node (n76) [nonterminal] {Hilfsfunktion}; & \node (n77) [point] {}; & \node (n78) [nonterminal] {Parameter}; & \node (n79) [point] {}; & \node (n710) [terminal] {=}; & \node (n711) [point] {}; & \node (n712) [point] {}; &  & \node (n714) [point] {}; & \node (n715) [point] {}; & \node (n716) [terminal] {LF}; & \node (n717) [point] {}; & \node (n718) [point] {};\\
+ &  &  &  &  &  &  &  &  &  &  &  & \node (n813) [nonterminal] {TiefereHilfsfunktion}; &  &  &  &  & \\
+ &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & \\
+ &  &  & \node (n104) [nonterminal] {Ausdruck}; &  &  &  &  &  &  &  &  &  &  &  &  &  & \\
+\node (n111) [point] {}; & \node (n112) [terminal] {in}; & \node (n113) [point] {}; &  & \node (n115) [point] {}; & \node (n116) [circle, draw, inner sep=0pt, minimum size=0.75ex] {}; &  &  &  &  &  &  &  &  &  &  &  & \\
+ &  &  & \node (n124) [nonterminal] {Hilfsfunktion}; &  &  &  &  &  &  &  &  &  &  &  &  &  & \\
+    };
+  { [start chain]
+       \chainin (n21);
+       \chainin (n22)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n22);
+       \chainin (n23)    [join];
+  }
+  { [start chain]
+       \chainin (n23);
+       \chainin (n24)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n24);
+       \chainin (n25)    [join];
+  }
+  { [start chain]
+       \chainin (n25);
+       \chainin (n26)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n26);
+       \chainin (n27)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n27);
+       \chainin (n28)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n71);
+       \chainin (n72)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n72);
+       \chainin (n73)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n73);
+       \chainin (n74)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n74);
+       \chainin (n75)    [join];
+  }
+  { [start chain]
+       \chainin (n75);
+       \chainin (n76)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n76);
+       \chainin (n77)    [join];
+  }
+  { [start chain]
+       \chainin (n77);
+       \chainin (n78)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n78);
+       \chainin (n79)    [join];
+  }
+  { [start chain]
+       \chainin (n79);
+       \chainin (n710)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n710);
+       \chainin (n711)    [join];
+  }
+  { [start chain]
+       \chainin (n711);
+       \chainin (n712)    [join];
+  }
+  { [start chain]
+       \chainin (n712);
+       \chainin (n613)    [join=by {vh path,tip}];
+  }
+  { [start chain]
+       \chainin (n613);
+       \chainin (n714)    [join=by {hv path}];
+  }
+  { [start chain]
+       \chainin (n712);
+       \chainin (n813)    [join=by {vh path,tip}];
+  }
+  { [start chain]
+       \chainin (n813);
+       \chainin (n714)    [join=by {hv path}];
+  }
+  { [start chain]
+       \chainin (n714);
+       \chainin (n715)    [join];
+  }
+  { [start chain]
+       \chainin (n715);
+       \chainin (n716)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n716);
+       \chainin (n717)    [join];
+  }
+  { [start chain]
+       \chainin (n717);
+       \chainin (n718)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n111);
+       \chainin (n112)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n112);
+       \chainin (n113)    [join];
+  }
+  { [start chain]
+       \chainin (n113);
+       \chainin (n104)    [join=by {vh path,tip}];
+  }
+  { [start chain]
+       \chainin (n104);
+       \chainin (n115)    [join=by {hv path}];
+  }
+  { [start chain]
+       \chainin (n113);
+       \chainin (n124)    [join=by {vh path,tip}];
+  }
+  { [start chain]
+       \chainin (n124);
+       \chainin (n115)    [join=by {hv path}];
+  }
+  { [start chain]
+       \chainin (n115);
+       \chainin (n116)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n25);
+       \chainin (n14)    [join=by vh path];
+       \chainin (n23)    [join=by {hv path,tip}];
+  }
+  { [start chain]
+       \chainin (n79);
+       \chainin (n68)    [join=by vh path];
+       \chainin (n77)    [join=by {hv path,tip}];
+  }
+  { [start chain]
+       \chainin (n715);
+       \chainin (n513)    [join=by vh path];
+       \chainin (n711)    [join=by {hv path,tip}];
+  }
+  { [start chain]
+       \chainin (n717);
+       \chainin (n411)    [join=by vh path];
+       \chainin (n75)    [join=by {hv path,tip}];
+  }
+\end{tikzpicture}

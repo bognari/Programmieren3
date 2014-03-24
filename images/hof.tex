@@ -1,0 +1,130 @@
+\begin{tikzpicture}[
+      nonterminal/.style={
+         rectangle,
+         minimum size=5.0mm,
+         very thick,
+         draw=blue!50!black!50,
+         top color=white,
+         bottom color=blue!50!black!20,
+         font=\itshape\scriptsize,
+         %text height=1.5ex,
+         %text depth=.25ex
+      },
+      terminal/.style={
+         rounded rectangle,
+         minimum size=5.0mm,
+         very thick,draw=black!50,
+         top color=white,bottom color=black!20,
+         font=\ttfamily\scriptsize,
+         %text height=1.5ex,
+         %text depth=.25ex
+      },
+      skip loop/.style={
+         to path={-- ++(0,#1) -| (\tikztotarget)}
+      },
+      point/.style={coordinate},>=stealth',thick,draw=black!50,
+      tip/.style={->,shorten >=0.007pt},every join/.style={rounded corners},
+      hv path/.style={to path={-| (\tikztotarget)}},
+      vh path/.style={to path={|- (\tikztotarget)}},
+      %text height=1.5ex,text depth=.25ex
+    ]
+    \matrix[column sep=5.0mm, row sep=3.0mm] {
+ &  &  &  &  &  &  &  &  &  & \node (n111) [point] {}; &  &  &  &  &  &  &  &  & \\
+ &  &  &  &  & \node (n26) [terminal] {->}; & \node (n27) [nonterminal] {Typ}; &  &  &  & \node (n211) [point] {}; &  &  &  &  & \node (n216) [terminal] {->}; & \node (n217) [nonterminal] {Typ}; &  &  & \\
+\node (n31) [circle, draw, inner sep=0pt, minimum size=0.75ex] {}; & \node (n32) [nonterminal] {Funktionsname}; & \node (n33) [terminal] {::}; & \node (n34) [point] {}; & \node (n35) [point] {}; &  &  & \node (n38) [point] {}; & \node (n39) [terminal] {(}; & \node (n310) [point] {}; & \node (n311) [nonterminal] {HOF Typ}; & \node (n312) [terminal] {->}; & \node (n313) [point] {}; & \node (n314) [terminal] {)}; & \node (n315) [point] {}; &  &  & \node (n318) [point] {}; & \node (n319) [point] {}; & \node (n320) [circle, draw, inner sep=0pt, minimum size=0.75ex] {};\\
+    };
+  { [start chain]
+       \chainin (n31);
+       \chainin (n32)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n32);
+       \chainin (n33)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n33);
+       \chainin (n34)    [join];
+  }
+  { [start chain]
+       \chainin (n34);
+       \chainin (n35)    [join];
+  }
+  { [start chain]
+       \chainin (n35);
+       \chainin (n38)    [join];
+  }
+  { [start chain]
+       \chainin (n26);
+       \chainin (n27)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n38);
+       \chainin (n27)    [join=by {vh path,tip}];
+  }
+  { [start chain]
+       \chainin (n26);
+       \chainin (n35)    [join=by {hv path,tip}];
+  }
+  { [start chain]
+       \chainin (n38);
+       \chainin (n39)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n39);
+       \chainin (n310)    [join];
+  }
+  { [start chain]
+       \chainin (n310);
+       \chainin (n311)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n311);
+       \chainin (n312)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n312);
+       \chainin (n313)    [join];
+  }
+  { [start chain]
+       \chainin (n313);
+       \chainin (n314)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n314);
+       \chainin (n315)    [join];
+  }
+  { [start chain]
+       \chainin (n315);
+       \chainin (n318)    [join];
+  }
+  { [start chain]
+       \chainin (n216);
+       \chainin (n217)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n318);
+       \chainin (n217)    [join=by {vh path,tip}];
+  }
+  { [start chain]
+       \chainin (n216);
+       \chainin (n315)    [join=by {hv path,tip}];
+  }
+  { [start chain]
+       \chainin (n318);
+       \chainin (n319)    [join];
+  }
+  { [start chain]
+       \chainin (n319);
+       \chainin (n320)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n313);
+       \chainin (n211)    [join=by vh path];
+       \chainin (n310)    [join=by {hv path,tip}];
+  }
+  { [start chain]
+       \chainin (n319);
+       \chainin (n111)    [join=by vh path];
+       \chainin (n34)    [join=by {hv path,tip}];
+  }
+\end{tikzpicture}

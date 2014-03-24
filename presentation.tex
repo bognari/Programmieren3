@@ -1,0 +1,150 @@
+\RequirePackage[l2tabu, orthodox]{nag}
+\documentclass[hyperref={bookmarksopen=false}]{beamer} 
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{pgf}
+\usepackage{stmaryrd}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\usepackage{microtype}
+
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage[scaled=.90]{helvet}
+\usepackage{courier}
+
+\usepackage{tikz}
+\usetikzlibrary{
+  arrows,
+  shapes.misc,
+  shapes.arrows,
+  chains,
+  matrix,
+  positioning,
+  scopes,
+  decorations.pathmorphing,
+  shadows,
+  backgrounds
+}
+\usepackage{verbatim}
+
+\usepackage{listings}
+\usepackage{color}
+
+\usepackage{graphicx}
+
+\makeatletter
+\let\beamer@writeslidentry@miniframeson=\beamer@writeslidentry
+\def\beamer@writeslidentry@miniframesoff{%
+  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% does not happen normally
+  {%else
+    % removed \addtocontents commands
+    \clearpage\beamer@notesactions%
+  }
+}
+\newcommand*{\miniframeson}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframeson}
+\newcommand*{\miniframesoff}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframesoff}
+\makeatother
+
+\defbeamertemplate*{section in toc}{my theme}
+{\leavevmode\leftskip=0.5em\large{\usebeamercolor[fg]{titlelike}} \inserttocsection\par}
+
+\defbeamertemplate*{subsection in toc}{my theme}
+{\leavevmode\leftskip=2em\normalsize{\usebeamercolor[fg]{titlelike}} \inserttocsubsection\par}
+
+\defbeamertemplate*{subsubsection in toc}{my theme}
+{\leavevmode\leftskip=3.5em\normalsize\usebeamerfont{subsection in toc}\usebeamerfont{subsubsection in toc}\inserttocsubsubsection\par}
+
+\AtBeginSection[]{
+  \frame{ 
+  		\scriptsize
+  		\frametitle{\insertsectionhead}  
+  		\tableofcontents[currentsection, hideallsubsections] 
+  	}
+}
+
+\AtBeginSubsection[]{
+  \frame{
+  		\scriptsize 
+  		\frametitle{\insertsectionhead\ - \insertsubsectionhead}  
+  		\tableofcontents[ 
+  		    currentsubsection, 
+  		    sectionstyle=show/shaded, 
+  		    subsectionstyle=show/shaded/hide
+  		    ] 
+  		\vspace{6cm}
+  	}
+}
+
+\newcommand{\tocm}{
+	\begingroup
+	\setbeamertemplate{frametitle}{
+	\vspace{-3.2mm}%
+	    \begin{beamercolorbox}[ht=0.4cm,wd=\paperwidth]{frametitle}%
+	    %    \ifbeamer@theme@section%
+	    %        \vspace*{-0.0mm}%
+	    %        \insertnavigation{\paperwidth}\vskip1pt%
+	   	%    \fi%
+	    \end{beamercolorbox}%
+	    \vspace{-0.45mm}%
+	    \begin{beamercolorbox}[leftskip=0.50cm,ht=0.71cm,wd=\paperwidth,dp=0.2cm]{frametitle}%
+	        \insertframetitle%
+	    \end{beamercolorbox}%
+	    }
+	\frame{ 
+		\frametitle{Ausblick für Morgen}  
+		\tableofcontents[hideallsubsections]
+	}
+	\endgroup
+}
+
+\lstset{
+	language=Haskell,
+	numbers=none,
+	keywordstyle=\color{green!40!black},
+	commentstyle=\color{magenta!40!black},
+	identifierstyle=\color{blue},
+	stringstyle=\color{orange},
+	%otherkeywords={$, \{, \}, \[, \]},
+	frame=single,
+	tabsize=2
+}
+
+\usecolortheme{seagull}
+\useoutertheme[section]{tubs}
+
+\setbeamertemplate{itemize items}[tusquare]
+
+\title{Programmieren für Fortgeschrittene - eine Einführung in Haskell}
+
+\author[Stephan Mielke]{\emph{Stephan Mielke}}
+\institute[TU Braunschweig, IPS]{Technische Universität Braunschweig, IPS}
+
+\instlogo{ips}
+\titlegraphic{iz_corner}
+
+
+\begin{document}
+\miniframesoff
+% % % % % % % % % % % % % % % % % % % % %
+\part{Tag eins}
+\include{tag1}
+% % % % % % % % % % % % % % % % % % % % %
+\part{Tag zwei}
+\tocm
+\include{tag2}
+% % % % % % % % % % % % % % % % % % % % %
+\part{Tag drei}
+\tocm
+\include{tag3}
+% % % % % % % % % % % % % % % % % % % % %
+\part{Tag vier}
+\tocm
+\include{tag4}
+% % % % % % % % % % % % % % % % % % % % %
+\part{Tag fünf}
+\tocm
+\include{tag5}
+\end{document}   

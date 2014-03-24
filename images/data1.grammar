@@ -1,0 +1,3 @@
+"data" Datentyp "=" Konstruktor "\\{" (Attributname "::" Typ)+ "\\}" 
+("deriving" "("(Typklasse ",")+ ")")?
+	

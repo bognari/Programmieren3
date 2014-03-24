@@ -1,0 +1,1 @@
+"=" "if" 'Bool Ausdruck' "then" Ausdruck "else" Ausdruck

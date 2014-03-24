@@ -1,0 +1,436 @@
+%%This is a very basic article template.
+%%There is just one section and two subsections.
+\documentclass{article}
+
+\usepackage[ngerman]{babel}
+\usepackage[utf8x]{inputenc}
+
+\usepackage{geometry}
+\geometry{a4paper,left=24mm,right=18mm, top=2cm, bottom=3cm}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\headheight 35pt
+\lhead{}
+\rhead{}
+\chead{Programmieren für Fortgeschrittene \\ Aufgabenblatt II \\}
+\cfoot{Programmieren für Fortgeschrittene \\ Aufgabenblatt II \\}
+\lfoot{\thepage}
+\rfoot{\today}
+
+
+%\title{Programmieren für Fortgeschrittene}
+%\subtitle{Aufgaben Blatt 1}
+
+%\author{Stephan Mielke}
+
+
+%\date{21.03.2013}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{MnSymbol}
+
+\usepackage{float}
+
+\usepackage{listings}
+\usepackage{color}
+
+
+\lstset{language=Haskell,
+numbers=none,
+keywordstyle=\color{green!40!black},
+commentstyle=\color{magenta!40!black},
+identifierstyle=\color{blue},
+stringstyle=\color{orange},
+otherkeywords={$, \{, \}, \[, \]},
+frame=single,
+tabsize=2
+}
+
+
+\begin{document}
+\section{Mengen als Listen}
+Mengen können in Haskell durch Listen repräsentiert werden. Allerdings unterscheiden
+sich Mengen und Listen in zwei Punkten:
+\begin{itemize}
+  \item Die Elemente einer Liste besitzen eine Reihenfolge, die Elemente von Mengen
+nicht.
+\item Derselbe Wert darf in einer Liste mehrfach vorkommen, in einer Menge nicht.
+\end{itemize}
+Zur Darstellung von Mengen verwenden wir daher nur solche Listen, deren Elemente
+streng monoton wachsen. Die Reihenfolge der Elemente ist damit festgelegt und eine
+Dopplung von Werten ist nicht möglich.\\
+
+Es sollen nun Mengenoperationen auf Basis von Listen implementiert werden. Geben Sie
+für folgende Funktionen deren allgemeinste Typen an. Implementieren Sie anschließend
+die Funktionen. Sie können davon ausgehen, dass als Argumente übergebene Mengendarstellungen
+immer die oben genannte Eigenschaft erfüllen. Sie müssen aber sicher
+stellen, dass Sie keine ungültigen Mengendarstellungen als Resultate generieren.
+\subsection{}
+Die Funktion $istElement$ entscheidet, ob eine Wert in einer
+Menge enthalten ist und implementiert damit die Relation 2. Es ergibt sich z.B.
+\begin{align*}
+4 \;'istElement'\; [1, 3, 5, 7] & \leadsto False\\
+5 \;'istElement'\; [1, 3, 5, 7] & \leadsto True
+\end{align*}
+\subsection{}
+Die Funktion $istTeilmenge$ entscheidet, ob eine Menge Teilmenge einer anderen
+Menge ist und implementiert damit die Relation $\subseteq$. Es ergibt sich z.B.
+\begin{align*}
+[1, 3] \;'istTeilmenge'\; [1, 2, 3, 4, 5] & \leadsto True\\
+[1, 3, 6] \;'istTeilmenge'\; [1, 2, 3, 4, 5] & \leadsto False
+\end{align*}
+\subsection{}
+Die Funktion $vereinigung$ bestimmt die Vereinigungsmenge zweier Mengen und
+implementiert damit die Funktion $\cup$. Es ergibt sich z.B.
+\begin{align*}
+[1, 2, 4] \;'vereinigung'\; [3, 4, 5] \leadsto [1, 2, 3, 4, 5]
+\end{align*}
+\subsection{}
+Die Funktion $schnitt$ bestimmt die Schnittmenge zweier Mengen und implementiert
+damit die Funktion $\cap$. Es ergibt sich z.B.
+\begin{align*}
+[1, 2, 4] \;'schnitt'\; [3, 4, 5] \leadsto [4]
+\end{align*}
+\section{Funktionen als Listen}
+Wir stellen Funktionen als Listen von Paaren dar. Die Liste zu einer Funktion $f$ enthält
+für jedes $x$, für das $f (x)$ definiert ist, das Paar $(x, f(x))$. Die Paare sind innerhalb der Liste
+aufsteigend nach den Funktionsargumenten sortiert. Kein Paar kommt mehrfach vor.
+\subsection{}
+Programmieren Sie eine Haskell-Funktion $resultat$, welche zu
+einer als Liste dargestellten Funktion $f$ und einem Wert $x$ des Definitionsbereichs
+den entsprechenden Funktionswert $f(x)$ liefert. Ist $f(x)$ nicht definiert, soll $resultat$
+mit einer Fehlermeldung abbrechen. Es ergibt sich z.B.
+\begin{align*}
+resultat\; [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)] 2 \leadsto 4
+\end{align*}
+\subsection{}
+Häufig ist es nicht erwünscht, dass Funktionen mit Fehlermeldungen abbrechen.
+Stattdessen werden oft Werte des Datentyps $Maybe$ als Funktionsresultate verwendet.
+$Maybe$ ist im Prelude wie folgt definiert:
+\begin{lstlisting}
+data Maybe wert = Nothing | Just wert
+\end{lstlisting}
+Der Wert $Nothing$ signalisiert einen Fehler, während ein Wert $Just\;x$ die erfolgreiche
+Berechnung des Wertes x darstellt. Modifizieren Sie die Funktion $resultat$ zu einer
+Funktion $evtlResultat$, welche nicht mit Fehlermeldungen abbricht, sondern $Maybe$-
+Werte liefert. Es ergibt sich z.B.
+\begin{align*}
+evtlResultat\; [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)]\; 3 & \leadsto Nothing\\
+evtlResultat\; [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)]\; 2 & \leadsto Just\;4
+\end{align*}
+\subsection{}
+Programmieren Sie eine Haskell-Funktion $urbilder$, die zu einer gegebenen Funktion
+$f$ und einem gegebenen Wert $y$ die Menge $\{x | f(x) = y\}$ berechnet. Diese Menge
+soll wie in Aufgabe 1 beschrieben dargestellt werden. Es ergibt sich z.B.
+\begin{align*}
+urbilder\; [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)]\; 4 \leadsto [-2, 2] 
+\end{align*}
+\subsection{}
+Programmieren sie eine Haskell-Funktion $echteArgumente$, welche zu einer gegebenen
+Funktion $f$ die Menge aller $x$ liefert, für die es einen Funktionswert $f(x)$ gibt.
+Verwenden Sie wieder die Mengendarstellung aus Aufgabe 1. Es ergibt sich z.B.
+\begin{align*}
+echteArgumente\; [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)] \leadsto [-2,-1, 0, 1, 2]
+\end{align*}
+\subsection{}
+Wir betrachten nun Funktionen, deren Definitions- und Wertebereich identisch sind.
+Ein Wert $x$ ist Fixpunkt einer solchen Funktion $f$ , wenn $f(x) = x$ gilt. Programmieren
+Sie eine Haskell-Funktion $fixpunkte$, die zu einer gegebenen Funktion die Menge
+aller Fixpunkte berechnet. Diese Menge soll wieder wie in Aufgabe 1 beschrieben
+dargestellt werden. Es ergibt sich z.B.
+\begin{align*}
+fixpunkte \;[(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)] \leadsto [0, 1]
+\end{align*}
+\subsection{}
+Programmieren Sie eine Haskell-Funktion $funKomposition$, die aus zwei Funktionen
+$f$ und $g$ deren Komposition $f \circ g$ berechnet. Es ergibt sich z.B.
+\begin{align*}
+[(1, 0), (2, 1)] \;'funKomposition' \;[(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)] \leadsto [(-1, 0), (1, 0)]
+\end{align*}
+
+\section{Relationen als Listen}
+Eine Relation ist eine Menge von Paaren. Wir wollen solche Mengen von Paaren in Haskell
+als Listen von Paaren darstellen. Wir wollen allerdings keine besonderen Anforderungen
+an diese Listen stellen. Paare können in einer Liste in beliebiger Reihenfolge stehen und
+dürfen auch mehrfach auftreten.\\	
+
+Die Funktionskomposition $\circ$ kann zu einer Relationskomposition verallgemeinert werden.
+Es seien $R_1 \subseteq A \times B$ und $R_2 \subseteq B \times C$ zwei Relationen. Die Komposition $R_2 \circ R_1 \subseteq A \times C$
+ist wie folgt definiert:
+\begin{align*}
+R_2 \circ R_1 = \left\{(a, c)\;| \exists\;b : (a, b) \in R_1 \wedge (b, c) \in R_2 \right\}
+\end{align*}
+Definieren Sie eine Funktion $relKomposition$, die die Relationskomposition umsetzt.
+Verwenden Sie dafür eine List-Comprehension. Es ergibt sich z.B.
+\begin{align*}
+[(4,-2), (1,-1), (0, 0), (1, 1), (4, 2)] \;'relKomposition' \;[(0, 1), (1, 2)] \leadsto [(0,-1), (0, 1)]
+\end{align*}
+\section{Instanziierung von Typklassen}
+Wir betrachten den im letzten Aufgabenblatt vorgestellten Typ $Ausdruck$ für
+arithmetische Ausdrücke. Dieser ist wie folgt definiert:
+\begin{lstlisting}
+data Ausdruck = Konstante Integer
+  | Variable String
+  | Summe Ausdruck Ausdruck
+  | Differenz Ausdruck Ausdruck
+  | Produkt Ausdruck Ausdruck
+\end{lstlisting}
+Beachten Sie, dass wir diesmal die Klausel \textbf{deriving (Show)} weggelassen haben.
+\subsection{}
+Machen Sie $Ausdruck$ zu einer Instanz von $Eq$. Zwei Ausdrücke
+sollen nur dann als gleich gelten, wenn sie strukturgleich sind. Die Ausdrücke
+$x$ und $x + 0$ gelten z.B. als ungleich.
+\subsection{}
+Machen Sie $Ausdruck$ zu einer Instanz von $Show$. Es genügt dabei, die Methode $show$
+zu implementieren, welche $Ausdr"ucke$ in Zeichenketten umwandelt. Ihre $show$-
+Implementierung soll die gleichen Resultate liefern, wie die $show$-Implementierung,
+welche durch $deriving(Show)$ automatisch erzeugt wird. Es ergibt sich z.B.
+\begin{align*}
+show\; (Differenz\; (Konstante\; 5) \;(Variable \;"x"))\\
+\leadsto "Differenz\; (Konstante\; 5)\; (Variable\; \backslash "x\backslash")"
+\end{align*}
+Beachten Sie, dass Anführungsstriche (") in Zeichenkettenliteralen als $\backslash$" dargestellt
+werden.
+\section{eigene Klasse}
+Wie betrachten folgende Klassendeklaration:
+\begin{lstlisting}
+class Spiegelbar wert where
+	gespiegelt :: wert -> wert
+\end{lstlisting}
+Instanzen von $Spiegelbar$ sollen diejenigen Strukturen sein, die man spiegeln kann. Die
+Funktion $gespiegelt$ liefert zu einem Wert die entsprechende gespiegelte Variante.
+\subsection{}
+Ein Beispiel für $spiegelbare$ Strukturen sind Listen. Die gespiegelte Liste zu einer
+Liste $l$ enthält die Elemente von $l$ in umgekehrter Reihenfolge. Instanziieren Sie
+$Spiegelbar$ entsprechend.
+\subsection{} 
+Der Typ blattmarkierter Binärbäume lässt sich folgendermaßen definieren:
+\begin{lstlisting}
+data Baum el = Blatt el | Verzweigung (Baum el) (Baum el)
+\end{lstlisting}
+Auch blattmarkierte Bäume lassen sich spiegeln, nämlich indem man für jeden
+inneren Knoten dessen beide Unterbäume vertauscht. Schreiben Sie eine entsprechende
+instance-Deklaration.
+
+\section{Babylonisches Wurzelziehen}
+Das Babylonische Wurzelziehen ist eine Methode zur Berechnung von Quadratwurzeln.
+In verallgemeinerter Form kann es auch zum Ziehen anderer Wurzeln benutzt werden.
+Es seien $x$ und $y$ reelle Zahlen mit $x > 0$ und $y > 0$. Wir definieren nun eine Folge $\langle z_i \rangle$
+wie folgt:
+\begin{itemize}
+  \item Das erste Folgenglied $z_0$ ist eine beliebige positive reelle Zahl.
+  \item Für jedes weitere Folgenglied $z_{n+1}$ gilt: \\
+  \begin{align*}
+  z_{n+1} = \frac{(x-1) \cdot z_n^x + y}{x \cdot z_n^{(x-1)}}
+  \end{align*}
+\end{itemize}
+Die Folge $\langle z_i \rangle$ nähert sich $\sqrt[x]{y}$ an. Man berechnet nun solange Folgenglieder, bis der
+Abstand der letzten beiden berechneten Glieder kleiner als eine vorgegebene Genauigkeitsschranke
+$\epsilon$ ist, wobei $\epsilon$ eine positive reelle Zahl ist. Schreiben Sie eine Funktion
+$wurzel$, die die Zahlen $\epsilon$, $x$, $y$ und $z_0$ in dieser Reihenfolge als Argumente erwartet und
+daraus die entsprechende Wurzelnäherung berechnet.
+
+\section{abstrakter Datentyp für Mengen}
+Implementieren Sie einen abstrakten Datentyp $Menge$. Verwenden Sie intern die Darstellung
+von Mengen als aufsteigend sortierte Listen aus Aufgabe 1.
+Der abstrakte Datentyp soll folgende Operationen bereit stellen:
+
+\begin{table}[H]
+    \begin{tabular}{lp{5.5cm}p{6.5cm}} %\hline
+        Bezeichner & Typ & Bedeutung         \\ \hline
+		leer & $Menge\;a$ & die leere Menge \\
+		einfuegen & $a \to Menge\;a \to Menge\;a$ & Einfügen eines Elements in eine Menge\\
+		loeschen & $a \to Menge\;a \to Menge\;a$ & Löschen einesWerts aus einer Menge\\
+		vereinigung & $Menge\;a \to Menge\;a \to Menge\;a$ & Vereinigung zweier Mengen\\
+		schnitt & $Menge\;a \to Menge\;a \to Menge\;a$ & Schnitt zweier Mengen\\
+		differenz & $Menge\;a \to Menge\;a \to Menge\;a$ & Differenz zweier Mengen\\
+		istLeer & $Menge\;a \to Bool$ & Test, ob eine Menge leer ist\\
+		istElement & $a \to Menge\;a \to Boola$ & Test, ob einWert Element einer Menge ist\\
+		istTeilmenge & $Menge\;a \to Menge\;a \to Bool$ & Test, ob eine Menge Teilmenge einer \newline zweiten Menge ist\\
+		istEchteTeilmenge & $Menge\;a \to Menge\;a \to Bool$ & Test, ob eine Menge echte Teilmenge einer \newline zweiten Menge ist\\
+		minimalesElement & $Menge\;a \to Maybe\;a$ \newline $Menge\;a \to a$ & das minimale Element einer Menge\\
+		maximalesElement & $Menge\;a \to Maybe\;a$ \newline $Menge\;a \to a$ & das maximale Element einer Menge
+	\end{tabular}	
+\end{table}
+Die Funktion $loeschen$ soll die ursprüngliche Menge zurückgegeben, wenn der angegebene
+Wert nicht Element dieser Menge ist. Die Funktionen $minimalesElement$ und
+$maximalesElement$ sollen mit einer Fehlermeldung abbrechen oder den Typ $Maybe$ verwenden und $Nothing$ zurückgeben, wenn die gegebene Menge
+leer ist.
+
+\subsection{}
+Legen Sie ein Modul $Menge$ für den abstrakten Datentyp
+an. Fügen Sie in dieses Modul die Deklaration des Datentyps $Menge$ sowie die
+Typsignaturen der Mengenoperationen ein. Legen Sie eine geeignete Exportliste
+an. Es soll außerdem möglich sein, Mengen auf Gleichheit zu testen und in der
+üblichen Notation $\{x_1, \ldots , x_n\}$ auszugeben. Sorgen Sie für entsprechende Typklassen Instanziierungen.
+
+\subsection{}
+Implementieren Sie die Mengenoperationen. Sie können dazu Ihre Lösung von
+Aufgabe 1 verwenden.
+
+\section{Funktionen höherer Ordnung}
+\subsection{}
+Programmieren Sie eine Haskell-Funktion 
+\begin{lstlisting}
+summe :: (Num zahl) => [zahl] -> zahl
+\end{lstlisting}
+welche die Summe der Elemente einer Liste von Zahlen berechnet. Verwenden Sie
+dazu die vordefinierte Funktion $foldr$.\\
+\begin{lstlisting}
+foldr :: (a -> b -> b) -> b -> [a] -> b
+\end{lstlisting}
+$a$ und $b$ können gleiche Typen sein.\\
+alles Weitere finden Sie unter: www.haskell.org/hoogle
+\subsection{}
+Programmieren Sie eine Haskell-Funktion 
+\begin{lstlisting}
+produkte :: (Num zahl) => [zahl] -> [zahl] -> [zahl]
+\end{lstlisting}
+welche zu zwei Listen $[x_1, x_2, \ldots , x_n]$ und $[y_1, y_2, \ldots, y_n]$ die Liste der Produkte
+$[x_1 \cdot y_1, x_2 \cdot y_2, \ldots, x_n \cdot y_n]$
+berechnet. Geben Sie zwei Lösungen an. Die erste Lösung soll die vordefinierten
+Funktionen $zip$, $map$ und $uncurry$ verwenden, die zweite Lösung die vordefinierte
+Funktion $zipWith$.
+\begin{lstlisting}
+zip :: [a] -> [b] -> [(a,b)]
+map :: (a -> b) -> [a] -> [b]
+uncurry :: (a -> b -> c) -> (a, b) -> c
+
+zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
+\end{lstlisting}
+\subsection{}
+Wir stellen einen Vektor als Liste seiner kartesischen Koordinaten dar:
+\begin{lstlisting}
+type Vektor koord = [koord]
+\end{lstlisting}
+Programmieren Sie eine Haskell-Funktion
+\begin{lstlisting}
+skalarProdukt :: (Num koord) => Vektor koord -> Vektor koord -> koord
+\end{lstlisting}
+welche zu zwei Vektoren $(x_1, \ldots , x_n)$ und $(y_1, \ldots ,y_n)$ das Skalarprodukt
+$\sum^n_{i=1}{x_i \cdot y_i}$ berechnet. Verwenden Sie die in den Teilaufgaben 1 und 2 definierten Funktionen.
+\subsection{}
+Wir stellen eine Matrix als Liste ihrer Zeilen dar:
+\begin{lstlisting}
+type Matrix koord = [Vektor koord]
+\end{lstlisting}
+Programmieren Sie eine Haskell-Funktion
+\begin{lstlisting}
+lineareAbb :: (Num koord) => Matrix koord -> (Vektor koord -> Vektor koord)
+\end{lstlisting}
+die zu einer gegebenen $(n \times m)$-Matrix die durch sie dargestellte lineare Abbildung
+ermittelt, welche m-dimensionale in n-dimensionale Vektoren überführt.
+
+\section{Falten von Listen}
+\subsection{}
+Im Prelude sind die folgenden Funktionen definiert:
+\begin{lstlisting}
+(++)   :: [el] -> [el] -> [el]
+concat :: [[el]] -> [el]
+length :: [el] -> Int
+filter :: (el -> Bool) -> [el] -> [el]
+\end{lstlisting}
+Geben Sie zu jeder dieser Funktionen einen äquivalenten Haskell-Ausdruck an,
+der keine \textbf{let}-Ausdrücke enthält und höchstens die folgenden vordefinierten
+Funktionen benutzt:
+\begin{lstlisting}
+succ  :: Int -> Int
+(:)   :: el -> [el] -> [el]
+foldr :: (el -> accu -> accu) -> accu -> [el] -> accu
+\end{lstlisting}
+\subsection{}
+Geben Sie einen zu der Funktion $concat$ äquivalenten Haskell-Ausdruck an, der keine
+\textbf{let}-Ausdrücke enthält und höchstens die folgenden vordefinierten Funktionen
+benutzt:
+\begin{lstlisting}
+(:)   :: el -> [el] -> [el]
+foldl :: (accu -> el -> accu) -> accu -> [el] -> accu
+\end{lstlisting}
+\section{Varianten von $map$ und $foldr$ für Bäume}
+Die Listenfunktionen $map$ und $foldr$ sind im $Prelude$ vordefiniert. Varianten dieser
+Funktionen gibt es auch für viele andere algebraische Datentypen, so z.B. auch für den
+Typ $Baum$. Dieser wird wie folgt definiert:
+\begin{lstlisting}
+data Baum el = Blatt el | Verzweigung (Baum el) (Baum el)
+\end{lstlisting}
+Die Typsignaturen der $map$- und der $foldr$-Variante für Baum lauten folgendermaßen:
+\begin{lstlisting}
+baumMap  :: (el -> el') -> Baum el -> Baum el'
+baumFold :: (el -> accu) -> (accu -> accu -> accu) -> Baum el -> accu
+\end{lstlisting}
+Einen Baum $baumMap \;fun \;baum$ erhält man, indem man in $baum$ jede Blattmarkierung $el$
+durch $fun\;el$ ersetzt. Einen Baum $baumFold \;accuBlatt \;accuVerzweigung \;baum$ erhält man,
+indem man in $baum$ jedes Vorkommen des Datenkonstruktors $Blatt$ durch $accuBlatt$ und
+jedes Vorkommen des Datenkonstruktors $Verzweigung$ durch $accuVerzweigung$ ersetzt.
+Zum Beispiel liefert
+\begin{align*}
+baumFold (\lambda el \to [el]) (++) ((Blatt \;2 \;'Verzweigung' \;Blatt \;3) 'Verzweigung' \;Blatt\;5)
+\end{align*}
+die Liste $([2] ++ [3]) ++ [5]$, also $[2, 3, 5]$. Allgemein stellt $baumFold \;(\lambda el \to [el]) \;(++)\; baum$
+die Liste aller Blattmarkierungen von $baum$ dar.
+\subsection{}
+Implementieren Sie die beschriebenen Haskell-Funktionen $baumMap$ und $baumFold$.
+\subsection{}
+Programmieren Sie eine Haskell-Funktion 
+\begin{lstlisting}
+hoehe :: Baum el -> Int
+\end{lstlisting}
+welche die Höhe
+eines Baums bestimmt. Die Höhe eines Baums, der nur aus einem Blatt besteht, sei
+dabei $0$, nicht $1$. Verwenden Sie für Ihre Implementierung keine \textbf{explizite Rekursion},
+sondern die Funktion $baumFold$.
+
+\section{Sortieren mit variabler Ordnung}
+Es soll eine Haskell-Funktion $mergeSort$ programmiert werden, welche nach verschiedenen
+Kriterien sortieren kann. Dazu soll ihr neben der zu sortierenden Liste eine
+Vergleichsfunktion als Argument übergeben werden. Die Vergleichsfunktion soll eine
+irreflexive Ordnung darstellen.
+\subsection{}
+Welchen Typ hat eine $Vergleichsfunktion$ für einen Typ $el$?\\
+Welchen Typ hat dann die Funktion $mergeSort$, die als zusätzliches Argument die
+zu verwendende Vergleichsfunktion erhält?
+\subsection{}
+Implementieren Sie die Funktion $mergesort$, welche eine Vergleichsfunktion sowie die zu sortierende Liste als Argumente bekommt.\\
+als Tipp die "`divide and conquer"' Implementierung.
+\begin{lstlisting}
+dc :: ([a] -> Bool) -> ([a] -> [b]) -> ([a] -> ([a],[a])) -> 
+  (([b],[b]) -> [b]) -> [a] -> [b]
+dc simple solve split combine q 
+      | simple q 	= solve q
+      | otherwise 	= 	combine (l1, l2)
+        where 
+          (p1, p2) = split q
+          l1 = dc simple solve split combine p1
+          l2 = dc simple solve split combine p2	
+\end{lstlisting}
+\subsection{}
+Betrachten Sie den folgenden Datentyp zur Repräsentation von Büchern:
+\begin{lstlisting}
+data Buch = Buch {
+    autor :: String,
+    titel :: String,
+    jahr :: Integer,
+    verlag :: String
+  } deriving (Show)
+\end{lstlisting}
+Programmieren Sie die Vergleichsfunktionen $autorVergleich$, $titelVergleich$ und
+$jahrVergleich$, mit denen eine Liste von Büchern nach Autor, Titel bzw. Erscheinungsjahr
+sortiert werden kann.
+\subsection{}
+Programmieren Sie eine Haskell-Funktion $und$ zur Komposition von Vergleichsfunktionen.
+Es seien $vergleich_1$ und $vergleich_2$ zwei Vergleichsfunktionen. Dann soll
+$vergleich_1\;'und'\;vergleich_2$ eine Vergleichsfunktion sein, mittels der zuerst nach dem
+durch $vergleich_1$ dargestellten Kriterium und bei äquivalenten Einträgen nach dem
+durch $vergleich_2$ dargestellten Kriterium sortiert wird. So soll z.B.
+\begin{align*}
+mergeSort (autorVergleich \;'und' \;titelVergleich) \;<[Liste]>
+\end{align*}
+Bücher zunächst nach Autor und bei gleichem Autor nach Titel sortieren.
+\end{document}
