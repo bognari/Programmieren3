@@ -1,1 +1,1 @@
-Bezeichner "=" "(" Parameter ("," Parameter)* ")" "->" Ausdruck
+Bezeichner "(" Parameter ("," Parameter)* ")" "=" Ausdruck

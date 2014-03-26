@@ -1,60 +1,93 @@
-%%This is a very basic article template.
-%%There is just one section and two subsections.
-\documentclass{article}
+\documentclass[
+  10pt,                   % Schriftgröße
+  DIV12,
+  german,                 % für Umlaute, Silbentrennung etc.
+  oneside,                % einseitiges Dokument
+  %titlepage,              % es wird eine Titelseite verwendet
+  parskip=half,           % Abstand zwischen Absätzen (halbe Zeile)
+  headings=normal,        % Größe der Überschriften verkleinern
+  captions=tableheading,  % Beschriftung von Tabellen unterhalb ausgeben
+  %final                   % Status des Dokuments (final/draft)
+]{scrartcl}      
 
-\usepackage[ngerman]{babel}
+
 \usepackage[utf8x]{inputenc}
+\usepackage[ngerman]{babel}
 
 \usepackage{geometry}
-\geometry{a4paper,left=24mm,right=18mm, top=2cm, bottom=3cm}
+\geometry{verbose,                     % zeigt die eingestellten Parameter beim
+                                       % Latexlauf an
+      paper=a4paper,                   % Papierformat
+      top=25mm,                        % Rand oben
+      left=25mm,                       % Rand links
+      right=25mm,                      % Rand rechts
+      bottom=40mm,                     % Rand unten
+      pdftex                           % schreibt das Papierformat in die
+                                       % Ausgabe damit Ausgabeprogramm
+                                       % Papiergröße erkennt
+}
 
-\usepackage{fancyhdr}
-\pagestyle{fancy}
+%\usepackage[headsepline, footsepline, ilines]{scrpage2}
+%\chead{}
 
-\headheight 35pt
-\lhead{}
-\rhead{}
-\chead{Programmieren für Fortgeschrittene \\ Aufgabenblatt II \\}
-\cfoot{Programmieren für Fortgeschrittene \\ Aufgabenblatt II \\}
-\lfoot{\thepage}
-\rfoot{\today}
+\usepackage[%
+  automark,
+  headsepline,                %% Separation line below the header
+  footsepline,               %% Separation line above the footer
+  markuppercase
+]{scrpage2}
 
+%\lehead{\bfseries\pagemark}    %% Top left on even pages
+%\lohead{\bfseries\headmark}    %% Top left on odd pages
+%\rehead{\bfseries\headmark}    %% Top right on even pages
+%\rohead{\bfseries\pagemark}    %% Top right on odd pages
+\chead{Programmieren für Fortgeschrittene \\ Aufgabenblatt II}                       %% Top center
 
-%\title{Programmieren für Fortgeschrittene}
-%\subtitle{Aufgaben Blatt 1}
+\automark[subsection]{section}
+\pagestyle{scrheadings}
 
-%\author{Stephan Mielke}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
 
+\usepackage{microtype}
+\usepackage{float}
 
-%\date{21.03.2013}
+\usepackage{mathptmx}
+\usepackage[scaled=.90]{helvet}
+\usepackage{courier}
 
 \usepackage{tikz}
-\usetikzlibrary{shapes,arrows,positioning}
-
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{MnSymbol}
-
-\usepackage{float}
+\usetikzlibrary{
+  arrows,
+  shapes.misc,
+  shapes.arrows,
+  chains,
+  matrix,
+  positioning,
+  scopes,
+  decorations.pathmorphing,
+  shadows,
+  backgrounds
+}
 
 \usepackage{listings}
 \usepackage{color}
 
-
-\lstset{language=Haskell,
-numbers=none,
-keywordstyle=\color{green!40!black},
-commentstyle=\color{magenta!40!black},
-identifierstyle=\color{blue},
-stringstyle=\color{orange},
-otherkeywords={$, \{, \}, \[, \]},
-frame=single,
-tabsize=2
+\lstset{
+	language=Haskell,
+	numbers=none,
+	keywordstyle=\color{green!40!black},
+	commentstyle=\color{magenta!40!black},
+	identifierstyle=\color{blue},
+	stringstyle=\color{orange},
+	%otherkeywords={$, \{, \}, \[, \]},
+	frame=single,
+	tabsize=2
 }
 
-
 \begin{document}
+\renewcommand*\thesubsection{\alph{subsection})}
 \section{Mengen als Listen}
 Mengen können in Haskell durch Listen repräsentiert werden. Allerdings unterscheiden
 sich Mengen und Listen in zwei Punkten:
@@ -73,87 +106,92 @@ die Funktionen. Sie können davon ausgehen, dass als Argumente übergebene Menge
 immer die oben genannte Eigenschaft erfüllen. Sie müssen aber sicher
 stellen, dass Sie keine ungültigen Mengendarstellungen als Resultate generieren.
 \subsection{}
-Die Funktion $istElement$ entscheidet, ob eine Wert in einer
+Die Funktion \lstinline|istElement| entscheidet, ob eine Wert in einer
 Menge enthalten ist und implementiert damit die Relation 2. Es ergibt sich z.B.
-\begin{align*}
-4 \;'istElement'\; [1, 3, 5, 7] & \leadsto False\\
-5 \;'istElement'\; [1, 3, 5, 7] & \leadsto True
-\end{align*}
+\begin{center}
+\begin{tabular}{ll}
+\lstinline|4 `istElement` [1, 3, 5, 7]| & $\leadsto$ \lstinline|False|\\
+\lstinline|5 `istElement` [1, 3, 5, 7]| & $\leadsto$ \lstinline|True|
+\end{tabular}
+\end{center}
 \subsection{}
-Die Funktion $istTeilmenge$ entscheidet, ob eine Menge Teilmenge einer anderen
-Menge ist und implementiert damit die Relation $\subseteq$. Es ergibt sich z.B.
-\begin{align*}
-[1, 3] \;'istTeilmenge'\; [1, 2, 3, 4, 5] & \leadsto True\\
-[1, 3, 6] \;'istTeilmenge'\; [1, 2, 3, 4, 5] & \leadsto False
-\end{align*}
+Die Funktion \lstinline|istTeilmenge| entscheidet, ob eine Menge Teilmenge einer anderen Menge ist und implementiert damit die Relation $\subseteq$. Es ergibt sich z.B.
+\begin{center}
+\begin{tabular}{ll}
+\lstinline|[1, 3] `istTeilmenge` [1, 2, 3, 4, 5]| & $\leadsto$ \lstinline|True|\\
+\lstinline|[1, 3, 6] `istTeilmenge` [1, 2, 3, 4, 5]| & $\leadsto$ \lstinline|False|
+\end{tabular}
+\end{center}
 \subsection{}
-Die Funktion $vereinigung$ bestimmt die Vereinigungsmenge zweier Mengen und
+Die Funktion \lstinline|vereinigung| bestimmt die Vereinigungsmenge zweier Mengen und
 implementiert damit die Funktion $\cup$. Es ergibt sich z.B.
-\begin{align*}
-[1, 2, 4] \;'vereinigung'\; [3, 4, 5] \leadsto [1, 2, 3, 4, 5]
-\end{align*}
+\begin{center}
+\lstinline|[1, 2, 4] `vereinigung` [3, 4, 5]|  $\leadsto$ \lstinline|[1, 2, 3, 4, 5]|
+\end{center}
 \subsection{}
-Die Funktion $schnitt$ bestimmt die Schnittmenge zweier Mengen und implementiert
+Die Funktion \lstinline|schnitt| bestimmt die Schnittmenge zweier Mengen und implementiert
 damit die Funktion $\cap$. Es ergibt sich z.B.
-\begin{align*}
-[1, 2, 4] \;'schnitt'\; [3, 4, 5] \leadsto [4]
-\end{align*}
+\begin{center}
+\lstinline|[1, 2, 4] `schnitt` [3, 4, 5]| $\leadsto$ \lstinline|[4]|
+\end{center}
 \section{Funktionen als Listen}
 Wir stellen Funktionen als Listen von Paaren dar. Die Liste zu einer Funktion $f$ enthält
 für jedes $x$, für das $f (x)$ definiert ist, das Paar $(x, f(x))$. Die Paare sind innerhalb der Liste
 aufsteigend nach den Funktionsargumenten sortiert. Kein Paar kommt mehrfach vor.
 \subsection{}
-Programmieren Sie eine Haskell-Funktion $resultat$, welche zu
+Programmieren Sie eine Haskell-Funktion \lstinline|resultat|, welche zu
 einer als Liste dargestellten Funktion $f$ und einem Wert $x$ des Definitionsbereichs
 den entsprechenden Funktionswert $f(x)$ liefert. Ist $f(x)$ nicht definiert, soll $resultat$
 mit einer Fehlermeldung abbrechen. Es ergibt sich z.B.
-\begin{align*}
-resultat\; [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)] 2 \leadsto 4
-\end{align*}
+\begin{center}
+\lstinline|resultat [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)] 2| $\leadsto$ \lstinline|4|
+\end{center}
 \subsection{}
 Häufig ist es nicht erwünscht, dass Funktionen mit Fehlermeldungen abbrechen.
-Stattdessen werden oft Werte des Datentyps $Maybe$ als Funktionsresultate verwendet.
-$Maybe$ ist im Prelude wie folgt definiert:
+Stattdessen werden oft Werte des Datentyps \lstinline|Maybe| als Funktionsresultate verwendet.
+\lstinline|Maybe| ist im Prelude wie folgt definiert:
 \begin{lstlisting}
 data Maybe wert = Nothing | Just wert
 \end{lstlisting}
-Der Wert $Nothing$ signalisiert einen Fehler, während ein Wert $Just\;x$ die erfolgreiche
-Berechnung des Wertes x darstellt. Modifizieren Sie die Funktion $resultat$ zu einer
-Funktion $evtlResultat$, welche nicht mit Fehlermeldungen abbricht, sondern $Maybe$-
+Der Wert \lstinline|Nothing| signalisiert einen Fehler, während ein Wert \lstinline|Just x| die erfolgreiche
+Berechnung des Wertes $x$ darstellt. Modifizieren Sie die Funktion \lstinline|resultat| zu einer
+Funktion \lstinline|evtlResultat|, welche nicht mit Fehlermeldungen abbricht, sondern \lstinline|Maybe|-
 Werte liefert. Es ergibt sich z.B.
-\begin{align*}
-evtlResultat\; [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)]\; 3 & \leadsto Nothing\\
-evtlResultat\; [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)]\; 2 & \leadsto Just\;4
-\end{align*}
+\begin{center}
+\begin{tabular}{ll}
+\lstinline|evtlResultat [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)] 3| & $\leadsto$ \lstinline|Nothing|\\
+\lstinline|evtlResultat [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)] 2| & $\leadsto$ \lstinline|Just 4|
+\end{tabular}
+\end{center}
 \subsection{}
-Programmieren Sie eine Haskell-Funktion $urbilder$, die zu einer gegebenen Funktion
+Programmieren Sie eine Haskell-Funktion \lstinline|urbilder|, die zu einer gegebenen Funktion
 $f$ und einem gegebenen Wert $y$ die Menge $\{x | f(x) = y\}$ berechnet. Diese Menge
 soll wie in Aufgabe 1 beschrieben dargestellt werden. Es ergibt sich z.B.
-\begin{align*}
-urbilder\; [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)]\; 4 \leadsto [-2, 2] 
-\end{align*}
+\begin{center}
+\lstinline|urbilder [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)] 4| $\leadsto$ \lstinline|[-2, 2]| 
+\end{center}
 \subsection{}
-Programmieren sie eine Haskell-Funktion $echteArgumente$, welche zu einer gegebenen
+Programmieren sie eine Haskell-Funktion \lstinline|echteArgumente|, welche zu einer gegebenen
 Funktion $f$ die Menge aller $x$ liefert, für die es einen Funktionswert $f(x)$ gibt.
 Verwenden Sie wieder die Mengendarstellung aus Aufgabe 1. Es ergibt sich z.B.
-\begin{align*}
-echteArgumente\; [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)] \leadsto [-2,-1, 0, 1, 2]
-\end{align*}
+\begin{center}
+\lstinline|echteArgumente [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)]| $\leadsto$ \lstinline|[-2,-1, 0, 1, 2]|
+\end{center}
 \subsection{}
 Wir betrachten nun Funktionen, deren Definitions- und Wertebereich identisch sind.
 Ein Wert $x$ ist Fixpunkt einer solchen Funktion $f$ , wenn $f(x) = x$ gilt. Programmieren
-Sie eine Haskell-Funktion $fixpunkte$, die zu einer gegebenen Funktion die Menge
+Sie eine Haskell-Funktion \lstinline|fixpunkte|, die zu einer gegebenen Funktion die Menge
 aller Fixpunkte berechnet. Diese Menge soll wieder wie in Aufgabe 1 beschrieben
 dargestellt werden. Es ergibt sich z.B.
-\begin{align*}
-fixpunkte \;[(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)] \leadsto [0, 1]
-\end{align*}
+\begin{center}
+\lstinline|fixpunkte [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)]| $\leadsto$ \lstinline|[0, 1]|
+\end{center}
 \subsection{}
-Programmieren Sie eine Haskell-Funktion $funKomposition$, die aus zwei Funktionen
+Programmieren Sie eine Haskell-Funktion \lstinline|funKomposition|, die aus zwei Funktionen
 $f$ und $g$ deren Komposition $f \circ g$ berechnet. Es ergibt sich z.B.
-\begin{align*}
-[(1, 0), (2, 1)] \;'funKomposition' \;[(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)] \leadsto [(-1, 0), (1, 0)]
-\end{align*}
+\begin{center}
+\lstinline|[(1, 0), (2, 1)] `funKomposition` [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)]| $\leadsto$ \lstinline|[(-1, 0), (1, 0)]|
+\end{center}
 
 \section{Relationen als Listen}
 Eine Relation ist eine Menge von Paaren. Wir wollen solche Mengen von Paaren in Haskell
@@ -167,13 +205,13 @@ ist wie folgt definiert:
 \begin{align*}
 R_2 \circ R_1 = \left\{(a, c)\;| \exists\;b : (a, b) \in R_1 \wedge (b, c) \in R_2 \right\}
 \end{align*}
-Definieren Sie eine Funktion $relKomposition$, die die Relationskomposition umsetzt.
+Definieren Sie eine Funktion \lstinline|relKomposition|, die die Relationskomposition umsetzt.
 Verwenden Sie dafür eine List-Comprehension. Es ergibt sich z.B.
-\begin{align*}
-[(4,-2), (1,-1), (0, 0), (1, 1), (4, 2)] \;'relKomposition' \;[(0, 1), (1, 2)] \leadsto [(0,-1), (0, 1)]
-\end{align*}
+\begin{center}
+\lstinline|[(4,-2), (1,-1), (0, 0), (1, 1), (4, 2)] `relKomposition` [(0, 1), (1, 2)]| $\leadsto$ \lstinline|[(0,-1), (0, 1)]|
+\end{center}
 \section{Instanziierung von Typklassen}
-Wir betrachten den im letzten Aufgabenblatt vorgestellten Typ $Ausdruck$ für
+Wir betrachten den im letzten Aufgabenblatt vorgestellten Typ \lstinline|Ausdruck| für
 arithmetische Ausdrücke. Dieser ist wie folgt definiert:
 \begin{lstlisting}
 data Ausdruck = Konstante Integer
@@ -182,20 +220,20 @@ data Ausdruck = Konstante Integer
   | Differenz Ausdruck Ausdruck
   | Produkt Ausdruck Ausdruck
 \end{lstlisting}
-Beachten Sie, dass wir diesmal die Klausel \textbf{deriving (Show)} weggelassen haben.
+Beachten Sie, dass wir diesmal die Klausel \textbf{\lstinline|deriving (Show)|} weggelassen haben.
 \subsection{}
-Machen Sie $Ausdruck$ zu einer Instanz von $Eq$. Zwei Ausdrücke
+Machen Sie \lstinline|Ausdruck| zu einer Instanz von \lstinline|Eq|. Zwei Ausdrücke
 sollen nur dann als gleich gelten, wenn sie strukturgleich sind. Die Ausdrücke
 $x$ und $x + 0$ gelten z.B. als ungleich.
 \subsection{}
-Machen Sie $Ausdruck$ zu einer Instanz von $Show$. Es genügt dabei, die Methode $show$
-zu implementieren, welche $Ausdr"ucke$ in Zeichenketten umwandelt. Ihre $show$-
-Implementierung soll die gleichen Resultate liefern, wie die $show$-Implementierung,
-welche durch $deriving(Show)$ automatisch erzeugt wird. Es ergibt sich z.B.
-\begin{align*}
-show\; (Differenz\; (Konstante\; 5) \;(Variable \;"x"))\\
-\leadsto "Differenz\; (Konstante\; 5)\; (Variable\; \backslash "x\backslash")"
-\end{align*}
+Machen Sie \lstinline|Ausdruck| zu einer Instanz von \lstinline|Show|. Es genügt dabei, die Funktion \lstinline|show|
+zu implementieren, welche Ausdrücke in Zeichenketten umwandelt. Ihre \lstinline|show|-
+Implementierung soll die gleichen Resultate liefern, wie die \lstinline|show|-Implementierung,
+welche durch \lstinline|deriving(Show)| automatisch erzeugt wird. Es ergibt sich z.B.
+\begin{center}
+\lstinline|show (Differenz (Konstante 5) (Variable "x"))|\\
+$\leadsto$ \lstinline|"Differenz (Konstante 5) (Variable \"x\")"|
+\end{center}
 Beachten Sie, dass Anführungsstriche (") in Zeichenkettenliteralen als $\backslash$" dargestellt
 werden.
 \section{eigene Klasse}
@@ -204,12 +242,12 @@ Wie betrachten folgende Klassendeklaration:
 class Spiegelbar wert where
 	gespiegelt :: wert -> wert
 \end{lstlisting}
-Instanzen von $Spiegelbar$ sollen diejenigen Strukturen sein, die man spiegeln kann. Die
-Funktion $gespiegelt$ liefert zu einem Wert die entsprechende gespiegelte Variante.
+Instanzen von \lstinline|Spiegelbar| sollen diejenigen Strukturen sein, die man spiegeln kann. Die
+Funktion \lstinline|gespiegelt| liefert zu einem Wert die entsprechende gespiegelte Variante.
 \subsection{}
-Ein Beispiel für $spiegelbare$ Strukturen sind Listen. Die gespiegelte Liste zu einer
+Ein Beispiel für \lstinline|spiegelbare| Strukturen sind Listen. Die gespiegelte Liste zu einer
 Liste $l$ enthält die Elemente von $l$ in umgekehrter Reihenfolge. Instanziieren Sie
-$Spiegelbar$ entsprechend.
+\lstinline|Spiegelbar| entsprechend.
 \subsection{} 
 Der Typ blattmarkierter Binärbäume lässt sich folgendermaßen definieren:
 \begin{lstlisting}
@@ -234,39 +272,37 @@ wie folgt:
 Die Folge $\langle z_i \rangle$ nähert sich $\sqrt[x]{y}$ an. Man berechnet nun solange Folgenglieder, bis der
 Abstand der letzten beiden berechneten Glieder kleiner als eine vorgegebene Genauigkeitsschranke
 $\epsilon$ ist, wobei $\epsilon$ eine positive reelle Zahl ist. Schreiben Sie eine Funktion
-$wurzel$, die die Zahlen $\epsilon$, $x$, $y$ und $z_0$ in dieser Reihenfolge als Argumente erwartet und
+\lstinline|wurzel|, die die Zahlen $\epsilon$, $x$, $y$ und $z_0$ in dieser Reihenfolge als Argumente erwartet und
 daraus die entsprechende Wurzelnäherung berechnet.
 
 \section{abstrakter Datentyp für Mengen}
-Implementieren Sie einen abstrakten Datentyp $Menge$. Verwenden Sie intern die Darstellung
-von Mengen als aufsteigend sortierte Listen aus Aufgabe 1.
+Implementieren Sie einen abstrakten Datentyp \lstinline|Menge|. Verwenden Sie intern die Darstellung von Mengen als aufsteigend sortierte Listen aus Aufgabe 1.
 Der abstrakte Datentyp soll folgende Operationen bereit stellen:
 
 \begin{table}[H]
     \begin{tabular}{lp{5.5cm}p{6.5cm}} %\hline
         Bezeichner & Typ & Bedeutung         \\ \hline
-		leer & $Menge\;a$ & die leere Menge \\
-		einfuegen & $a \to Menge\;a \to Menge\;a$ & Einfügen eines Elements in eine Menge\\
-		loeschen & $a \to Menge\;a \to Menge\;a$ & Löschen einesWerts aus einer Menge\\
-		vereinigung & $Menge\;a \to Menge\;a \to Menge\;a$ & Vereinigung zweier Mengen\\
-		schnitt & $Menge\;a \to Menge\;a \to Menge\;a$ & Schnitt zweier Mengen\\
-		differenz & $Menge\;a \to Menge\;a \to Menge\;a$ & Differenz zweier Mengen\\
-		istLeer & $Menge\;a \to Bool$ & Test, ob eine Menge leer ist\\
-		istElement & $a \to Menge\;a \to Boola$ & Test, ob einWert Element einer Menge ist\\
-		istTeilmenge & $Menge\;a \to Menge\;a \to Bool$ & Test, ob eine Menge Teilmenge einer \newline zweiten Menge ist\\
-		istEchteTeilmenge & $Menge\;a \to Menge\;a \to Bool$ & Test, ob eine Menge echte Teilmenge einer \newline zweiten Menge ist\\
-		minimalesElement & $Menge\;a \to Maybe\;a$ \newline $Menge\;a \to a$ & das minimale Element einer Menge\\
-		maximalesElement & $Menge\;a \to Maybe\;a$ \newline $Menge\;a \to a$ & das maximale Element einer Menge
+		leer & \lstinline|Menge a| & die leere Menge \\
+		einfuegen & \lstinline|a -> Menge a -> Menge a| & Einfügen eines Elements in eine Menge\\
+		loeschen & \lstinline|a -> Menge a -> Menge a| & Löschen einesWerts aus einer Menge\\
+		vereinigung & \lstinline|Menge a -> Menge a -> Menge a| & Vereinigung zweier Mengen\\
+		schnitt & \lstinline|Menge a -> Menge a -> Menge a| & Schnitt zweier Mengen\\
+		differenz & \lstinline|Menge a -> Menge a -> Menge a| & Differenz zweier Mengen\\
+		istLeer & \lstinline|Menge a -> Bool| & Test, ob eine Menge leer ist\\
+		istElement & \lstinline|a -> Menge a -> Bool| & Test, ob einWert Element einer Menge ist\\
+		istTeilmenge & \lstinline|Menge a -> Menge a -> Bool| & Test, ob eine Menge Teilmenge einer \newline zweiten Menge ist\\
+		istEchteTeilmenge & \lstinline|Menge a -> Menge a -> Bool| & Test, ob eine Menge echte Teilmenge einer \newline zweiten Menge ist\\
+		minimalesElement & \lstinline|Menge a -> Maybe a| \newline \lstinline|Menge a -> a| & das minimale Element einer Menge\\
+		maximalesElement & \lstinline|Menge a -> Maybe a| \newline \lstinline|Menge a -> a| & das maximale Element einer Menge
 	\end{tabular}	
 \end{table}
-Die Funktion $loeschen$ soll die ursprüngliche Menge zurückgegeben, wenn der angegebene
-Wert nicht Element dieser Menge ist. Die Funktionen $minimalesElement$ und
-$maximalesElement$ sollen mit einer Fehlermeldung abbrechen oder den Typ $Maybe$ verwenden und $Nothing$ zurückgeben, wenn die gegebene Menge
+Die Funktion \lstinline|loeschen| soll die ursprüngliche Menge zurückgegeben, wenn der angegebene Wert nicht Element dieser Menge ist. Die Funktionen \lstinline|minimalesElement| und
+\lstinline|maximalesElement| sollen mit einer Fehlermeldung abbrechen oder den Typ \lstinline|Maybe| verwenden und \lstinline|Nothing| zurückgeben, wenn die gegebene Menge
 leer ist.
 
 \subsection{}
-Legen Sie ein Modul $Menge$ für den abstrakten Datentyp
-an. Fügen Sie in dieses Modul die Deklaration des Datentyps $Menge$ sowie die
+Legen Sie ein Modul \lstinline|Menge| für den abstrakten Datentyp
+an. Fügen Sie in dieses Modul die Deklaration des Datentyps \lstinline|Menge| sowie die
 Typsignaturen der Mengenoperationen ein. Legen Sie eine geeignete Exportliste
 an. Es soll außerdem möglich sein, Mengen auf Gleichheit zu testen und in der
 üblichen Notation $\{x_1, \ldots , x_n\}$ auszugeben. Sorgen Sie für entsprechende Typklassen Instanziierungen.
@@ -282,7 +318,7 @@ Programmieren Sie eine Haskell-Funktion
 summe :: (Num zahl) => [zahl] -> zahl
 \end{lstlisting}
 welche die Summe der Elemente einer Liste von Zahlen berechnet. Verwenden Sie
-dazu die vordefinierte Funktion $foldr$.\\
+dazu die vordefinierte Funktion \lstinline|foldr|.\\
 \begin{lstlisting}
 foldr :: (a -> b -> b) -> b -> [a] -> b
 \end{lstlisting}
@@ -296,8 +332,8 @@ produkte :: (Num zahl) => [zahl] -> [zahl] -> [zahl]
 welche zu zwei Listen $[x_1, x_2, \ldots , x_n]$ und $[y_1, y_2, \ldots, y_n]$ die Liste der Produkte
 $[x_1 \cdot y_1, x_2 \cdot y_2, \ldots, x_n \cdot y_n]$
 berechnet. Geben Sie zwei Lösungen an. Die erste Lösung soll die vordefinierten
-Funktionen $zip$, $map$ und $uncurry$ verwenden, die zweite Lösung die vordefinierte
-Funktion $zipWith$.
+Funktionen \lstinline|zip|, \lstinline|map| und \lstinline|uncurry| verwenden, die zweite Lösung die vordefinierte
+Funktion \lstinline|zipWith|.
 \begin{lstlisting}
 zip :: [a] -> [b] -> [(a,b)]
 map :: (a -> b) -> [a] -> [b]
@@ -346,37 +382,37 @@ succ  :: Int -> Int
 foldr :: (el -> accu -> accu) -> accu -> [el] -> accu
 \end{lstlisting}
 \subsection{}
-Geben Sie einen zu der Funktion $concat$ äquivalenten Haskell-Ausdruck an, der keine
+Geben Sie einen zu der Funktion \lstinline|concat| äquivalenten Haskell-Ausdruck an, der keine
 \textbf{let}-Ausdrücke enthält und höchstens die folgenden vordefinierten Funktionen
 benutzt:
 \begin{lstlisting}
 (:)   :: el -> [el] -> [el]
 foldl :: (accu -> el -> accu) -> accu -> [el] -> accu
 \end{lstlisting}
-\section{Varianten von $map$ und $foldr$ für Bäume}
-Die Listenfunktionen $map$ und $foldr$ sind im $Prelude$ vordefiniert. Varianten dieser
+\section{Varianten von \lstinline|map| und \lstinline|foldr| für Bäume}
+Die Listenfunktionen \lstinline|map| und \lstinline|foldr| sind im \lstinline|Prelude| vordefiniert. Varianten dieser
 Funktionen gibt es auch für viele andere algebraische Datentypen, so z.B. auch für den
-Typ $Baum$. Dieser wird wie folgt definiert:
+Typ \lstinline|Baum|. Dieser wird wie folgt definiert:
 \begin{lstlisting}
 data Baum el = Blatt el | Verzweigung (Baum el) (Baum el)
 \end{lstlisting}
-Die Typsignaturen der $map$- und der $foldr$-Variante für Baum lauten folgendermaßen:
+Die Typsignaturen der \lstinline|map|- und der \lstinline|foldr|-Variante für \lstinline|Baum| lauten folgendermaßen:
 \begin{lstlisting}
 baumMap  :: (el -> el') -> Baum el -> Baum el'
 baumFold :: (el -> accu) -> (accu -> accu -> accu) -> Baum el -> accu
 \end{lstlisting}
-Einen Baum $baumMap \;fun \;baum$ erhält man, indem man in $baum$ jede Blattmarkierung $el$
-durch $fun\;el$ ersetzt. Einen Baum $baumFold \;accuBlatt \;accuVerzweigung \;baum$ erhält man,
-indem man in $baum$ jedes Vorkommen des Datenkonstruktors $Blatt$ durch $accuBlatt$ und
-jedes Vorkommen des Datenkonstruktors $Verzweigung$ durch $accuVerzweigung$ ersetzt.
+Einen Baum \lstinline|baumMap f baum| erhält man, indem man in \lstinline|baum| jede Blattmarkierung \lstinline|el|
+durch \lstinline|f el| ersetzt. Einen Baum \lstinline|baumFold accuBlatt accuVerzweigung baum| erhält man,
+indem man in \lstinline|baum| jedes Vorkommen des Datenkonstruktors \lstinline|Blatt| durch \lstinline|accuBlatt| und
+jedes Vorkommen des Datenkonstruktors \lstinline|Verzweigung| durch \lstinline|accuVerzweigung| ersetzt.
 Zum Beispiel liefert
-\begin{align*}
-baumFold (\lambda el \to [el]) (++) ((Blatt \;2 \;'Verzweigung' \;Blatt \;3) 'Verzweigung' \;Blatt\;5)
-\end{align*}
-die Liste $([2] ++ [3]) ++ [5]$, also $[2, 3, 5]$. Allgemein stellt $baumFold \;(\lambda el \to [el]) \;(++)\; baum$
-die Liste aller Blattmarkierungen von $baum$ dar.
+\begin{center}
+\lstinline|baumFold (\el -> [el]) (++) ((Blatt  2  `Verzweigung` Blatt 3) `Verzweigung` Blatt 5)|
+\end{center}
+die Liste \lstinline|([2] ++ [3]) ++ [5]|, also \lstinline|[2, 3, 5]|. Allgemein stellt \lstinline|baumFold  (\el -> [el])  (++)  baum|
+die Liste aller Blattmarkierungen von \lstinline|baum| dar.
 \subsection{}
-Implementieren Sie die beschriebenen Haskell-Funktionen $baumMap$ und $baumFold$.
+Implementieren Sie die beschriebenen Haskell-Funktionen \lstinline|baumMap| und \lstinline|baumFold|.
 \subsection{}
 Programmieren Sie eine Haskell-Funktion 
 \begin{lstlisting}
@@ -385,19 +421,19 @@ hoehe :: Baum el -> Int
 welche die Höhe
 eines Baums bestimmt. Die Höhe eines Baums, der nur aus einem Blatt besteht, sei
 dabei $0$, nicht $1$. Verwenden Sie für Ihre Implementierung keine \textbf{explizite Rekursion},
-sondern die Funktion $baumFold$.
+sondern die Funktion \lstinline|baumFold|.
 
 \section{Sortieren mit variabler Ordnung}
-Es soll eine Haskell-Funktion $mergeSort$ programmiert werden, welche nach verschiedenen
+Es soll eine Haskell-Funktion \lstinline|mergeSort| programmiert werden, welche nach verschiedenen
 Kriterien sortieren kann. Dazu soll ihr neben der zu sortierenden Liste eine
 Vergleichsfunktion als Argument übergeben werden. Die Vergleichsfunktion soll eine
 irreflexive Ordnung darstellen.
 \subsection{}
-Welchen Typ hat eine $Vergleichsfunktion$ für einen Typ $el$?\\
-Welchen Typ hat dann die Funktion $mergeSort$, die als zusätzliches Argument die
+Welchen Typ hat eine \lstinline|Vergleichsfunktion| für einen Typ \lstinline|el|?\\
+Welchen Typ hat dann die Funktion \lstinline|mergeSort|, die als zusätzliches Argument die
 zu verwendende Vergleichsfunktion erhält?
 \subsection{}
-Implementieren Sie die Funktion $mergesort$, welche eine Vergleichsfunktion sowie die zu sortierende Liste als Argumente bekommt.\\
+Implementieren Sie die Funktion \lstinline|mergesort|, welche eine Vergleichsfunktion sowie die zu sortierende Liste als Argumente bekommt.\\
 als Tipp die "`divide and conquer"' Implementierung.
 \begin{lstlisting}
 dc :: ([a] -> Bool) -> ([a] -> [b]) -> ([a] -> ([a],[a])) -> 
@@ -420,17 +456,127 @@ data Buch = Buch {
     verlag :: String
   } deriving (Show)
 \end{lstlisting}
-Programmieren Sie die Vergleichsfunktionen $autorVergleich$, $titelVergleich$ und
-$jahrVergleich$, mit denen eine Liste von Büchern nach Autor, Titel bzw. Erscheinungsjahr
+Programmieren Sie die Vergleichsfunktionen \lstinline|autorVergleich|, \lstinline|titelVergleich| und
+\lstinline|jahrVergleich|, mit denen eine Liste von Büchern nach Autor, Titel bzw. Erscheinungsjahr
 sortiert werden kann.
 \subsection{}
-Programmieren Sie eine Haskell-Funktion $und$ zur Komposition von Vergleichsfunktionen.
+Programmieren Sie eine Haskell-Funktion \lstinline|und| zur Komposition von Vergleichsfunktionen.
 Es seien $vergleich_1$ und $vergleich_2$ zwei Vergleichsfunktionen. Dann soll
-$vergleich_1\;'und'\;vergleich_2$ eine Vergleichsfunktion sein, mittels der zuerst nach dem
+\lstinline|vergleich1 `und` vergleich2| eine Vergleichsfunktion sein, mittels der zuerst nach dem
 durch $vergleich_1$ dargestellten Kriterium und bei äquivalenten Einträgen nach dem
 durch $vergleich_2$ dargestellten Kriterium sortiert wird. So soll z.B.
-\begin{align*}
-mergeSort (autorVergleich \;'und' \;titelVergleich) \;<[Liste]>
-\end{align*}
+\begin{center}
+\lstinline|mergeSort (autorVergleich `und` titelVergleich) [Liste]|
+\end{center}
 Bücher zunächst nach Autor und bei gleichem Autor nach Titel sortieren.
+\section{Binäre Suchbäume}
+Wir betrachten den folgenden Datentyp für binäre Suchbäume:
+\begin{center}
+\lstinline|data Suchbaum el = Blatt | Knoten (Suchbaum el) el (Suchbaum el)|
+\end{center}
+Natürlich koönnen wir mit diesem Datentyp beliebige binäre Bäume darstellen, deren innere Knoten markiert sind. Wir wollen aber nur solche Bäume aufbauen, die auch tatsächlich Suchbäume sind. Dabei gilt folgendes:
+\begin{itemize}
+\item Der leere Baum \lstinline|Blatt| ist ein Suchbaum 
+\item Ein Baum \lstinline|Knoten links wurzel rechts| ist nur dann ein Suchbaum, wenn folgendes gilt:
+\begin{itemize}
+\item Die Unterbäume \lstinline|links| und \lstinline|rechts| sind Suchbäume.
+\item Alle Markierungen von \lstinline|links| sind kleiner und alle Markierungen von \lstinline|rechts| sind größer als \lstinline|wurzel|.
+\end{itemize}
+\end{itemize}
+\subsection{}
+Programmieren Sie eine Haskell-Funktion
+\begin{center}
+\lstinline|istElement :: (Ord el) => el -> Suchbaum el -> Bool|,
+\end{center}
+welche testet, ob ein angegebener Wert in einem Suchbaum vorkommt. Nutzen Sie dabei die oben genannten Eigenschaften von Suchbäumen aus, um den Zeitaufwand möglichst gering zu halten.
+
+\subsection{}
+Ein Faltungsoperator für den Typ Suchbaum kann wie folgt definiert werden: 
+\begin{lstlisting}
+suchbaumFold :: accu -> (accu -> el -> accu -> accu) -> Suchbaum el -> accu
+suchbaumFold accuBlatt accuKnoten = fold where
+    fold Blatt = accuBlatt
+    fold (Knoten links wurzel rechts) = accuKnoten ( fold links)
+                                        wurzel ( fold rechts)
+\end{lstlisting}
+Wandeln Sie Ihre Implementierung von \lstinline|istElement| aus der vorigen Teilaufgabe in eine Implementierung um, welche statt einer expliziten Rekursion \lstinline|suchbaumFold| verwendet.
+
+\section{AVL-Bäume}
+Wir betrachten den folgenden Datentyp für AVL-Bäume:
+\begin{center}
+\lstinline!data AVLBaum el = AVLBlatt | AVLKnoten Int (AVLBaum el) el (AVLBaum el)!
+\end{center}
+Verglichen mit den Suchbäumen aus Aufgabe 12 enthalten Knoten eines AVL-Baums zusätzlich eine ganze Zahl, die die Höhe des Baumes angibt. Wir speichern die Höhe statt der Balance, da sich die Höhe bei Änderungen des Baumes einfacher aktualisieren lässt. Die Balance lässt sich aus den Höhen der Unterbäume berechnen.
+
+Vorgaben:
+
+\begin{lstlisting}
+hoehe :: AVLBaum el -> Int
+hoehe AVLBlatt            = 0
+hoehe (AVLKnoten h _ _ _) = h
+
+balance :: AVLBaum el -> AVLBaum el -> Int
+balance left right = (hoehe left) - (hoehe right)
+
+avlKnoten :: AVLBaum el -> el -> AVLBaum el -> AVLBaum el
+avlKnoten left root right = AVLKnoten h left root right
+  where
+    h = 1 + max (hoehe left) (hoehe right)
+    
+verbinden :: AVLBaum el -> el -> AVLBaum el -> AVLBaum el
+verbinden t1@(AVLKnoten h1 l1 w1 r1) r t2@(AVLKnoten h2 l2 w2 r2) 
+  | balance t1 t2 == -2 && (balance l1 r1) <  0  = 
+      leftRightRotation (avlKnoten t1 r t2)
+  | balance t1 t2 ==  2 && (balance l2 r2) >  0  = 
+      rightLeftRotation (avlKnoten t1 r t2)
+  | balance t1 t2 == -2 && (balance l1 r1) >= 0  = 
+      leftRotation (avlKnoten t1 r t2)
+  | balance t1 t2 ==  2 && (balance l2 r2) <= 0  = 
+      rightRotation (avlKnoten t1 r t2)
+  | otherwise = avlKnoten t1 r t2
+\end{lstlisting}
+
+\begin{center}
+\lstinline!hoehe :: AVLBaum el -> Int!
+\end{center}
+Gibt die Höhe des AVL-Baums zurück.
+\begin{center}
+\lstinline!balance :: AVLBaum el -> AVLBaum el -> Int!
+\end{center}
+Berechnet die Balance zwischen zwei AVL-Bäumen.
+\begin{center}
+\lstinline!avlKnoten :: AVLBaum el -> el -> AVLBaum el -> AVLBaum el!
+\end{center}
+Konstruiert aus einem linken Unterbaum, einem Wert und einem rechten Unterbaum einen AVL-Baum, dieser muss nicht balanciert sein.
+\begin{center}
+\lstinline!verbinden :: AVLBaum el -> el -> AVLBaum el -> AVLBaum el!
+\end{center}
+Vereint zwei AVL-Bäume und ein Element zu einen neuen AVL-Baum. Dabei wird vorausgesetzt, dass die Elemente des ersten AVL-Baums kleiner und die des zweiten AVL-Baums größer als das direkt übergebene Element sind. Normalerweise sollen die beiden AVL-Bäume als linker und rechter Unterbaum und das Element als Wurzel des neuen Baums verwendet werden. Wenn dadurch allerdings ein unbalancierter Baum entstehen würde, soll mittels Rotation bzw. Doppelrotation ein entsprechender balancierter Baum erzeugt werden.
+
+\subsection{}
+Programmieren Sie die Haskell-Funktionen
+\begin{lstlisting}
+leftRotation :: AVLBaum el -> AVLBaum el
+
+rightRotation :: AVLBaum el -> AVLBaum el
+
+leftRightRotation :: AVLBaum el -> AVLBaum el
+
+rightLeftRotation :: AVLBaum el -> AVLBaum el
+\end{lstlisting}
+welche einen geänderten AVL-Baum durch Rotation balancieren. Die Funktionen \lstinline|leftRightRotation| und \lstinline|rightLeftRotation| lasen sich aus den ersten beiden ableiten. 
+
+\subsection{}
+Programmieren Sie eine Haskell-Funktion
+\begin{center}
+\lstinline!avlEinfuegen :: (Ord el) => el -> AVLBaum el -> AVLBaum el!,
+\end{center}
+welche ein Element in einen AVL-Baum einfügt. Wenn der angegebene Wert bereits im AVL-Baum enthalten ist, soll der Baum nicht geändert werden.
+
+\subsection{}
+Programmieren Sie eine Haskell-Funktion
+\begin{center}
+\lstinline!avlLoeschen :: (Ord el) => el -> AVLBaum el -> AVLBaum el!,
+\end{center}
+welche ein Element aus einem AVL-Baum löscht. Wenn der angegebene Wert nicht im AVL-Baum enthalten ist, soll der Baum nicht geändert werden.
 \end{document}

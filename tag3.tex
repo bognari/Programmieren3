@@ -25,6 +25,7 @@ Aufzählungstypen sind mit Enums aus C bzw. C++ zu vergleichen und fassen inhalt
 \begin{center}
 \scalebox{0.6}{\input{images/data2.tex}}
 \end{center}
+In diesem Fall erhält der Konstruktor keine Parameter.
 \end{block}
 }
 }
@@ -360,9 +361,9 @@ tail :: [a] -> [a]
 \begin{frame}[fragile]
 \frametitle{Listen in Funktionen}
 \begin{lstlisting}
-lenght :: [Int] -> Int
-lenght []     = 0
-lenght (_:xs) = 1 + lenght xs
+length :: [Int] -> Int
+length []     = 0
+length (_:xs) = 1 + length xs
 
 append :: [Int] -> [Int] -> [Int]
 append []     ys = ys

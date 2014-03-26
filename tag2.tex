@@ -123,7 +123,7 @@ plus' (a, b) = a + b
 \frametitle{Block}
 \begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-  \item Definitionen im Block sind immer nur eine Stufe höher sichtbar
+  \item Definitionen im Block sind immer nur eine Stufe höher sichtbar (hier sind nicht let-in und where gemeint)
   \item Im Block ist alles Äußere sichtbar
 \end{itemize}
 \end{block}
@@ -146,14 +146,14 @@ In Haskell spielt das Layout des Quellcodes eine Rolle!
 \end{block}
 \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Block} 
-\begin{lstlisting}
-outer a b =
-  let inner c = a + b + c
-  in inner 1
-\end{lstlisting}
-\end{frame}
+%\begin{frame}[fragile]
+%\frametitle{Block} 
+%\begin{lstlisting}
+%outer a b =
+%  let inner c = a + b + c
+%  in inner 1
+%\end{lstlisting}
+%\end{frame}
 \subsection{Module}
 \begin{frame}
 \frametitle{Module}
@@ -368,7 +368,7 @@ max a b =
 \lstinline|plus' a b = a + b|
 \end{exampleblock}
 \begin{exampleblock}{Lambda ($\lambda$)-Ausdruck}
-\lstinline|plus'' =  \a -> \b -> a + b|
+\lstinline|plus'' =  \\a -> \\b -> a + b|
 \end{exampleblock}
 \end{frame}
 
@@ -615,7 +615,7 @@ ggT''' a b | b == 0    = a
 \end{block}
 \begin{lstlisting}
 filter :: (Int -> Bool) -> [Int] -> [Int]
-filter do []     = 0
+filter do []     = []
 filter do (x:xs) | do x       = x : filter do xs
                  | otherwise  = filter do xs
 \end{lstlisting}

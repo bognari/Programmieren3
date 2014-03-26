@@ -417,7 +417,7 @@ Programmieren Sie eine Funktion \lstinline|mal :: Integer -> Integer -> Integer|
 \subsection{}
 Programmieren Sie eine Funktion \lstinline|hoch :: Integer -> Integer -> Integer| welche Potenzen natürlicher Zahlen berechnet. 
 \subsection{}
-Die Reihe \lstinline|plus|, \lstinline|mal|, \lstinline|hoch| kann beliebig fortgesetzt werden. Programmieren Sie eine Funktion \\\lstinline|meta :: Integer -> Integer -> Integer -> Integer| sodass \lstinline|meta 0 a b$| der Summe \lstinline|plus a b|, \lstinline|meta 1 a b| dem Produkt \lstinline|mal a b|, \lstinline|meta 2 a b| der Potenz \lstinline|hoch a b| usw. entspricht. Was berechnet \lstinline|meta 3 a b|?
+Die Reihe \lstinline|plus|, \lstinline|mal|, \lstinline|hoch| kann beliebig fortgesetzt werden. Programmieren Sie eine Funktion \\\lstinline|meta :: Integer -> Integer -> Integer -> Integer| sodass \lstinline|meta 0 a b| der Summe \lstinline|plus a b|, \lstinline|meta 1 a b| dem Produkt \lstinline|mal a b|, \lstinline|meta 2 a b| der Potenz \lstinline|hoch a b| usw. entspricht. Was berechnet \lstinline|meta 3 a b|?
 \newpage
 \section{Datentypen}
 \subsection{}
@@ -516,7 +516,7 @@ data Ausdruck = Konstante Integer
   | Summe Ausdruck Ausdruck
   | Differenz Ausdruck Ausdruck
   | Produkt Ausdruck Ausdruck
-deriving (Show) -- ermoeglicht Ausgabe der Werte im GHCi
+  deriving (Show) -- ermoeglicht Ausgabe der Werte im GHCi
 \end{lstlisting}
 Der Ausdruck $x + (3 - x) \cdot y$ wird beispielsweise repräsentiert durch:
 \begin{lstlisting}

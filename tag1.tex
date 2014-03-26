@@ -307,7 +307,7 @@ Funktionsname: \lstinline|mod 100 4| $\equiv$ \lstinline|100 `mod` 4|
 \lstinline|plus' a b = a + b|
 \end{exampleblock}
 \begin{exampleblock}{Lambda ($\lambda$)-Ausdruck}
-\lstinline|plus'' =  \a -> \b -> a + b|\\
+\lstinline|plus'' =  \\a -> \\b -> a + b|\\
 Morgen kommt mehr zum Thema $\lambda$-Ausdrücke
 \end{exampleblock}
 \end{frame}
@@ -500,7 +500,8 @@ f   a   = x a `div` 3
 \only<2>{\begin{exampleblock}{\vspace*{-3ex}}
 \begin{center}
 \scalebox{0.45}{\input{images/BlockLet.tex}}\\
-Blöcke mit let-in können verschachtelt sein
+Blöcke mit let-in können verschachtelt sein\\
+Bei mehr als einer Hilfsfunktion, muss nach dem \lstinline|let| ein Zeilenumbruch erfolgen.
 \end{center}
 \end{exampleblock}}
 \end{frame}
@@ -509,7 +510,8 @@ Blöcke mit let-in können verschachtelt sein
 \frametitle{Der let-in Block}
 \begin{lstlisting}
 dec a = 
-  let inc1 a = a + 1
+  let               
+      inc1 a = a + 1
       inc2 a = a + 2
   in  inc1 a - inc2 0
 \end{lstlisting}
