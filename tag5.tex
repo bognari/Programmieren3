@@ -7,27 +7,39 @@
 
 \section{Das Array}
 \begin{frame}
-\frametitle{das Array}
+\frametitle{Das Array}
+\begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-	\item in Haskell existieren nicht nur Listen zur Speicherung und Verarbeitung von Daten sondern auch zwei Array Formen
+	\item In Haskell existieren nicht nur Listen zur Speicherung und Verarbeitung von Daten sondern auch zwei Array Formen
 	\item Arrays in Haskell besitzen immer eine feste Größe die bei der Erstellung angegeben wird
 \end{itemize}
+\end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{statische Arrays}
+\frametitle{Statische Arrays}
+\begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-	\item es muss das Modul $Data.Array.IArray$ importiert werden
-	\item die einzelnen Elemente eines Arrays werden mit dem $!$ Operator angesprochen\\ z.B. $a!5$ gibt das Element mit dem Index $5$ aus dem Array $a$ wieder
-	\item erstellt werden Arrays mit $(listArray (<Start>,<Ende>) <Liste>) :: Array <IndexTyp> <ElemTyp>$
-	\\als Array Index kann jeder Datentyp verwendet werden, welcher die Typklasse $Ix$ implementiert 
-	\item oder mit $(array (<Start>, <Ende>) [Liste\;mit\;Tupeln]) :: Array <IndexTyp> <ElemTyp>$
-	\\ in diesem Fall wird dem Array eine Liste mit Tupeln übergeben bei dem das erste Element der "`Primarykey"' ist
+	\item Es muss das Modul \lstinline|Data.Array.IArray| importiert werden
+	\item Die einzelnen Elemente eines Arrays werden mit dem \lstinline|!| Operator angesprochen\\ z.B. \lstinline|a!5| gibt das Element mit dem Index $5$ aus dem Array $a$ wieder 
 \end{itemize}
+\only<2>{
+\begin{center}
+\scalebox{0.8}{\input{images/listarray.tex}}
+\end{center}
+Als Array Index kann jeder Datentyp verwendet werden, welcher die Typklasse \lstinline|Ix| implementiert
+}
+\only<3>{
+\begin{center}
+\scalebox{0.7}{\input{images/array.tex}}
+\end{center}
+In diesem Fall wird dem Array eine Liste mit Tupeln übergeben bei dem das erste Element der "`Primarykey"' ist (wie eine Map)
+}
+\end{block}
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{statische Arrays}
+\frametitle{Statische Arrays}
 \begin{lstlisting}
 listArray :: (Ix i, IArray a e) => (i, i) 
     -> [e] -> a i e
@@ -42,12 +54,12 @@ myArray2 = (array (1,5) [(k,k*2)|
     k <- [1..5]):: Array Int Int
 \end{lstlisting}
 \begin{alertblock}{Achtung}
-Die Anzahl der Listen Elemente und der Platz müssen nicht übereinstimmen, solange das Array nicht ausgegeben ($show\; a$) wird. 
+Die Anzahl der Listen Elemente und der Platz müssen nicht übereinstimmen, solange das Array nicht ausgegeben (\lstinline|show a|) wird. 
 \end{alertblock}
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{statische Arrays}
+\frametitle{Statische Arrays}
 \begin{lstlisting}
 accumArray :: (IX i, IArray a e) => (e -> e' -> e) 
    -> e -> (i,i) -> [(i, e')] -> a i e
@@ -56,56 +68,63 @@ myArray3 = (accumArray (+) 0 (0,4) [(i `mod` 5
    , 1) | i <- [1..123]]) :: Array Int Int
 \end{lstlisting}	
 \pause
-\begin{align*}
-array\; (0,4) [(0,24),(1,25),(2,25),(3,25),(4,24)]
-\end{align*}
+\begin{block}{\vspace*{-3ex}}
+\lstinline|array (0,4) [(0,24),(1,25),(2,25),(3,25),(4,24)]|
+\end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{wichtige Array Funktionen}
+\frametitle{Wichtige Array Funktionen}
+\begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-\item $amap$ ist die Array-Form der $map$ Funktion für Listen
-\item $elems$ wandelt das Array in eine Liste um (nur die Werte)
-\item $assocs$ wandelt das Array in eine Liste von Tupeln der Form $(k, v)$ um
-\item der $\backslash\backslash$ Operator (update) ändert in einem Array die gegebenen Wertpaare.
+\item \lstinline|amap| ist die Array-Form der $map$ Funktion für Listen
+\item \lstinline|elems| wandelt das Array in eine Liste um (nur die Werte)
+\item \lstinline|assocs| wandelt das Array in eine Liste von Tupeln der Form $(k, v)$ um
+\item Der \textbackslash\textbackslash$\;$Operator (update) ändert in einem Array die gegebenen Wertpaare.
 \end{itemize}
+\end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{statische vs. dynamische Arrays}
+\frametitle{Statische vs. dynamische Arrays}
+\begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-\item bei einem Update mit dem $\backslash\backslash$ Operator (update) wird bei statischen das gesamte Array kopiert und die Änderungen vorgenommen
-\item somit dauert es bei statischen länger als bei dynamischen
+\item Bei einem Update mit dem \textbackslash\textbackslash$\;$Operator (update) wird bei statischen das gesamte Array kopiert und die Änderungen vorgenommen
+\item Somit dauert es bei statischen länger als bei dynamischen
 \end{itemize}
+\end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{dynamische Arrays}
+\frametitle{Dynamische Arrays}
+\begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-\item import von $Data.Array.Diff$
-\item Funktionen heißen gleich nur Typ ist $DiffArray$ statt $Array$
-\item besitzen zwar eine Konstante Zeit beim Update
-\item aber erhöhte Zugriffszeit beim Lesen
-\item durch geschickte Array Konstruktion kann jedoch fast vollständig auf Updates verzichtet werden
+\item Import von \lstinline|Data.Array.Diff|
+\item Funktionen heißen gleich nur Typ ist \lstinline|DiffArray| statt \lstinline|Array|
+\item Besitzen zwar eine Konstante Zeit beim Update
+\item Aber erhöhte Zugriffszeit beim Lesen
+\item Durch geschickte Array Konstruktion kann jedoch fast vollständig auf Updates verzichtet werden
 \end{itemize}
+\end{block}
 \end{frame}
 
 \begin{frame}[fragile]
 \frametitle{Haskell API}
-\begin{itemize}
-\item für weitere Datentypen und deren Funktionen siehe:\\
+\begin{block}{\vspace*{-3ex}}
+für weitere Datentypen und deren Funktionen siehe:\\
 haskell.org/hoogle
-\end{itemize}
+\end{block}
 \end{frame}
 
 \section{Monaden}
 \begin{frame}
 \frametitle{Monaten}
+\begin{block}{\vspace*{-3ex}}
 \begin{itemize}
 \item Monaden sind ein mathematisches Konzept aus der Kategorientheorie
-\item werden eingesetzt um Funktionen miteinander zu kombinieren 
-\item ist in Haskell eine polymorphe Datenstrucktur mit speziellen Funktionen
-\item das Prinzip ist:
+\item Werden eingesetzt um Funktionen miteinander zu kombinieren 
+\item Ist in Haskell eine polymorphe Datenstruktur mit speziellen Funktionen
+\item Das Prinzip ist:
 \begin{itemize}
 \item Sequenzialisierung gemäß des Continuation-style Programming \\
 	der Kontrollfluss kehrt nicht zum Aufrufer zurück sondern geht zur Nachfolgefunktion 
@@ -113,6 +132,7 @@ haskell.org/hoogle
 \item Sicherung von Single-Threadedness dadurch, weil keine dagegen verstoßende Funktion benutzt werden kann
 \end{itemize}
 \end{itemize}
+\end{block}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -154,20 +174,24 @@ add' mA mB = mA >>= (\a ->
 \end{frame}
 
 \begin{frame}
-\frametitle{do-Notation}
+\frametitle{Do-Notation}
+\begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-\item mit der do-Notation werden Monaden ($>>=$) zusammengefasst \\ pro Zeile
-\item somit ist es syntaktischer Zucker
-\item für die Verwendung der do-Notation sind 4 Regeln zu beachten
+\item Mit der do-Notation werden Monaden (\lstinline|>>=|) zusammengefasst \\ pro Zeile
+\item Somit ist es syntaktischer Zucker
+\item Für die Verwendung der do-Notation sind 4 Regeln zu beachten
 \end{itemize}
+\end{block}
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{do-Notation - Regel 1}
+\frametitle{Do-Notation - Regel 1}
+\begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-\item einzelne Anweisungen benötigen keine Umformung.
-\item das $do$ wird einfach weggelassen.
+\item Einzelne Anweisungen benötigen keine Umformung.
+\item Das \lstinline|do| wird einfach weggelassen.
 \end{itemize}
+\end{block}
 \begin{lstlisting}
 do 
   e
@@ -179,11 +203,13 @@ e
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{do-Notation - Regel 2}
+\frametitle{Do-Notation - Regel 2}
+\begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-\item wird der Rückgabewert nicht benötigt
-\item dann wird die Anweisung nach vorne gezogen
+\item Wird der Rückgabewert nicht benötigt
+\item Dann wird die Anweisung nach vorne gezogen
 \end{itemize}
+\end{block}
 \begin{lstlisting}
 do 
   e
@@ -197,11 +223,13 @@ e >>= \_ -> do
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{do-Notation - Regel 3}
+\frametitle{Do-Notation - Regel 3}
+\begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-\item wird der Rückgabewert mit Pattern-Matching ausgewertet
-\item dann muss eine Hilfsfunktion dies übernehmen
+\item Wird der Rückgabewert mit Pattern-Matching ausgewertet
+\item Dann muss eine Hilfsfunktion dies übernehmen
 \end{itemize}
+\end{block}
 \begin{lstlisting}
 do 
   pattern <- e
@@ -217,11 +245,13 @@ in e >>= ok
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{do-Notation - Regel 4}
+\frametitle{Do-Notation - Regel 4}
+\begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-\item wird ein Wert mit let gespeichert, kann dies vor das $do$ gezogen werden
-\item das $in$ ist im do-Block optional
+\item Wird ein Wert mit \lstinline|let| gespeichert, kann dies vor das \lstinline|do| gezogen werden
+\item Das \lstinline|in| ist im do-Block optional
 \end{itemize}
+\end{block}
 \begin{lstlisting}
 do 
   let <Deklaration>
@@ -236,8 +266,8 @@ in do
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{do-Notation - If-Then-Else}
-wir erwarten:
+\frametitle{Do-Notation - If-Then-Else}
+\begin{block}{Wir erwarten}
 \begin{lstlisting}
 f = do 
   if <irgendwas> then
@@ -245,23 +275,26 @@ f = do
   else 
     <Anweisungen>
 \end{lstlisting}	
-Aber !
+\end{block}
+\vspace*{-3ex}
+\begin{block}{Aber!}
 \begin{lstlisting}
-f = do 
+f = 
   if <irgendwas> then do
     <Anweisungen>
-  else do 
+  else do
     <Anweisungen>
-\end{lstlisting}
+\end{lstlisting}	
+\end{block}
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{do-Notation - Beispiel}
+\frametitle{Do-Notation - Beispiel}
 \begin{lstlisting}
 add' :: Maybe Int -> Maybe Int -> Maybe Int
 add' mA mB = mA >>= (\a ->
-              mB >>= (\b ->
-                return (a + b)))
+               mB >>= (\b ->
+                 return (a + b)))
 \end{lstlisting}	
 \pause
 \begin{lstlisting}
@@ -274,13 +307,15 @@ add mA mB = do
 \end{frame}
 
 \begin{frame}
-\frametitle{vordefinierte Monaden}
+\frametitle{Vordefinierte Monaden}
+\begin{block}{\vspace*{-3ex}}
 \begin{itemize}
 \item Writer - für Debug / Logging / Tracing
 \item Reader - zum Lesen von gemeinsamen Zuständen (global)
 \item State - Verknüpfung von Writer und Reader für gemeinsame Zustände
 \\ für zustandsbasierte Rechnungen
 \end{itemize}
+\end{block}
 \end{frame}
 
 \section{IO}
@@ -335,45 +370,53 @@ main = do
 \end{frame}
 
 \begin{frame}
-\frametitle{das O in IO}
+\frametitle{Das O in IO}
+\begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-  \item $print \;::\; Show\; a \Rightarrow a \to IO\;()$ \\ gibt jeden Datentyp der $Show$ implementiert aus
-  \item $putChar\; :: \; Char \to IO \;()$ \\ gibt ein Char aus
-  \item $putStr\; :: \; String \to IO\;()$\\ gibt einen String aus \\
-  $putStr = sequence_.map\; putChar$
+  \item \lstinline|print :: Show a => a -> IO()| \\ gibt jeden Datentyp der \lstinline|Show| implementiert aus
+  \item \lstinline|putChar :: Char -> IO()| \\ gibt ein \lstinline|Char| aus
+  \item \lstinline|putStr :: String -> IO()|\\ gibt einen \lstinline|String| aus \\
+  \lstinline|putStr = sequence_map putChar|
 \end{itemize}
+\end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{das O in IO}
+\frametitle{Das O in IO}
+\begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-  \item $writeFile \;::\; FilePath \to String \to IO\;()$ 
-  \item $type \; Filepath = String$
-  \item schreibt den "`String"' mittels Textstrom in eine Datei
+  \item \lstinline|writeFile :: FilePath -> String -> IO()| 
+  \item \lstinline|type Filepath = String|
+  \item Schreibt den \lstinline|String| mittels Textstrom in eine Datei
 \end{itemize}
+\end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{das I in IO}
+\frametitle{Das I in IO}
+\begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-  \item $readLn\; ::\; Read \;a => IO \;a$ \\liest jeden Datentyp der $Read$ implementiert ein
-  \item $getChar \; :: \; IO \;Char$ \\ liest ein Char ein
-  \item $getLine \; :: \; IO \;String$\\ liest die ganze Zeile ein als String
-  \item die Pufferung der Eingaben ist über $hSetBuffering$ einstellbar\\ für Windows bekommt es der GHC trotzdem nicht hin :(
+  \item \lstinline|readLn :: Read a => IO a|\\ liest jeden Datentyp der \lstinline|Read| implementiert ein
+  \item \lstinline|getChar :: IO Char|\\ liest ein Char ein
+  \item \lstinline|getLine :: IO String|\\ liest die ganze Zeile ein als String
+  \item Die Pufferung der Eingaben ist über \lstinline|hSetBuffering| einstellbar\\ für Windows bekommt es der GHC trotzdem nicht hin :(
 \end{itemize}
+\end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{das O in IO}
+\frametitle{Das I in IO}
+\begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-  \item $readFile \;:: \;FilePath \to IO\;String$ 
-  \item $type \; Filepath = String$
-  \item liest die Datei als String ein
+  \item \lstinline|readFile :: FilePath -> IO String|
+  \item \lstinline|type Filepath = String|
+  \item Liest die Datei als String ein
 \end{itemize}
+\end{block}
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Hangman}
+\frametitle{Datei einlesen}
 \begin{lstlisting}
 isInfix :: String -> String -> Maybe String
 isInfix [] _ = Nothing
@@ -383,7 +426,7 @@ isInfix t w | w == take (length w) t = Just t
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Hangman}
+\frametitle{Wortsuche in einer Datei}
 \begin{lstlisting}
 main = do
   putStrLn "Dateipfad: "
@@ -402,26 +445,18 @@ main = do
 
 \begin{frame}
 \frametitle{Zusammenfassung}
-
-\begin{itemize}
-  \item ab jetzt seid ihr auf dem Wissenstand, auf dem ich bin
-\end{itemize}
+\begin{block}{\vspace*{-3ex}}
+Ab jetzt seid ihr auf dem Wissenstand, auf dem ich bin.
 
 % The following outlook is optional.
 \vskip0pt plus.5fill
 \begin{itemize}
-  \item nun seid ihr dran
+  \item Nun seid ihr dran
   \begin{itemize}
-    \item stellt Fragen
-    \item schlagt auf www.haskell.org/hoogle nach 
-    \item oder vergesst alles schnell wieder
+    \item Stellt Fragen
+    \item Schlagt auf www.haskell.org/hoogle nach 
+    \item Oder vergesst alles schnell wieder
   \end{itemize}
 \end{itemize}
+\end{block}
 \end{frame}
-
-
-%\begin{frame}
-%\begin{center}
-%\rotatebox{30}{\textcolor{red}{{\fontsize{100}{40} \selectfont Ende}}}
-%\end{center}
-%\end{frame}

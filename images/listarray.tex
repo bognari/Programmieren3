@@ -29,43 +29,46 @@
       %text height=1.5ex,text depth=.25ex
     ]
     \matrix[column sep=5.0mm, row sep=3.0mm] {
- &  &  &  & \node (n15) [terminal] {->}; & \node (n16) [nonterminal] {AttrTyp}; &  &  & \\
-\node (n21) [circle, draw, inner sep=0pt, minimum size=0.75ex] {}; & \node (n22) [nonterminal] {Konstruktor}; & \node (n23) [terminal] {::}; & \node (n24) [point] {}; &  &  & \node (n27) [point] {}; & \node (n28) [nonterminal] {Datentyp}; & \node (n29) [circle, draw, inner sep=0pt, minimum size=0.75ex] {};\\
+\node (n11) [circle, draw, inner sep=0pt, minimum size=0.75ex] {}; & \node (n12) [terminal] {listArray}; & \node (n13) [terminal] {(}; & \node (n14) [nonterminal] {Start}; & \node (n15) [terminal] {,}; & \node (n16) [nonterminal] {Ende}; & \node (n17) [terminal] {)}; & \node (n18) [terminal] {[}; & \node (n19) [nonterminal] {values}; & \node (n110) [terminal] {]}; & \node (n111) [circle, draw, inner sep=0pt, minimum size=0.75ex] {};\\
     };
   { [start chain]
-       \chainin (n21);
-       \chainin (n22)    [join=by tip];
+       \chainin (n11);
+       \chainin (n12)    [join=by tip];
   }
   { [start chain]
-       \chainin (n22);
-       \chainin (n23)    [join=by tip];
+       \chainin (n12);
+       \chainin (n13)    [join=by tip];
   }
   { [start chain]
-       \chainin (n23);
-       \chainin (n24)    [join];
+       \chainin (n13);
+       \chainin (n14)    [join=by tip];
   }
   { [start chain]
-       \chainin (n24);
-       \chainin (n27)    [join];
-  }
-  { [start chain]
-       \chainin (n16);
+       \chainin (n14);
        \chainin (n15)    [join=by tip];
   }
   { [start chain]
-       \chainin (n27);
-       \chainin (n16)    [join=by {vh path,tip}];
-  }
-  { [start chain]
        \chainin (n15);
-       \chainin (n24)    [join=by {hv path,tip}];
+       \chainin (n16)    [join=by tip];
   }
   { [start chain]
-       \chainin (n27);
-       \chainin (n28)    [join=by tip];
+       \chainin (n16);
+       \chainin (n17)    [join=by tip];
   }
   { [start chain]
-       \chainin (n28);
-       \chainin (n29)    [join=by tip];
+       \chainin (n17);
+       \chainin (n18)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n18);
+       \chainin (n19)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n19);
+       \chainin (n110)    [join=by tip];
+  }
+  { [start chain]
+       \chainin (n110);
+       \chainin (n111)    [join=by tip];
   }
 \end{tikzpicture}

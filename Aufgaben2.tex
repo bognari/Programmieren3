@@ -150,9 +150,10 @@ mit einer Fehlermeldung abbrechen. Es ergibt sich z.B.
 Häufig ist es nicht erwünscht, dass Funktionen mit Fehlermeldungen abbrechen.
 Stattdessen werden oft Werte des Datentyps \lstinline|Maybe| als Funktionsresultate verwendet.
 \lstinline|Maybe| ist im Prelude wie folgt definiert:
-\begin{lstlisting}
-data Maybe wert = Nothing | Just wert
-\end{lstlisting}
+\begin{center}
+\lstinline!data Maybe wert = Nothing | Just wert!
+\end{center}
+
 Der Wert \lstinline|Nothing| signalisiert einen Fehler, während ein Wert \lstinline|Just x| die erfolgreiche
 Berechnung des Wertes $x$ darstellt. Modifizieren Sie die Funktion \lstinline|resultat| zu einer
 Funktion \lstinline|evtlResultat|, welche nicht mit Fehlermeldungen abbricht, sondern \lstinline|Maybe|-
@@ -234,7 +235,7 @@ welche durch \lstinline|deriving(Show)| automatisch erzeugt wird. Es ergibt sich
 \lstinline|show (Differenz (Konstante 5) (Variable "x"))|\\
 $\leadsto$ \lstinline|"Differenz (Konstante 5) (Variable \"x\")"|
 \end{center}
-Beachten Sie, dass Anführungsstriche (") in Zeichenkettenliteralen als $\backslash$" dargestellt
+Beachten Sie, dass Anführungsstriche (") in Zeichenkettenliteralen als (\textbackslash") dargestellt
 werden.
 \section{eigene Klasse}
 Wie betrachten folgende Klassendeklaration:
@@ -245,14 +246,15 @@ class Spiegelbar wert where
 Instanzen von \lstinline|Spiegelbar| sollen diejenigen Strukturen sein, die man spiegeln kann. Die
 Funktion \lstinline|gespiegelt| liefert zu einem Wert die entsprechende gespiegelte Variante.
 \subsection{}
-Ein Beispiel für \lstinline|spiegelbare| Strukturen sind Listen. Die gespiegelte Liste zu einer
+Ein Beispiel für spiegelbare Strukturen sind Listen. Die gespiegelte Liste zu einer
 Liste $l$ enthält die Elemente von $l$ in umgekehrter Reihenfolge. Instanziieren Sie
 \lstinline|Spiegelbar| entsprechend.
 \subsection{} 
 Der Typ blattmarkierter Binärbäume lässt sich folgendermaßen definieren:
-\begin{lstlisting}
-data Baum el = Blatt el | Verzweigung (Baum el) (Baum el)
-\end{lstlisting}
+\begin{center}
+\lstinline!data Baum el = Blatt el | Verzweigung (Baum el) (Baum el)!
+\end{center}
+
 Auch blattmarkierte Bäume lassen sich spiegeln, nämlich indem man für jeden
 inneren Knoten dessen beide Unterbäume vertauscht. Schreiben Sie eine entsprechende
 instance-Deklaration.
@@ -314,21 +316,23 @@ Aufgabe 1 verwenden.
 \section{Funktionen höherer Ordnung}
 \subsection{}
 Programmieren Sie eine Haskell-Funktion 
-\begin{lstlisting}
-summe :: (Num zahl) => [zahl] -> zahl
-\end{lstlisting}
+
+\begin{center}
+\lstinline!summe :: (Num zahl) => [zahl] -> zahl!
+\end{center}
 welche die Summe der Elemente einer Liste von Zahlen berechnet. Verwenden Sie
 dazu die vordefinierte Funktion \lstinline|foldr|.\\
-\begin{lstlisting}
-foldr :: (a -> b -> b) -> b -> [a] -> b
-\end{lstlisting}
+
+\begin{center}
+\lstinline!foldr :: (a -> b -> b) -> b -> [a] -> b!
+\end{center}
 $a$ und $b$ können gleiche Typen sein.\\
 alles Weitere finden Sie unter: www.haskell.org/hoogle
 \subsection{}
 Programmieren Sie eine Haskell-Funktion 
-\begin{lstlisting}
-produkte :: (Num zahl) => [zahl] -> [zahl] -> [zahl]
-\end{lstlisting}
+\begin{center}
+\lstinline!produkte :: (Num zahl) => [zahl] -> [zahl] -> [zahl]!
+\end{center}
 welche zu zwei Listen $[x_1, x_2, \ldots , x_n]$ und $[y_1, y_2, \ldots, y_n]$ die Liste der Produkte
 $[x_1 \cdot y_1, x_2 \cdot y_2, \ldots, x_n \cdot y_n]$
 berechnet. Geben Sie zwei Lösungen an. Die erste Lösung soll die vordefinierten
@@ -343,24 +347,25 @@ zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
 \end{lstlisting}
 \subsection{}
 Wir stellen einen Vektor als Liste seiner kartesischen Koordinaten dar:
-\begin{lstlisting}
-type Vektor koord = [koord]
-\end{lstlisting}
+\begin{center}
+\lstinline!type Vektor koord = [koord]!
+\end{center}
 Programmieren Sie eine Haskell-Funktion
-\begin{lstlisting}
-skalarProdukt :: (Num koord) => Vektor koord -> Vektor koord -> koord
-\end{lstlisting}
+\begin{center}
+\lstinline!skalarProdukt :: (Num koord) => Vektor koord -> Vektor koord -> koord!
+\end{center}
 welche zu zwei Vektoren $(x_1, \ldots , x_n)$ und $(y_1, \ldots ,y_n)$ das Skalarprodukt
 $\sum^n_{i=1}{x_i \cdot y_i}$ berechnet. Verwenden Sie die in den Teilaufgaben 1 und 2 definierten Funktionen.
 \subsection{}
 Wir stellen eine Matrix als Liste ihrer Zeilen dar:
-\begin{lstlisting}
-type Matrix koord = [Vektor koord]
-\end{lstlisting}
+\begin{center}
+\lstinline!type Matrix koord = [Vektor koord]!
+\end{center}
 Programmieren Sie eine Haskell-Funktion
-\begin{lstlisting}
-lineareAbb :: (Num koord) => Matrix koord -> (Vektor koord -> Vektor koord)
-\end{lstlisting}
+\begin{center}
+\lstinline!lineareAbb :: (Num koord) => Matrix koord -> (Vektor koord -> Vektor koord)!
+\end{center}
+
 die zu einer gegebenen $(n \times m)$-Matrix die durch sie dargestellte lineare Abbildung
 ermittelt, welche m-dimensionale in n-dimensionale Vektoren überführt.
 
@@ -393,15 +398,17 @@ foldl :: (accu -> el -> accu) -> accu -> [el] -> accu
 Die Listenfunktionen \lstinline|map| und \lstinline|foldr| sind im \lstinline|Prelude| vordefiniert. Varianten dieser
 Funktionen gibt es auch für viele andere algebraische Datentypen, so z.B. auch für den
 Typ \lstinline|Baum|. Dieser wird wie folgt definiert:
-\begin{lstlisting}
-data Baum el = Blatt el | Verzweigung (Baum el) (Baum el)
-\end{lstlisting}
+\begin{center}
+\lstinline!data Baum el = Blatt el | Verzweigung (Baum el) (Baum el)!
+\end{center}
 Die Typsignaturen der \lstinline|map|- und der \lstinline|foldr|-Variante für \lstinline|Baum| lauten folgendermaßen:
-\begin{lstlisting}
-baumMap  :: (el -> el') -> Baum el -> Baum el'
-baumFold :: (el -> accu) -> (accu -> accu -> accu) -> Baum el -> accu
-\end{lstlisting}
-Einen Baum \lstinline|baumMap f baum| erhält man, indem man in \lstinline|baum| jede Blattmarkierung \lstinline|el|
+
+\begin{center}
+\lstinline|baumMap  :: (el -> el') -> Baum el -> Baum el'|
+\lstinline|baumFold :: (el -> accu) -> (accu -> accu -> accu) -> Baum el -> accu|
+\end{center}
+
+Einen Baum \lstinline|baumMap f baum| erhält man, indem man in  \lstinline|baum| jede Blattmarkierung \lstinline|el|
 durch \lstinline|f el| ersetzt. Einen Baum \lstinline|baumFold accuBlatt accuVerzweigung baum| erhält man,
 indem man in \lstinline|baum| jedes Vorkommen des Datenkonstruktors \lstinline|Blatt| durch \lstinline|accuBlatt| und
 jedes Vorkommen des Datenkonstruktors \lstinline|Verzweigung| durch \lstinline|accuVerzweigung| ersetzt.
@@ -415,9 +422,9 @@ die Liste aller Blattmarkierungen von \lstinline|baum| dar.
 Implementieren Sie die beschriebenen Haskell-Funktionen \lstinline|baumMap| und \lstinline|baumFold|.
 \subsection{}
 Programmieren Sie eine Haskell-Funktion 
-\begin{lstlisting}
-hoehe :: Baum el -> Int
-\end{lstlisting}
+\begin{center}
+\lstinline|hoehe :: Baum el -> Int|
+\end{center}
 welche die Höhe
 eines Baums bestimmt. Die Höhe eines Baums, der nur aus einem Blatt besteht, sei
 dabei $0$, nicht $1$. Verwenden Sie für Ihre Implementierung keine \textbf{explizite Rekursion},
@@ -433,7 +440,7 @@ Welchen Typ hat eine \lstinline|Vergleichsfunktion| für einen Typ \lstinline|el
 Welchen Typ hat dann die Funktion \lstinline|mergeSort|, die als zusätzliches Argument die
 zu verwendende Vergleichsfunktion erhält?
 \subsection{}
-Implementieren Sie die Funktion \lstinline|mergesort|, welche eine Vergleichsfunktion sowie die zu sortierende Liste als Argumente bekommt.\\
+Implementieren Sie die Funktion \lstinline|mergeSort|, welche eine Vergleichsfunktion sowie die zu sortierende Liste als Argumente bekommt.\\
 als Tipp die "`divide and conquer"' Implementierung.
 \begin{lstlisting}
 dc :: ([a] -> Bool) -> ([a] -> [b]) -> ([a] -> ([a],[a])) -> 
@@ -477,7 +484,7 @@ Wir betrachten den folgenden Datentyp für binäre Suchbäume:
 Natürlich koönnen wir mit diesem Datentyp beliebige binäre Bäume darstellen, deren innere Knoten markiert sind. Wir wollen aber nur solche Bäume aufbauen, die auch tatsächlich Suchbäume sind. Dabei gilt folgendes:
 \begin{itemize}
 \item Der leere Baum \lstinline|Blatt| ist ein Suchbaum 
-\item Ein Baum \lstinline|Knoten links wurzel rechts| ist nur dann ein Suchbaum, wenn folgendes gilt:
+\item Ein Baum "\lstinline|Knoten links wurzel rechts|" ist nur dann ein Suchbaum, wenn folgendes gilt:
 \begin{itemize}
 \item Die Unterbäume \lstinline|links| und \lstinline|rechts| sind Suchbäume.
 \item Alle Markierungen von \lstinline|links| sind kleiner und alle Markierungen von \lstinline|rechts| sind größer als \lstinline|wurzel|.

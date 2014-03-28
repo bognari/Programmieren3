@@ -29,8 +29,8 @@
       %text height=1.5ex,text depth=.25ex
     ]
     \matrix[column sep=5.0mm, row sep=3.0mm] {
- &  &  & \node (n14) [point] {}; &  &  &  &  & \\
-\node (n21) [circle, draw, inner sep=0pt, minimum size=0.75ex] {}; & \node (n22) [nonterminal] {Funktion}; & \node (n23) [point] {}; & \node (n24) [nonterminal] {erwarteter Wert}; & \node (n25) [terminal] { }; & \node (n26) [point] {}; & \node (n27) [terminal] {=}; & \node (n28) [nonterminal] {Ausdruck}; & \node (n29) [circle, draw, inner sep=0pt, minimum size=0.75ex] {};\\
+ &  &  & \node (n14) [point] {}; &  &  &  & \\
+\node (n21) [circle, draw, inner sep=0pt, minimum size=0.75ex] {}; & \node (n22) [nonterminal] {Funktion}; & \node (n23) [point] {}; & \node (n24) [nonterminal] {erwarteter Wert}; & \node (n25) [point] {}; & \node (n26) [terminal] {=}; & \node (n27) [nonterminal] {Ausdruck}; & \node (n28) [circle, draw, inner sep=0pt, minimum size=0.75ex] {};\\
     };
   { [start chain]
        \chainin (n21);
@@ -46,11 +46,11 @@
   }
   { [start chain]
        \chainin (n24);
-       \chainin (n25)    [join=by tip];
+       \chainin (n25)    [join];
   }
   { [start chain]
        \chainin (n25);
-       \chainin (n26)    [join];
+       \chainin (n26)    [join=by tip];
   }
   { [start chain]
        \chainin (n26);
@@ -61,11 +61,7 @@
        \chainin (n28)    [join=by tip];
   }
   { [start chain]
-       \chainin (n28);
-       \chainin (n29)    [join=by tip];
-  }
-  { [start chain]
-       \chainin (n26);
+       \chainin (n25);
        \chainin (n14)    [join=by vh path];
        \chainin (n23)    [join=by {hv path,tip}];
   }

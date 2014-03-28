@@ -1,1 +1,1 @@
-Funktion ((Konstruktor "(" ('erwarteter Wert' " ")+ ")")+ " ")+ "=" Ausdruck
+Funktion (( "(" Konstruktor ('erwarteter Wert')+ ")")+)+ "=" Ausdruck

@@ -29,10 +29,10 @@
       %text height=1.5ex,text depth=.25ex
     ]
     \matrix[column sep=5.0mm, row sep=3.0mm] {
- &  &  &  &  &  &  & \node (n18) [point] {}; &  &  &  &  &  &  &  &  & \\
- &  &  &  &  &  &  & \node (n28) [point] {}; &  &  &  &  &  &  &  &  & \\
- &  &  &  &  &  &  & \node (n38) [point] {}; &  &  &  &  &  &  &  &  & \\
-\node (n41) [circle, draw, inner sep=0pt, minimum size=0.75ex] {}; & \node (n42) [nonterminal] {Funktion}; & \node (n43) [point] {}; & \node (n44) [point] {}; & \node (n45) [nonterminal] {Konstruktor}; & \node (n46) [terminal] {(}; & \node (n47) [point] {}; & \node (n48) [nonterminal] {erwarteter Wert}; & \node (n49) [terminal] { }; & \node (n410) [point] {}; & \node (n411) [terminal] {)}; & \node (n412) [point] {}; & \node (n413) [terminal] { }; & \node (n414) [point] {}; & \node (n415) [terminal] {=}; & \node (n416) [nonterminal] {Ausdruck}; & \node (n417) [circle, draw, inner sep=0pt, minimum size=0.75ex] {};\\
+ &  &  &  &  &  & \node (n17) [point] {}; &  &  &  &  &  &  &  & \\
+ &  &  &  &  &  & \node (n27) [point] {}; &  &  &  &  &  &  &  & \\
+ &  &  &  &  &  &  & \node (n38) [point] {}; &  &  &  &  &  &  & \\
+\node (n41) [circle, draw, inner sep=0pt, minimum size=0.75ex] {}; & \node (n42) [nonterminal] {Funktion}; & \node (n43) [point] {}; & \node (n44) [point] {}; & \node (n45) [terminal] {(}; & \node (n46) [nonterminal] {Konstruktor}; & \node (n47) [point] {}; & \node (n48) [nonterminal] {erwarteter Wert}; & \node (n49) [point] {}; & \node (n410) [terminal] {)}; & \node (n411) [point] {}; & \node (n412) [point] {}; & \node (n413) [terminal] {=}; & \node (n414) [nonterminal] {Ausdruck}; & \node (n415) [circle, draw, inner sep=0pt, minimum size=0.75ex] {};\\
     };
   { [start chain]
        \chainin (n41);
@@ -64,15 +64,15 @@
   }
   { [start chain]
        \chainin (n48);
-       \chainin (n49)    [join=by tip];
+       \chainin (n49)    [join];
   }
   { [start chain]
        \chainin (n49);
-       \chainin (n410)    [join];
+       \chainin (n410)    [join=by tip];
   }
   { [start chain]
        \chainin (n410);
-       \chainin (n411)    [join=by tip];
+       \chainin (n411)    [join];
   }
   { [start chain]
        \chainin (n411);
@@ -84,33 +84,25 @@
   }
   { [start chain]
        \chainin (n413);
-       \chainin (n414)    [join];
+       \chainin (n414)    [join=by tip];
   }
   { [start chain]
        \chainin (n414);
        \chainin (n415)    [join=by tip];
   }
   { [start chain]
-       \chainin (n415);
-       \chainin (n416)    [join=by tip];
-  }
-  { [start chain]
-       \chainin (n416);
-       \chainin (n417)    [join=by tip];
-  }
-  { [start chain]
-       \chainin (n410);
+       \chainin (n49);
        \chainin (n38)    [join=by vh path];
        \chainin (n47)    [join=by {hv path,tip}];
   }
   { [start chain]
-       \chainin (n412);
-       \chainin (n28)    [join=by vh path];
+       \chainin (n411);
+       \chainin (n27)    [join=by vh path];
        \chainin (n44)    [join=by {hv path,tip}];
   }
   { [start chain]
-       \chainin (n414);
-       \chainin (n18)    [join=by vh path];
+       \chainin (n412);
+       \chainin (n17)    [join=by vh path];
        \chainin (n43)    [join=by {hv path,tip}];
   }
 \end{tikzpicture}

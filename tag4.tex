@@ -212,7 +212,7 @@ Die Funktion wird auf das Resultat von dem Ausdruck der "`rechts"' vom Operator 
 \lstinline|True|
 \end{block}}
 \only<2>{\begin{block}{Aufruf}
-\lstinline|(xor True) False|
+\lstinline|(xor True) True|
 \end{block}
 \begin{block}{Ausgabe}
 \lstinline|False|
@@ -267,6 +267,7 @@ uncurry f t = f (fst t) (snd t)
 \end{lstlisting}
 \end{block}
 \pause
+\vspace*{-3ex}
 \begin{block}{\vspace*{-3ex}}
 \begin{itemize}
   \item \lstinline|fst t| gibt das erste Element aus \lstinline|t|

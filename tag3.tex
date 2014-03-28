@@ -193,7 +193,6 @@ data Shape = Circle{center :: Point, radius :: Double}
 \end{lstlisting}
 Konstruktoren: \only<1>{?}\pause
 \begin{lstlisting}
-Point :: Double -> Double -> Point
 Circle :: Point -> Double -> Shape
 Rectangle :: Point -> Double -> Double -> Shape
 Triangle :: Point -> Point -> Point -> Shape
@@ -211,8 +210,6 @@ data Shape = Circle{center :: Point, radius :: Double}
 \end{lstlisting} 
 Selektoren: \only<1>{?}\pause
 \begin{lstlisting}
-x :: Point -> Double
-y :: Point -> Double
 center :: Shape -> Point
 radius :: Shape -> Double
 point :: Shape -> Point
