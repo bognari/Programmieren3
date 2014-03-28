@@ -57,3 +57,4 @@ findPrefix (a:as)  (Node _   cs)  = findSubTrie cs
 linearize :: Eq a => Trie a b -> [b]
 linearize (Node Nothing   cs)  = foldr (\(_,t) bs -> linearize t ++ bs) [] cs
 linearize (Node (Just b)  cs)  = b : linearize (Node Nothing cs)
+

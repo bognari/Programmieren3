@@ -479,7 +479,7 @@ Bücher zunächst nach Autor und bei gleichem Autor nach Titel sortieren.
 \section{Binäre Suchbäume}
 Wir betrachten den folgenden Datentyp für binäre Suchbäume:
 \begin{center}
-\lstinline|data Suchbaum el = Blatt | Knoten (Suchbaum el) el (Suchbaum el)|
+\lstinline!data Suchbaum el = Blatt | Knoten (Suchbaum el) el (Suchbaum el)!
 \end{center}
 Natürlich koönnen wir mit diesem Datentyp beliebige binäre Bäume darstellen, deren innere Knoten markiert sind. Wir wollen aber nur solche Bäume aufbauen, die auch tatsächlich Suchbäume sind. Dabei gilt folgendes:
 \begin{itemize}
@@ -532,14 +532,14 @@ avlKnoten left root right = AVLKnoten h left root right
     
 verbinden :: AVLBaum el -> el -> AVLBaum el -> AVLBaum el
 verbinden t1@(AVLKnoten h1 l1 w1 r1) r t2@(AVLKnoten h2 l2 w2 r2) 
-  | balance t1 t2 == -2 && (balance l1 r1) <  0  = 
-      leftRightRotation (avlKnoten t1 r t2)
-  | balance t1 t2 ==  2 && (balance l2 r2) >  0  = 
-      rightLeftRotation (avlKnoten t1 r t2)
-  | balance t1 t2 == -2 && (balance l1 r1) >= 0  = 
-      leftRotation (avlKnoten t1 r t2)
-  | balance t1 t2 ==  2 && (balance l2 r2) <= 0  = 
-      rightRotation (avlKnoten t1 r t2)
+  | balance t1 t2 == 2  && (balance l1 r1) < 0  = 
+    leftRightRotation (avlKnoten t1 r t2)
+  | balance t1 t2 == -2 && (balance l2 r2) > 0  = 
+    rightLeftRotation (avlKnoten t1 r t2)
+  | balance t1 t2 == 2  && (balance l1 r1) >= 0  = 
+    leftRotation (avlKnoten t1 r t2)
+  | balance t1 t2 == -2 && (balance l2 r2) <= 0  = 
+    rightRotation (avlKnoten t1 r t2)
   | otherwise = avlKnoten t1 r t2
 \end{lstlisting}
 
