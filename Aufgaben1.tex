@@ -10,301 +10,18 @@
   %final                   % Status des Dokuments (final/draft)
 ]{scrartcl}      
 
-
-\usepackage[utf8x]{inputenc}
-\usepackage[ngerman]{babel}
-
-\usepackage{geometry}
-\geometry{verbose,                     % zeigt die eingestellten Parameter beim
-                                       % Latexlauf an
-      paper=a4paper,                   % Papierformat
-      top=25mm,                        % Rand oben
-      left=25mm,                       % Rand links
-      right=25mm,                      % Rand rechts
-      bottom=40mm,                     % Rand unten
-      pdftex                           % schreibt das Papierformat in die
-                                       % Ausgabe damit Ausgabeprogramm
-                                       % Papiergröße erkennt
-}
-
-%\usepackage[headsepline, footsepline, ilines]{scrpage2}
-%\chead{}
-
-\usepackage[%
-  automark,
-  headsepline,                %% Separation line below the header
-  footsepline,               %% Separation line above the footer
-  markuppercase
-]{scrpage2}
+\input{blattHeader.tex}
 
 %\lehead{\bfseries\pagemark}    %% Top left on even pages
 %\lohead{\bfseries\headmark}    %% Top left on odd pages
 %\rehead{\bfseries\headmark}    %% Top right on even pages
 %\rohead{\bfseries\pagemark}    %% Top right on odd pages
-\chead{Programmieren für Fortgeschrittene \\ Aufgabenblatt I}                       %% Top center
-
-\automark[subsection]{section}
-\pagestyle{scrheadings}
-
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{amsmath}
-
-\usepackage{microtype}
-\usepackage{float}
-
-\usepackage{mathptmx}
-\usepackage[scaled=.90]{helvet}
-\usepackage{courier}
-
-\usepackage{tikz}
-\usetikzlibrary{
-  arrows,
-  shapes.misc,
-  shapes.arrows,
-  chains,
-  matrix,
-  positioning,
-  scopes,
-  decorations.pathmorphing,
-  shadows,
-  backgrounds
-}
-
-\usepackage{listings}
-\usepackage{color}
-
-\lstset{
-	language=Haskell,
-	numbers=none,
-	keywordstyle=\color{green!40!black},
-	commentstyle=\color{magenta!40!black},
-	identifierstyle=\color{blue},
-	stringstyle=\color{orange},
-	%otherkeywords={$, \{, \}, \[, \]},
-	frame=single,
-	tabsize=2
-}
+\chead{Programmieren für Fortgeschrittene \\ Aufgabenblatt 1} 
 
 \begin{document}
-\renewcommand*\thesubsection{\roman{subsection})}
-
-\section*{Hinweise}
-\subsection{Kommentare}
-\begin{itemize}
-\item Zeilenkommentar: \lstinline|-- Text| 
-\item Blockkommentar: \lstinline|{- Text -}|
-\end{itemize}
-
-\subsection{Konstanten}
-\begin{minipage}[hbt]{6cm}
-\centering
-\begin{lstlisting}
-pi :: Double
-pi = 3.14
-\end{lstlisting}
-\end{minipage}
-\hfill
-\begin{minipage}[hbt]{8cm}
-\centering
-\scalebox{0.7}{\input{images/Konstante.tex}}
-\end{minipage}
-
-\subsection{Funktionen}
-\begin{minipage}[hbt]{6cm}
-\centering
-\begin{lstlisting}
-plus :: Int -> Int -> Int
-plus a b = a + b
-\end{lstlisting}
-\end{minipage}
-\hfill
-\begin{minipage}[hbt]{8cm}
-\centering
-\scalebox{0.6}{\input{images/Funktion.tex}}
-\end{minipage}
-
-\subsection{If-Then-Else}
-\begin{minipage}[hbt]{6cm}
-\centering
-\begin{lstlisting}
-ggT a b = if b == 0 
-        then a 
-        else ggT b (mod a b)
-\end{lstlisting}
-\end{minipage}
-\hfill
-\begin{minipage}[hbt]{8cm}
-\centering
-\scalebox{0.7}{\input{images/ifthenelse.tex}}
-\end{minipage}
-
-\subsection{Case Of}
-\begin{minipage}[hbt]{6cm}
-\centering
-\begin{lstlisting}
-ggT a b = case b of 
-        0 -> a
-        _ -> ggT b (mod a b)
-\end{lstlisting}
-\end{minipage}
-\hfill
-\begin{minipage}[hbt]{8cm}
-\centering
-\scalebox{0.8}{\input{images/caseof.tex}}
-\end{minipage}
-
-\subsection{Pattern Matching}
-\begin{minipage}[hbt]{6cm}
-\centering
-\begin{lstlisting}
-ggT a 0 = a
-ggT a b = ggT b (mod a b)
-\end{lstlisting}
-\end{minipage}
-\hfill
-\begin{minipage}[hbt]{8cm}
-\centering
-\scalebox{0.8}{\input{images/pattern.tex}}
-\end{minipage}
-
-\subsection{Guards}
-\begin{minipage}[hbt]{6cm}
-\centering
-\begin{lstlisting}
-ggT a b | b == 0    = a
-        | otherwise = 
-            ggT b (mod a b) 
-\end{lstlisting}
-\end{minipage}
-\hfill
-\begin{minipage}[hbt]{8cm}
-\centering
-\scalebox{0.8}{\input{images/guards.tex}}
-\end{minipage}
-
-\subsection{Module}
-\begin{lstlisting}
-module Wurf(weite, square) where
-weite :: Double -> Double -> Double
-weite v0 phi = ((square v0) / 9.81) * sin (2 * phi)
-square :: Double -> Double
-square x = x * x
-
-module Foo where
-import Wurf hiding (weite)
-bar ... = ... (square a) ...
-\end{lstlisting}
-\subsection{Eigene Datentypen}
-\begin{lstlisting}
-data Point = Point{x :: Double, y :: Double}
-
-data Shape = Circle{center :: Point, 
-    radius :: Double}
-  | Rectangle{point :: Point, width :: Double, 
-    height :: Double}
-  | Triangle{point1 :: Point, point2 :: Point, 
-    point3 :: Point}
-\end{lstlisting}
-\subsection{Typparameter}
-Keine Typparameter in Datentyp Definitionen!
-\begin{lstlisting}
-data (Eq a, Ord a) => Pair a b = 
-  PairConst {first :: a, second :: b} deriving(Show)
-\end{lstlisting}
-
-besser:
-\begin{lstlisting}
-data Pair a b = PairConst a b deriving(Show)
-
-instance Eq a => Eq (Pair a b) where
-  (PairConst i1 _) == (PairConst i2 _) = i1 == i2
-
-instance Ord a => Ord (Pair a b) where
-   (PairConst i1 _) <= (PairConst i2 _) = i1 <= i2
-
-bubbleSort :: (Ord a) => [(Pair a b)] -> [(Pair a b)]
-bubbleSort [] = []
-bubbleSort (x:xs) = step $ foldl go (x,[]) xs where
-  go (y,acc) x = (min x y, max x y : acc)
-  step (x,acc) = x : bubbleSort acc
-\end{lstlisting}
-
-\$ ist nichts anderes als: 
-\begin{lstlisting}
-(7 + 6) / (5 + 3) = (7 + 6) / $ 5 + 3
-\end{lstlisting}
-Die "`Klammerung"' geht bis zum Zeilenende.
-\subsection{Listen}
-%\begin{minipage}[hbt]{7cm}
-%\centering
-\begin{lstlisting}
-primes = sieve [2..]
-  where
-    sieves (p:xs) = p:sieves [x|x<- xs, mod x p > 0]
-\end{lstlisting}
-%\end{minipage}
-%\hfill
-%\begin{minipage}[hbt]{7cm}
-%\centering
-\begin{center}
-\scalebox{1}{\input{images/listgenerator.tex}}
-\end{center}
-%\end{minipage}
-
-\subsection{Operationen}
-\begin{table}[H]
-	\centering
-    \begin{tabular}{lll} %\hline
-        Bezeichner & Typ	& Bedeutung \\ \hline
-        \lstinline|(+)|        & \lstinline|a -> a -> a| & Addition          \\ 
-        \lstinline|(-)|        & \lstinline|a -> a -> a| & Subtraktion       \\ 
-        \lstinline|(*)|        & \lstinline|a -> a -> a| & Multiplikation    \\ 
-        \lstinline|negate|     & \lstinline|a -> a|      & Negation        \\ 
-        \lstinline|abs|        & \lstinline|a -> a|      & Absolutbetrag     \\ 
-        \lstinline|signum|     & \lstinline|a -> a|      & Vorzeichenbildung %\\ \hline
-    \end{tabular}	
-\caption{Für die Typen \lstinline|Int|, \lstinline|Integer|, \lstinline|Float| und \lstinline|Double|}
-\end{table}
-\begin{table}[H]
-	\centering
-    \begin{tabular}{lll} %\hline
-        Bezeichner & Typ         & Bedeutung         \\ \hline
-		\lstinline|succ| 	& \lstinline|a -> a| & Nachfolgerbildung \\
-		\lstinline|pred| 	& \lstinline|a -> a| & Vorgängerbildung\\
-		\lstinline|div| 	& \lstinline|a -> a -> a| & ganzzahlige Division, Ergebnis wird abgerundet\\
-		\lstinline|mod| 	& \lstinline|a -> a -> a| & zur ganzzahligen Division \lstinline|div| gehörender Rest\\
-		\lstinline|quot| 	& \lstinline|a -> a -> a| & ganzzahlige Division, Ergebnis wird Richtung 0 gerundet\\
-		\lstinline|rem| 	& \lstinline|a -> a -> a| & zur ganzzahligen Division \lstinline|quot| gehörender Rest %\\ \hline
-    \end{tabular}	
-\caption{Für die Typen \lstinline|Int| und \lstinline|Integer|}
-\end{table}
-\begin{table}[H]
-	\centering
-    \begin{tabular}{lll} %\hline
-        Bezeichner & Typ         & Bedeutung         \\ \hline
-		\lstinline|(/)|	 	& \lstinline|a -> a -> a| & Division\\
-		\lstinline|recip| 	& \lstinline|a -> a| & Kehrwertbildung\\
-		\lstinline|(**)| 	& \lstinline|a -> a -> a| & Potenzieren\\
-		\lstinline|sqrt| 	& \lstinline|a -> a| & Ziehen der Quadratwurzel %\\ \hline
-    \end{tabular}
-\caption{Für die Typen \lstinline|Float| und \lstinline|Double|}
-\end{table}
-\begin{table}[H]
-	\centering
-    \begin{tabular}{lll} %\hline
-        Bezeichner & Typ         & Bedeutung         \\ \hline
-		\lstinline!(||)!	& \lstinline|a -> a -> a| & Oder\\
-		\lstinline|(&&)| 	& \lstinline|a -> a -> a| & Und\\
-		\lstinline|not| 	& \lstinline|a -> a| & Verneinung %\\ \hline
-    \end{tabular}
-\caption{Für den Typ \lstinline|Bool|}
-\end{table}
-\newpage
-\renewcommand*\thesubsection{\alph{subsection})}
 \section{Einfache Haskell-Funktion}
 Im Folgenden soll eine Funktion programmiert werden, die die
-Wegstrecke $s(t)$ berechnet, welche im freien Fall unter Einfluss der Erdbeschleunigung $g = 9.81$ nach einer Zeit $t$ zurück gelegt wurde. Verwenden Sie die Formel 
+Wegstrecke $s(t)$ berechnet, welche im freien Fall unter Einfluss der Erdbeschleunigung $g = 9.81$ nach einer Zeit $t$ zurückgelegt wurde. Verwenden Sie die Formel 
 \begin{displaymath}
 s(t) = \frac{1}{2} \cdot gt^2.
 \end{displaymath}
@@ -318,7 +35,7 @@ Verändern Sie Ihr Programm zunächst so, dass $g$ als globale Variable (Konstan
 \subsection{}
 Die Eingabe eines negativen Wertes soll zu einem undefinierten Funktionswert
 und zu einer Fehlermeldung führen. Dies erreichen Sie mit Hilfe der Funktion
-\lstinline|error|, z.B. durch \lstinline|error "negative Zeit"|. Realisieren Sie dieses Verhalten einmal mit \textbf{If-Then-Else Ausdrücken} und einmal mit \textbf{Guards}.
+\lstinline|error|, z.B. durch \lstinline|error "negative Zeit"|. Realisieren Sie dieses Verhalten einmal mit \textbf{If-Then-Else-Ausdrücken} und einmal mit \textbf{Guards}.
 \section{Einfache Haskell-Funktionen}
 Schreiben Sie Haskell-Funktionen zur Berechnung von Volumen, Oberflächeninhalt und Radius von Kugeln. Beachten Sie, dass einige dieser Funktionen als Komposition der übrigen aufgefasst werden können. Verwenden Sie die vordefinierte Konstante \lstinline|pi::Double|.
 Hilfreiche Funktionen über reellen Zahlen finden Sie in den Hinweisen dieses Aufgabenblattes.
@@ -338,7 +55,7 @@ gibt, sollen die Funktionen für negative Eingaben undefiniert bleiben und mit
 einer Fehlermeldung abbrechen. Erweitern Sie dazu die Funktionen um sinnvolle
 Fallunterscheidungen und Fehlermeldungen.
 
-\section{Bbedingte Ausdrücke}
+\section{Bedingte Ausdrücke}
 Schreiben Sie eine Funktion vom Typ \lstinline|Integer -> Bool|, die zu einer gegebenen Jahreszahl prüft, ob sie im Gregorianischen Kalender ein Schaltjahr ist oder nicht.
 
 Pseudocode:
@@ -358,7 +75,7 @@ else
 \subsection{}
 Verwenden Sie hierfür nur If-Then-Else-Ausdrücke.
 \subsection{}
-Verwenden Sie hierfür nur Guards
+Verwenden Sie hierfür nur Guards.
 \subsection{}
 Verwenden Sie hierfür weder If-Then-Else-Ausdrücke noch Guards, sondern die
 booleschen Operatoren.
@@ -366,18 +83,18 @@ booleschen Operatoren.
 \subsection{}
 Zur Bestimmung der Nullstellen von quadratischen Gleichungen
 der Form $ax^2 + bx + c$ gibt es neben der bekannten „p-q-Formel“ 
-(mit $p = \frac{b}{a}$ und $q = \frac{c}{a}$) auch die so genannte „a-b-c-Formel“
+(mit $p = \frac{b}{a}$ und $q = \frac{c}{a}$) auch die sogenannte „a-b-c-Formel“
 \begin{displaymath}
 x_{1, 2} = \frac{-b \pm \sqrt{b^2 - 4\;ac}}{2a}
 \end{displaymath}
 Setzen Sie diese Berechnung in Haskell zunächst mit \textbf{let-in} und dann mit \textbf{where} um.
 Dabei sollen $x_1$ und $x_2$ als 2-Tupel zurückgegeben werden.
 \subsection{}
-Seit der Veröffentlichung der Gaußschen Wochentagsformel haben verschiedene Mathematiker und Astronomen eine ganze Reihe vergleichbarer Formeln aufgestellt. Diese benötigen meist vorausberechnete Tabellen und verwenden komplizierte Sonderregeln, z.B. für Schaltjahre. Eine im Vergleich dazu sehr elegante Formel wurde 1972 von J. D. Robertson vorgestellt. Diese wird im Folgenden beschrieben. Gegeben sei ein beliebiges Datum $(T, M, J)$ im Gregorianischen Kalender, wobei $T$ den Tag des Monats beginnend mit 1, $M$ den Monat des Jahres beginnend mit 1 und $J$ das Jahr bezeichnet. Dann lässt sich der Wochentag $W$ mit 0 $\equiv$ Sonntag, 1 $\equiv$ Montag, . . . , 6 $\equiv$ Samstag folgendermaßen berechnen:
+Seit der Veröffentlichung der Gaußschen Wochentagesformel haben verschiedene Mathematiker und Astronomen eine ganze Reihe vergleichbarer Formeln aufgestellt. Diese benötigen meist vorausberechnete Tabellen und verwenden komplizierte Sonderregeln, z.B. für Schaltjahre. Eine im Vergleich dazu sehr elegante Formel wurde 1972 von J. D. Robertson vorgestellt. Diese wird im Folgenden beschrieben. Gegeben sei ein beliebiges Datum $(T, M, J)$ im Gregorianischen Kalender, wobei $T$ den Tag des Monats beginnend mit 1, $M$ den Monat des Jahres beginnend mit 1 und $J$ das Jahr bezeichnet. Dann lässt sich der Wochentag $W$ mit 0 $\equiv$ Sonntag, 1 $\equiv$ Montag, . . . , 6 $\equiv$ Samstag folgendermaßen berechnen:
 \begin{displaymath}
 W = \left(D  + T + 77 + E + \left[\frac{B}{400}\right] - 2 \left[\frac{B}{100}\right]\right) \;mod\;7
 \end{displaymath}
-Dabei gelte folgendes:
+Dabei gelte Folgendes:
 \begin{align*}
 A &= M + 10\\
 B &= \left[\frac{M - 14}{12}\right] + J\\
@@ -388,7 +105,7 @@ E &= \left[\frac{5(B \; mod \; 100)}{4}\right]\\
 \lfloor x \rfloor &= max\{ z \in \mathbb{Z} | z \leq x\}\\
 \lceil x \rceil &= min\{ z \in \mathbb{Z} | z \geq x\}
 \end{align*}
-Schreiben Sie eine Haskell-Funktion \lstinline|robertson :: Integer -> Integer -> Integer -> Integer|, die gemäß der obigen Formel den Wochentag berechnet. Sie können sich mit der Hilfsfunktion $wochentag$ den Wochentag als Text anzeigenlassen. Sie erhalten z.B. folgende Ausgaben:
+Schreiben Sie eine Haskell-Funktion \lstinline|robertson :: Integer -> Integer -> Integer -> Integer|, die gemäß der obigen Formel den Wochentag berechnet. Sie können sich mit der Hilfsfunktion $wochentag$ den Wochentag als Text anzeigen lassen. Sie erhalten z.B. folgende Ausgaben:
 \begin{itemize}
 \item \lstinline|wochentag 19 6 1623| $\to$ \lstinline|"Montag"|
 \item \lstinline|wochentag 19 1 2038| $\to$ \lstinline|"Dienstag"|
@@ -406,170 +123,16 @@ nicht = not
 \end{lstlisting}
 
 Programmieren Sie die zweistelligen booleschen Funktionen \lstinline|oder|, \lstinline|darausFolgt|, \lstinline|genauDannWenn| und \lstinline|entwederOder| unter ausschließlicher Verwendung von \lstinline|und|
-und \lstinline|nicht|. Testen Sie Ihre Funktionen.
+sowie \lstinline|nicht|. Testen Sie Ihre Funktionen.
 
 \section{Rekursion über den natürlichen Zahlen}
 In den folgenden Teilaufgaben dürfen keine anderen arithmetischen Operationen als die beiden vordefinierten Funktionen \lstinline|succ| und \lstinline|pred| verwendet werden.
 \subsection{}
-Programmieren Sie eine Funktion \lstinline|plus :: Integer -> Integer -> Integer| welche Summen natürlicher Zahlen berechnet. Nutzen Sie aus, dass \lstinline|a + b = succ(pred a + b)| und \lstinline|0 + a = a| gilt.
+Programmieren Sie eine Funktion \lstinline|plus :: Integer -> Integer -> Integer|, welche Summen natürlicher Zahlen berechnet. Nutzen Sie aus, dass \lstinline|a + b = succ(pred a + b)| und \lstinline|0 + a = a| gilt.
 \subsection{}
-Programmieren Sie eine Funktion \lstinline|mal :: Integer -> Integer -> Integer| welche Produkte natürlicher Zahlen berechnet. Nutzen Sie aus, dass \lstinline|a * b = b + (pred a * b)| und \lstinline|0 * a = 0| bzw. \lstinline|1 * a = a| gilt.
+Programmieren Sie eine Funktion \lstinline|mal :: Integer -> Integer -> Integer|, welche Produkte natürlicher Zahlen berechnet. Nutzen Sie aus, dass \lstinline|a * b = b + (pred a * b)| und \lstinline|0 * a = 0| bzw. \lstinline|1 * a = a| gilt.
 \subsection{}
-Programmieren Sie eine Funktion \lstinline|hoch :: Integer -> Integer -> Integer| welche Potenzen natürlicher Zahlen berechnet. 
+Programmieren Sie eine Funktion \lstinline|hoch :: Integer -> Integer -> Integer|, welche Potenzen natürlicher Zahlen berechnet. 
 \subsection{}
-Die Reihe \lstinline|plus|, \lstinline|mal|, \lstinline|hoch| kann beliebig fortgesetzt werden. Programmieren Sie eine Funktion \\\lstinline|meta :: Integer -> Integer -> Integer -> Integer| sodass \lstinline|meta 0 a b| der Summe \lstinline|plus a b|, \lstinline|meta 1 a b| dem Produkt \lstinline|mal a b|, \lstinline|meta 2 a b| der Potenz \lstinline|hoch a b| usw. entspricht. Was berechnet \lstinline|meta 3 a b|?
-\newpage
-\section{Datentypen}
-\subsection{}
-Geben Sie für die folgenden Typdeklarationen die Namen und Typen der automatisch generierten Konstruktoren und Selektoren an:
-\begin{lstlisting}
-data Ampelfarbe = Rot | Gelb | Gruen
-data Menge = Stueck Integer | Kilogramm Double | Liter Double
-data HausOderPostfach = Haus {
-    strasse :: String,
-    hausNummer :: Integer
-  }
-  | Postfach {
-    postfachNummer :: Integer
-  }
-data Adresse = Adresse {
-    hausOderPostfach :: HausOderPostfach,
-    ort :: String,
-    plz :: Integer
-  }
-\end{lstlisting}
-\subsection{}
-Geben Sie für den Datentyp Menge eine äquivalente Deklaration an, bei der automatisch Selektorfunktionen generiert werden. Wählen Sie sinnvolle Namen für die Selektorfunktionen.
-\subsection{}
-Geben Sie für die Datentypen HausOderPostfach und Adresse äquivalente Deklarationen an, bei denen nicht automatisch Selektoren generiert werden.
-\subsection{}
-Programmieren Sie aufbauend auf den Typdeklarationen aus Teilaufgabe 1 Selektorfunktionen mit den folgenden Signaturen:\\
-\begin{lstlisting}
-strasseVonAdresse :: Adresse -> String
-postfachNummerVonAdresse :: Adresse -> Integer
-\end{lstlisting}
-\section{Pattern-Matching}
-Gegeben sind die folgenden Typdeklarationen:
-\begin{lstlisting}
-data SI = SI String Integer
-data SIListe = Leer | NichtLeer SI SIListe
-data VielleichtSI = Nicht | Doch SI
-\end{lstlisting}
-\subsection{}
-Bestimmen Sie die Typen der Variablen in den folgenden Mustern. Begründen Sie
-Ihre Antworten kurz.
-\begin{lstlisting}
-loesche :: SI -> SIListe -> SIListe
-loesche a Leer = error "nicht da"
-loesche (SI b c) (NichtLeer (SI d e) f ) 
-               | b == d && c == e = f
-               | otherwise        = NichtLeer (SI d e) (loesche (SI b c) f )
-
-ersetze :: SI -> SIListe -> SIListe
-ersetze g Leer = Leer
-ersetze h@(SI i _) (NichtLeer j@(SI k _) l) = 
-               if i == k then NichtLeer h (ersetze h l)
-                         else NichtLeer j (ersetze h l)
-                                                        
-findeAnIdx :: Integer -> SIListe -> VielleichtSI
-findeAnIdx _ Leer                        = Nicht
-findeAnIdx m (NichtLeer n o) | m == 0    = Doch n
-                             | otherwise = findeAnIdx ( pred m) o
-\end{lstlisting}
-Hinweis:\\
-Das $@$ bindet den "`zerlegten"' Datentyp an den vorstehenden Bezeichner, damit dieser nicht wieder zusammen gesetzt werden muss.
-\subsection{}
-Gegeben sind folgende Definitionen:
-\begin{lstlisting}
-liste1 = NichtLeer (SI "Bert" 7)
-         (NichtLeer (SI "Bianca" 9)
-         (NichtLeer (SI "Bert" 7) Leer))
-liste2 = NichtLeer (SI "Bert" 8)
-         (NichtLeer (SI "Robert" 7) Leer)
-liste3 = NichtLeer (SI "Robert" 8)
-         (NichtLeer (SI "Robert" 7) Leer)
-\end{lstlisting}
-Geben Sie die Resultate folgender Funktionsanwendungen an. Begründen Sie Ihre
-Antworten kurz.\\
-a) 
-\begin{lstlisting}
-loesche (SI "Bert" 7) liste1
-\end{lstlisting}
-b)
-\begin{lstlisting}
-ersetze (SI "Robert" 9) liste2
-\end{lstlisting}
-c)
-\begin{lstlisting}
-ersetze (SI "Robert" 9) liste3
-\end{lstlisting}
-d)
-\begin{lstlisting}
-findeAnIdx 1 liste3
-\end{lstlisting}
-\section{Arithmetische Ausdrücke}
-Wir betrachten einen rekursiven Datentyp \lstinline|Ausdruck|, dessen Werte arithmetische Ausdrücke darstellen. Als Operationen sind Addition, Subtraktion und Multiplikation zugelassen, atomare Einheiten können Konstanten und Variablen sein. Die Deklaration
-von \lstinline|Ausdruck| ist wie folgt:
-\begin{lstlisting}
-data Ausdruck = Konstante Integer
-  | Variable String
-  | Summe Ausdruck Ausdruck
-  | Differenz Ausdruck Ausdruck
-  | Produkt Ausdruck Ausdruck
-  deriving (Show) -- ermoeglicht Ausgabe der Werte im GHCi
-\end{lstlisting}
-Der Ausdruck $x + (3 - x) \cdot y$ wird beispielsweise repräsentiert durch:
-\begin{lstlisting}
-Summe (Variable "x") (Produkt (Differenz (Konstante 3) (Variable "x")) 
-  (Variable "y"))
-\end{lstlisting}
-\subsection{}
-Geben Sie die Repräsentationen folgender arithmetischer Ausdrücke an:\\
-a) $-x$\\
-b) $3 \cdot x + y$\\
-c) $3 \cdot (x + y)$\\
-d) $3 + x \cdot y$
-\subsection{}
-Geben Sie die arithmetischen Ausdrücke an, die folgendermaßen repräsentiert
-werden:\\
-a) \begin{lstlisting}
-Produkt (Differenz (Variable "x") (Konstante 0)) (Variable "y")
-\end{lstlisting}
-b) \begin{lstlisting}
-Differenz (Variable "x") (Produkt (Konstante 0) (Variable "y"))
-\end{lstlisting}
-c) \begin{lstlisting}
-Summe (Produkt (Konstante 3) (Variable "z")) (Konstante 5)
-\end{lstlisting}
-\subsection{}
-Programmieren Sie eine Haskell-Funktion \lstinline|ausdruckNachString::Ausdruck -> String|
-welche arithmetische Ausdrücke in Zeichenfolgen konvertiert. Die ausgegebenen
-Zeichenfolgen sollen die arithmetischen Ausdrücke in Haskell-Syntax darstellen. Es ist z.B. folgendes möglich:
-\begin{lstlisting}
-ausdruckNachString (Differenz (Konstante 3) (Variable "x")) = "3 - x"
-\end{lstlisting}
-Hinweis:
-Zum Aneinanderhängen von Zeichenfolgen kann der Operator \lstinline|++| verwendet werden.
-\begin{lstlisting}
-(++) :: String -> String -> String
-\end{lstlisting}
-Ganzzahlen können durch Anwenden der Funktion \lstinline|show| in
-ihre Zifferndarstellung konvertiert werden. Es ergibt sich beispielsweise
-\begin{lstlisting}
-show 325 = "325"
-\end{lstlisting}
-\section{Rekursion über Listen}
-Die folgenden Teilaufgaben sollen ohne Verwendung vordefinierter Bibliotheksfunktionen gelöst werden. Berücksichtigen Sie, dass die zu programmierenden Funktionen nicht für alle Eingaben sinnvoll definiert sind. In diesen Fällen sollen entsprechende Fehlermeldungen ausgegeben werden.
-\subsection{}	
-Programmieren Sie eine Haskell-Funktion \lstinline|elementAnIdx :: Integer -> [el] -> el|, die zu einem Index \lstinline|i| und einer Liste das i-te Element dieser Liste bestimmt. Das erste Element einer nichtleeren Liste habe dabei den Index $0$. Es ergibt sich zum Beispiel:\\
-\lstinline|elementAnIdx 2 [3, 4, 5, 6] = 5|
-\subsection{}
-Programmieren Sie eine Haskell-Funktion \lstinline|snoc :: [el] -> el -> [el]|, die an eine Liste ein weiteres Element anhängt. Es ergibt sich zum Beispiel:\\
-\lstinline|snoc [1, 2, 3] 5 = [1, 2, 3, 5]|
-\subsection{}
-Programmieren Sie eine Haskell-Funktion \lstinline|rueckwaerts :: [el] -> [el]|, welche eine Liste umdreht, die Elemente der Liste also in umgekehrter Reihenfolge zurück gibt.
-\subsection{}
-Programmieren Sie eine Haskell-Funktion \lstinline|praefix :: Integer -> [el] -> [el]|, die für eine gegebene Zahl $n$ und eine Liste $l$ die Liste der ersten $n$ Elemente von $l$ zurück gibt.
-\subsection{}
-Programmieren Sie eine Haskell-Funktion \lstinline|suffix :: Integer -> [el] -> [el]|, die für eine Zahl $n$ und eine Liste $l$ die Liste der letzten $n$ Elemente von $l$ zurückgibt.
+Die Reihe \lstinline|plus|, \lstinline|mal|, \lstinline|hoch| kann beliebig fortgesetzt werden. Programmieren Sie eine Funktion \\\lstinline|meta :: Integer -> Integer -> Integer -> Integer|, sodass \lstinline|meta 0 a b| der Summe \lstinline|plus a b|, \lstinline|meta 1 a b| dem Produkt \lstinline|mal a b|, \lstinline|meta 2 a b| der Potenz \lstinline|hoch a b| usw. entspricht. Was berechnet \lstinline|meta 3 a b|?
 \end{document}

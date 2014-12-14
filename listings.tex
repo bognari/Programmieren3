@@ -1,0 +1,22 @@
+\usepackage{listings}
+\usepackage{color}
+\usepackage{pxfonts}
+
+\definecolor{mygreen}{RGB}{51,141,120}
+\definecolor{myblue}{RGB}{0,128,180}
+\definecolor{myviolet}{RGB}{118,0,118}
+
+\lstset{ %
+  language=Haskell,
+  backgroundcolor=\color{white},         % choose the background color
+  basicstyle=\ttfamily\footnotesize,     % size of fonts used for the code
+  numbers=none,
+  breaklines=true,                       % automatic line breaking only at whitespace
+  captionpos=b,                          % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  escapeinside={\%*}{*)},                % if you want to add LaTeX within your code
+  keywordstyle=\color{myblue}\bfseries, % keyword style
+  stringstyle=\color{myviolet},    % string literal style
+  frame=single,
+  tabsize=2
+}

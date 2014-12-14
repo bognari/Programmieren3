@@ -1,8 +1,28 @@
-\subtitle{Tag drei - noch etwas mehr} 
-\date{26.03.2014}
+\documentclass[fleqn,11pt,aspectratio=43]{beamer}
+\input{beamerHeader}
 
-\begin{frame}[plain]
+\title{Programmieren für Fortgeschrittene - \\eine Einführung in Haskell}
+
+\author[Stephan Mielke]{\emph{Stephan Mielke}}
+\institute[TU Braunschweig, IPS]{Technische Universität Braunschweig, IPS}
+
+
+\begin{document}
+
+\subtitle{Teil drei - noch etwas mehr} 
+\date{15.12.2014}
+
+\begin{frame}[plain, noframenumbering]
 \titlepage
+\end{frame}
+
+\begin{frame}[noframenumbering]
+  \scriptsize
+  %\frametitle{\insertsectionhead}  
+  \frametitle{Überblick}  
+  %\begin{block}{\vspace*{-2ex}}
+    \tableofcontents[currentsection,sectionstyle=show, hideallsubsections]
+  %end{block} 
 \end{frame}
 
 \section{Typkonstruktoren}
@@ -88,7 +108,7 @@ Green  :: Color
 \begin{block}{Kurz}
 \lstinline|data Point = Point Double Double|
 \end{block}
-\vspace*{-3ex}
+\vspace*{-1ex}
 }
 
 \begin{block}{\vspace*{-3ex}}
@@ -382,7 +402,7 @@ filter (x:xs) | ok x      = x : filter xs
               where
                 ok x = (mod x 2) == 1
 \end{lstlisting}
-\vspace*{-3ex}
+\vspace*{-1ex}
 \begin{block}{\vspace*{-3ex}}
 Was macht diese Funktion?\\
 Was ist der Funktionskopf von \lstinline|ok|?\\
@@ -749,3 +769,7 @@ instance Ord Buch where
 %\rotatebox{30}{\textcolor{red}{{\fontsize{100}{40} \selectfont Ende}}}
 %\end{center}
 %\end{frame}
+
+\input{danke}
+
+\end{document}

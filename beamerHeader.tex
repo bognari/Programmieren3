@@ -1,0 +1,40 @@
+\input{config.tex}
+
+\usetheme[%
+  %cmyk,%<cmyk/rgbprint>,          Auswahl des Farbmodells
+  orange,%<blue/orange/green/violet> Auswahl des Sekundärfarbklangs
+  %dark,%<light,medium>        Auswahl der Helligkeit
+  %colorhead,%    Farbig hinterlegte Kopfleiste
+  %colorfoot,%    Farbig hinterlegt Fußleiste auf Titelseite
+  %colorblocks,%   Blöcke Farbig hinterlegen
+  %nopagenum,%    Keine Seitennumer in Fußzeile
+  %nodate,%       Kein Datum in Fußleiste
+  %tocinheader,%   Inhaltsverzeichnis in Kopfleiste
+  %tinytocinheader,% kleines Kopfleisten-Inhaltsverzeichnis
+  %widetoc,%      breites Kopfleisten-Inhaltsverzeichnis
+  %narrowtoc,%    schmales Kopfleisten-Inhaltsverzeichnis
+  %nosubsectionsinheader,%  Keine subsections im Kopfleisten-Inhaltsverzeichnis
+  %nologoinfoot,% Kein Logo im Fußbereich darstellen
+  ]{tubs}
+
+\titlegraphic[scaled]{\includegraphics{img/titlepicture.jpg}}
+\logo{\includegraphics{img/logo_mit_text.pdf}}
+
+\AtBeginSection[]{
+  \begin{frame}[noframenumbering] 
+  		\scriptsize
+  		\frametitle{Überblick}  
+  		\tableofcontents[currentsection, hideallsubsections]
+  \end{frame}
+}
+
+\AtBeginSubsection[]{
+  \begin{frame}[noframenumbering]
+    	\scriptsize 
+  		\frametitle{\insertsectionhead - \insertsubsectionhead} 
+  		\tableofcontents[ 
+  			currentsubsection, 
+  		    sectionstyle=show/hide, 
+  		   	subsectionstyle=show/shaded/hide] 
+  \end{frame}
+}

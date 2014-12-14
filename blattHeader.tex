@@ -1,0 +1,27 @@
+\input{config.tex}
+
+\usepackage{float}
+\usepackage{geometry}
+
+\geometry{verbose,                     % zeigt die eingestellten Parameter beim
+                                       % Latexlauf an
+      paper=a4paper,                   % Papierformat
+      top=25mm,                        % Rand oben
+      left=25mm,                       % Rand links
+      right=25mm,                      % Rand rechts
+      bottom=40mm,                     % Rand unten
+      pdftex                           % schreibt das Papierformat in die
+                                       % Ausgabe damit Ausgabeprogramm
+                                       % Papiergröße erkennt
+}
+
+\usepackage[%
+  automark,
+  headsepline,                %% Separation line below the header
+  footsepline,               %% Separation line above the footer
+  markuppercase
+]{scrpage2}
+
+\automark[subsection]{section}
+\pagestyle{scrheadings}
+\renewcommand*\thesubsection{\roman{subsection})}

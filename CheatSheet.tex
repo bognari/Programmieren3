@@ -1,0 +1,237 @@
+\documentclass[
+  10pt,                   % Schriftgröße
+  DIV12,
+  german,                 % für Umlaute, Silbentrennung etc.
+  oneside,                % einseitiges Dokument
+  %titlepage,              % es wird eine Titelseite verwendet
+  parskip=half,           % Abstand zwischen Absätzen (halbe Zeile)
+  headings=normal,        % Größe der Überschriften verkleinern
+  captions=tableheading,  % Beschriftung von Tabellen unterhalb ausgeben
+  %final                   % Status des Dokuments (final/draft)
+]{scrartcl}      
+
+\input{blattHeader.tex}
+
+%\lehead{\bfseries\pagemark}    %% Top left on even pages
+%\lohead{\bfseries\headmark}    %% Top left on odd pages
+%\rehead{\bfseries\headmark}    %% Top right on even pages
+%\rohead{\bfseries\pagemark}    %% Top right on odd pages
+\chead{Programmieren für Fortgeschrittene \\ Cheat Sheet}                       %% Top center
+
+\begin{document}
+
+
+\section{Kommentare}
+\begin{itemize}
+\item Zeilenkommentar: \lstinline|-- Text| 
+\item Blockkommentar: \lstinline|{- Text -}|
+\end{itemize}
+
+\section{Konstanten}
+\begin{minipage}[hbt]{6cm}
+\centering
+\begin{lstlisting}
+pi :: Double
+pi = 3.14
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[hbt]{8cm}
+\centering
+\scalebox{0.7}{\input{images/Konstante.tex}}
+\end{minipage}
+
+\section{Funktionen}
+\begin{minipage}[hbt]{6cm}
+\centering
+\begin{lstlisting}
+plus :: Int -> Int -> Int
+plus a b = a + b
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[hbt]{8cm}
+\centering
+\scalebox{0.6}{\input{images/Funktion.tex}}
+\end{minipage}
+
+\section{If-Then-Else}
+\begin{minipage}[hbt]{6cm}
+\centering
+\begin{lstlisting}
+ggT a b = if b == 0 
+        then a 
+        else ggT b (mod a b)
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[hbt]{8cm}
+\centering
+\scalebox{0.7}{\input{images/ifthenelse.tex}}
+\end{minipage}
+
+\section{Case Of}
+\begin{minipage}[hbt]{6cm}
+\centering
+\begin{lstlisting}
+ggT a b = case b of 
+        0 -> a
+        _ -> ggT b (mod a b)
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[hbt]{8cm}
+\centering
+\scalebox{0.8}{\input{images/caseof.tex}}
+\end{minipage}
+
+\section{Pattern Matching}
+\begin{minipage}[hbt]{6cm}
+\centering
+\begin{lstlisting}
+ggT a 0 = a
+ggT a b = ggT b (mod a b)
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[hbt]{8cm}
+\centering
+\scalebox{0.8}{\input{images/pattern.tex}}
+\end{minipage}
+
+\section{Guards}
+\begin{minipage}[hbt]{6cm}
+\centering
+\begin{lstlisting}
+ggT a b | b == 0    = a
+        | otherwise = 
+            ggT b (mod a b) 
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[hbt]{8cm}
+\centering
+\scalebox{0.8}{\input{images/guards.tex}}
+\end{minipage}
+
+\section{Module}
+\begin{lstlisting}
+module Wurf(weite, square) where
+weite :: Double -> Double -> Double
+weite v0 phi = ((square v0) / 9.81) * sin (2 * phi)
+square :: Double -> Double
+square x = x * x
+
+module Foo where
+import Wurf hiding (weite)
+bar ... = ... (square a) ...
+\end{lstlisting}
+\section{Eigene Datentypen}
+\begin{lstlisting}
+data Point = Point{x :: Double, y :: Double}
+
+data Shape = Circle{center :: Point, 
+    radius :: Double}
+  | Rectangle{point :: Point, width :: Double, 
+    height :: Double}
+  | Triangle{point1 :: Point, point2 :: Point, 
+    point3 :: Point}
+\end{lstlisting}
+\section{Typparameter}
+Keine Typparameter in Datentyp-Definitionen!
+\begin{lstlisting}
+data (Eq a, Ord a) => Pair a b = 
+  PairConst {first :: a, second :: b} deriving(Show)
+\end{lstlisting}
+
+Besser:
+\begin{lstlisting}
+data Pair a b = PairConst a b deriving(Show)
+
+instance Eq a => Eq (Pair a b) where
+  (PairConst i1 _) == (PairConst i2 _) = i1 == i2
+
+instance Ord a => Ord (Pair a b) where
+   (PairConst i1 _) <= (PairConst i2 _) = i1 <= i2
+
+bubbleSort :: (Ord a) => [(Pair a b)] -> [(Pair a b)]
+bubbleSort [] = []
+bubbleSort (x:xs) = step $ foldl go (x,[]) xs where
+  go (y,acc) x = (min x y, max x y : acc)
+  step (x,acc) = x : bubbleSort acc
+\end{lstlisting}
+
+\$ ist nichts anderes als: 
+\begin{lstlisting}
+(7 + 6) / (5 + 3) = (7 + 6) / $ 5 + 3
+\end{lstlisting}
+Die "`Klammerung"' geht bis zum Zeilenende.
+\section{Listen}
+%\begin{minipage}[hbt]{7cm}
+%\centering
+\begin{lstlisting}
+primes = sieve [2..]
+  where
+    sieves (p:xs) = p:sieves [x|x<- xs, mod x p > 0]
+\end{lstlisting}
+%\end{minipage}
+%\hfill
+%\begin{minipage}[hbt]{7cm}
+%\centering
+\begin{center}
+\scalebox{1}{\input{images/listgenerator.tex}}
+\end{center}
+%\end{minipage}
+
+\section{Operationen}
+\begin{table}[H]
+	\centering
+    \begin{tabular}{lll} %\hline
+        Bezeichner & Typ	& Bedeutung\\ \hline
+        \lstinline|(+)|        & \lstinline|a -> a -> a| & Addition          \\ 
+        \lstinline|(-)|        & \lstinline|a -> a -> a| & Subtraktion       \\ 
+        \lstinline|(*)|        & \lstinline|a -> a -> a| & Multiplikation \\ 
+        \lstinline|negate|     & \lstinline|a -> a|      & Negation        \\ 
+        \lstinline|abs|        & \lstinline|a -> a|      & Absolutbetrag     \\ 
+        \lstinline|signum|     & \lstinline|a -> a|      & Vorzeichenbildung %\\ \hline
+    \end{tabular}	
+\caption{Für die Typen \lstinline|Int|, \lstinline|Integer|, \lstinline|Float| und \lstinline|Double|}
+\end{table}
+\begin{table}[H]
+	\centering
+    \begin{tabular}{lll} %\hline
+        Bezeichner & Typ         & Bedeutung         \\ \hline
+		\lstinline|succ| 	& \lstinline|a -> a| & Nachfolgerbildung \\
+		\lstinline|pred| 	& \lstinline|a -> a| & Vorgängerbildung\\
+		\lstinline|div| 	& \lstinline|a -> a -> a| & ganzzahlige Division, Ergebnis wird abgerundet\\
+		\lstinline|mod| 	& \lstinline|a -> a -> a| & zur ganzzahligen Division \lstinline|div| gehörender Rest\\
+		\lstinline|quot| 	& \lstinline|a -> a -> a| & ganzzahlige Division, Ergebnis wird Richtung 0 gerundet\\
+		\lstinline|rem| 	& \lstinline|a -> a -> a| & zur ganzzahligen Division \lstinline|quot| gehörender Rest %\\ \hline
+    \end{tabular}	
+\caption{Für die Typen \lstinline|Int| und \lstinline|Integer|}
+\end{table}
+\begin{table}[H]
+	\centering
+    \begin{tabular}{lll} %\hline
+        Bezeichner & Typ         & Bedeutung         \\ \hline
+		\lstinline|(/)|	 	& \lstinline|a -> a -> a| & Division\\
+		\lstinline|recip| 	& \lstinline|a -> a| & Kehrwertbildung\\
+		\lstinline|(**)| 	& \lstinline|a -> a -> a| & Potenzieren\\
+		\lstinline|sqrt| 	& \lstinline|a -> a| & Ziehen der Quadratwurzel %\\ \hline
+    \end{tabular}
+\caption{Für die Typen \lstinline|Float| und \lstinline|Double|}
+\end{table}
+\begin{table}[H]
+	\centering
+    \begin{tabular}{lll} %\hline
+        Bezeichner & Typ         & Bedeutung         \\ \hline
+		\lstinline!(||)!	& \lstinline|a -> a -> a| & Oder\\
+		\lstinline|(&&)| 	& \lstinline|a -> a -> a| & Und\\
+		\lstinline|not| 	& \lstinline|a -> a| & Verneinung %\\ \hline
+    \end{tabular}
+\caption{Für den Typ \lstinline|Bool|}
+\end{table}
+\newpage
+\renewcommand*\thesubsection{\alph{subsection})}
+
+\end{document}

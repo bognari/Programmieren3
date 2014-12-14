@@ -114,7 +114,7 @@ Terminiert die Funktion?
 \frametitle{Funktionen höherer Ordnung (HOF)}
 \begin{lstlisting}
 filter :: (Int -> Bool) -> [Int] -> [Int]
-filter do []     = 0
+filter do []     = []
 filter do (x:xs) | do x      = x : filter do xs
                  | otherwise = filter do xs
 \end{lstlisting}
@@ -158,123 +158,6 @@ Die Funktion wird auf das Resultat von dem Ausdruck der "`rechts"' vom Operator 
 \end{block}
 \end{frame}
 
-\section{Currying - für Fortgeschrittene}
-\begin{frame}
-\frametitle{Currying}
-\begin{block}{\vspace*{-3ex}}
-\begin{itemize}
-  \item Currying bzw. Schönfinkeln ist das Zusammenfassen von Argumenten
-  \item Wird in Sprachen und Kalkülen verwendet, in dem nur ein Argument erlaubt ist.\\
-  		z.B. in der $\lambda$-Notation
-  \item Die Form und Art des Zusammenfassens ist unterschiedlich 
-\end{itemize}
-\end{block}
-\end{frame}
-
-\begin{frame}
-\frametitle{Currying in der Lambda-Notation}
-\begin{block}{\vspace*{-3ex}}
-\begin{itemize}
-  \item $\lambda\;x\;y\;z\;.\;x\;y\;z$
-  \item wird aufgespalten zu
-  \item <2-7> $\lambda\;x\;.\;\lambda\;y\;.\;\lambda\;z\;.\;x\;y\;z$
-  \item <3-7> wird ausgewertet mit den Argumenten $a\;b\;c$
-  \item <4-7> $(\lambda\;x\;.\;\lambda\;y\;.\;\lambda\;z\;.\;x\;y\;z) a\;b\;c$
-  \item <5-7> $(\lambda\;y\;.\;\lambda\;z\;.\;a\;y\;z) b\;c$
-  \item <6-7> $(\lambda\;z\;.\;a\;b\;z) c$
-  \item <7> $(a\;b\;c)$
-\end{itemize}
-\end{block}
-\end{frame}
-
-\begin{frame}
-\frametitle{Currying in Haskell}
-\begin{block}{\vspace*{-3ex}}
-\begin{itemize}
-  \item Auch wenn wir in Haskell Funktionen mehrere Argumente übergeben können
-  \item Intern hat jede Funktion nur ein oder kein Argument!
-\end{itemize}
-\end{block}
-\end{frame}
-
-\begin{frame}
-\frametitle{Currying in Haskell}
-\begin{block}{Aufruf}
-\lstinline|:t xor True|
-\end{block}
-\begin{block}{Ausgabe}
-\lstinline|xor True :: Bool -> Bool|
-\end{block}
-\only<1>{\begin{block}{Aufruf}
-\lstinline|(xor True) False|
-\end{block}
-\begin{block}{Ausgabe}
-\lstinline|True|
-\end{block}}
-\only<2>{\begin{block}{Aufruf}
-\lstinline|(xor True) True|
-\end{block}
-\begin{block}{Ausgabe}
-\lstinline|False|
-\end{block}}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{Currying in Haskell}
-\begin{block}{\vspace*{-3ex}}
-\begin{itemize}
-  \item Currying erleichtert das Arbeiten mit Funktionen höherer Ordnung
-  \item Sehen wir uns folgendes Beispiel an
-\end{itemize}
-\end{block}
-\begin{lstlisting}
-map :: (a -> b) -> [a] -> [b]
-map _ []     = []
-map f (x:xs) = f x : map f xs
-\end{lstlisting}
-\begin{block}{Wie würdet ihr \lstinline|map| aufrufen um jedes Element einer Liste um 2 zu erhöhen?}
-\only<2>{\lstinline|map (+ 2) [1..10]|}
-\end{block}
-\end{frame}
-
-\begin{frame}
-\frametitle{Currying in Haskell}
-\begin{block}{\vspace*{-3ex}}
-\begin{itemize}
-  \item Soll Currying unterbunden werden, so muss die Anzahl der Argumente von Anfang an $\leq 1$ sein
-  \item <1-3> \lstinline|f :: Int -> Int -> Int|
-  \item <1-3> Hier für kommen Tupel ins Spiel
-  \item <2-3> \lstinline|f' :: (Int, Int) -> Int|
-  \item <2-3> Dieses "`Abändern"' ist jedoch nur bei eigenen Funktionen möglich
-  \item <3> Funktionen können dies jedoch für uns übernehmen
-\end{itemize}
-\end{block}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{Currying in Haskell}
-\begin{block}{\lstinline|curry|}
-\begin{lstlisting}
-curry :: ((a, b) -> c) a -> b -> c
-curry f x y = f (x, y)
-\end{lstlisting}
-\end{block}
-\pause
-\begin{block}{\lstinline|uncurry|}
-\begin{lstlisting}
-uncurry :: a -> b -> c -> ((a, b) -> c)
-uncurry f t = f (fst t) (snd t)
-\end{lstlisting}
-\end{block}
-\pause
-\vspace*{-3ex}
-\begin{block}{\vspace*{-3ex}}
-\begin{itemize}
-  \item \lstinline|fst t| gibt das erste Element aus \lstinline|t|
-  \item \lstinline|snd t| gibt das zweite Element aus \lstinline|t|
-\end{itemize}
-\end{block}
-\end{frame}
 
 \section{Lambda Ausdrücke}
 \begin{frame}

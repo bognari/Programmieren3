@@ -1,0 +1,61 @@
+\documentclass{beamer}
+\input{beamerHeader.tex}
+\usepackage{lmodern}
+\usepackage{booktabs}
+
+\newcommand{\extractHTML}[1]{\extractcolorspecs{#1}{\model}{\mycolor} \convertcolorspec{\model}{\mycolor}{HTML}\printcol \printcol}
+\newcommand{\extractRGB}[1]{\extractcolorspecs{#1}{\model}{\mycolor} \convertcolorspec{\model}{\mycolor}{RGB}\printcol \printcol}
+\newcommand{\extractCMYK}[1]{\extractcolorspecs{#1}{\model}{\mycolor} \convertcolorspec{\model}{\mycolor}{cmyk}\printcol \printcol}
+\newcommand{\colrow}[1]{{\color{#1}#1} & \extractRGB{#1} & \extractCMYK{#1} & \extractHTML{#1}}
+
+\setbeamercolor{block title alerted}{fg=yellow}
+
+% Create Color definition From Template: 
+% #1 template name, 
+% #2 foreground color name
+% #3 background color name
+\newcommand{\ccft}[3]{
+\usebeamercolor{#1}
+\definecolor{#2}{named}{fg}
+\definecolor{#3}{named}{bg}
+}
+
+\ccft{block title}{myblock title fg}{myblock title bg}
+\ccft{block body}{myblock body fg}{myblock body bg}
+\ccft{block title alerted}{myblock title alerted fg}{myblock title alerted bg}
+\ccft{palette secondary}{palette secondary fg}{palette secondary bg}
+
+
+\usebeamercolor{block body}
+
+\begin{document}
+\begin{frame}{Color definitions}
+\footnotesize
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+\multicolumn{1}{c|}{\textsc{Color}} &
+\multicolumn{1}{c}{\textsc{RGB}} &
+\multicolumn{1}{c}{\textsc{CMYK}} &
+\multicolumn{1}{c}{\textsc{HTML}}\\
+\midrule 
+\colrow{tuGreenDark80}\\
+\colrow{tuBlueMedium100}\\
+\colrow{tuVioletMedium}\\
+\colrow{example text.fg}\\
+\colrow{normal text.fg}\\
+\colrow{myblock title fg}\\
+\colrow{myblock title bg}\\
+\colrow{myblock body fg}\\
+\colrow{myblock body bg}\\
+\colrow{myblock title alerted fg}\\
+\colrow{myblock title alerted bg}\\
+\colrow{palette secondary fg}\\
+\colrow{palette secondary bg}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\end{frame}    
+
+\end{document}

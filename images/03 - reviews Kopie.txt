@@ -1,0 +1,165 @@
+Review 1:
+Das Paper stellt verschiedene Methoden des Testens in der Softwareentwicklung vor und geht insbesondere auf das modellbasierte Testen (MBT) ein.
+In der Einleitung geben die Autoren an, was Softwaretests leisten können müssen und zeigen das Problem auf, dass oftmals sehr viele Testfälle benötigt werden. Außerdem wird ein grober Überblick über den Inhalt des Papers gegeben.
+Nun werden Modelle eingeführt. Insbesondere gehen die Autoren auf den Unterschied zwischen transitionsbasierten und Pre/Post Modellen ein und geben eine Anleitung welche Modelle wann zu wählen sind. Im Zuge der Pre/Post Modelle wird außerdem die B Machine eingeführt.
+Die Autoren fahren mit einer Motivation für Softwaretests fort und stellen einige Testverfahren fort. Es wird auf Vor- und Nachteile der unterschiedlichen Methoden eingegangen und die Verfahren werden verglichen.
+Nun folgt mit dem MBT das Hauptthema des Papers. Zunächst werden Vorteile des MBT genannt und das Verfahren ausführlich beschrieben. Weiterhin wird beschrieben, was bei der Wahl der Modelle zu beachten ist und wie Testfälle generiert werden können. Als Abschluss wird als Beispiel für MBT eine B Machine als Modell für ein mobiles Endgerät gezeigt.
+
+Der Text ist weitestgehend gut strukturiert. Modelle und Testverfahren werden vernünftig eingeführt und es existiert ein „roter Faden“. Abbildungen werden gut eingesetzt um das Verständnis für vorgestellte Verfahren zu erleichtern. Leider fehlen an einigen Stellen Begründungen, warum gerade diese Verfahren vorgestellt werden. Außerdem wird der Lesefluss relativ häufig durch Satzstellungs- und Rechtschreibfehler beeinträchtigt.
+Die Motivation für Softwaretests, die am Anfang von Kapitel 3 steht, würde ich in die Einleitung verschieben. Generell gibt die Einleitung keine wirkliche Motivation warum MBT wichtig ist.
+Kapitel 2 und 3 führen gut zu Kapitel 4 hin, sind jedoch insgesamt sehr lang. Da das Paper auch insgesamt etwas zu lang ist, würde ich empfehlen, hier zu kürzen.
+Kapitel 4 nennt die Vorteile von MBT und erklärt den Ablauf gut. Es wird jedoch versäumt auf eventuelle Nachteile oder Probleme einzugehen. Dies wird nur im Fazit ganz kurz angeschnitten. Beim Lesen ergab sich bei mir dadurch die Frage, warum MBT nicht immer verwendet wird.
+Das abschließende Beispiel halte ich in einem einführenden Text zu MBT für schlecht gewählt. Mir fiel es sehr schwer mich auf die Aspekte des Testens zu konzentrieren, weil das Beispiel aus sehr vielen Abkürzungen und komplizierten Sachverhalten besteht. Hier würde ich mir ein Beispiel wünschen wo das Testverfahren und nicht die zu testende Technik im Mittelpunk steht.
+Literaturverweise sind teilweise etwas spärlich. Insbesondere sollten aus Quellen übernommene Abbildungen in der Beschreibung referenziert werden, nicht im dazugehörigen Fließtext. Außerdem fehlen Links, wenn Abbildungen im Text referenziert werden.
+Auf Seite 2, „Level 3, Modelle mit Text:“ wird plötzlich von Programmcode gesprochen ohne dass klar wird, was genau gemeint ist. 
+
+Kleine Anmerkungen:
+S.1 Z.1: Softwaretest -> Softwaretests
+S.1 Z.1: entstzunehmender -> ernstzunehmender
+S.1 Z.5: z.B -> zum Beispiel
+S.1 Zielsetzung Z.3: unterschiedlichen -> unterschiedliche
+S.1 Zielsetzung Z.7: Abkürzung „MBT“ sollte beim ersten Auftreten des Wortes eingeführt werden
+S.2 2.1 Z.2: …eindeutig, so… -> …eindeutig und so…
+S.2 Level 1: Nach „Textuelle“ fehlt ein Nomen
+S.2 Level 1: Software Spezifikation -> Software-Spezifikation
+S.2 Level 3 Z.1: „ist fundiert“ klingt nicht gut, eventuell „…basiert auf…“?
+S.2 Level 3 Z.1 Diagramme -> Diagrammen
+S.2 Level 3 Z.4: syncronisiert -> synchronisiert
+S.3 Level 5 Z.3: Compilieren -> Kompilieren
+S.3 2.2 Z.1: Nach Notationen sollte ein Punkt gesetzt werden
+S.3 Pre/Post Z.2: usw. -> und so weiter
+S.3 Pre/Post Z.3 / Z.4 kenzeichnen -> kennzeichnen (2x)
+S.3 Transitionbasierte Notation Z.4: Singular und Plural vermischt
+S.4 Datenorientiertes System Z.3: diese -> sie
+S.4 Datenorientiertes System Z.2 Singular und Plural vermischt
+S.4 Kontrollorientierte Systeme Z.4: bzw. -> beziehungsweise
+S.4 Daten-… Z.7: OCL-Abkürzung wurde noch nicht eingeführt
+S.5 oben: Das als Formal zu schreiben wirkt merkwürdig
+S.5 UML SM Z.4: zufinden -> zu finden
+S.5 2.5 Punkt 1: Semantic -> Semantik
+S.5 2.5 Punkt 2: vielzahl -> Vielzahl
+S.5 2.5 Punkt 2: komerzieller -> kommerzieller
+S.7 Z.4: Falsches Komma nach Start
+S.7 3.1 Z.1: das Funktionieren klingt nicht gut
+S.7 Verarbeite die Tests…: Warum ist dieser Punkt Imperativ?
+S.7 Prüfen ob… Z.3: präziese -> präzise
+S7. Prüfen ob… Z.3: …dass sich die Testfälle… (Wortstellung)
+S.8 Manuelles Testen Z.3: immernoch -> immer noch
+S.9 Z.1: Personalkosten -> Personal-
+S.9 Capture/… Z.4: durchlauf -> Durchlauf
+S.9 Capture/… Z.5: Die -> Dies
+S.9 Scriptbasiertes Testen Z.8:  Nach Softwaresystem sollte der Satz getrennt werden
+S.10 Z.9: Hier durch -> Hierdurch
+S.10 Z.9: Erstellungszeit -> Erstellungs-
+S.10 Z.10: ganze -> Ganze
+S.10 Z.10: weiter geführt -> weitergeführt
+S.10 Z.10: Satzstellung
+S.10 Z.14f: Satzstellung
+S.11 Überschrift: Modellbasierte -> Modellbasiertes
+S.11 Z.4f: Satzstellung
+S.12 Z.1: Satzstellung
+S.12 Punkt 4: Als einziger Punkt kein Imperativ?
+S.12 Z.6: Satzstellung
+S.12 Modellieren Z.7: sicher zustellen -> sicherzustellen
+S.12 Generieren Z.9: Testfällte -> Testfälle
+S.12 Überschrift: Konkretisiere -> Konkretisieren
+S.12 Konkretisieren Z.4: Oder -> Alternativ
+S.12 Konkretisieren Z.6: das -> dass
+S.13 Z.1 Ändern -> Änderungen
+S.13 Analysieren Z.3: Nach Programm sollte der Satz getrennt werden
+S.13 Analysieren Z.5: das -> dass
+S.13 4.2 Z.4: nutzten -> nutzen
+S.13 4.2 Z.5. ansich -> an sich
+S.13 4.2 Z.6: von einander -> voneinander
+S.14 4.3 Z.2: Testziele -> Testzielen
+S.14 4.3 Z.2: -den (das Wort gehört da nicht hin)
+S.14 4.3 Z.2: den Ergebnissen -> die Ergebnisse
+S.14 4.3.1 Z.2: einige -> einige
+S.14 Datenabdeckungskriterium Z.4: Warum wird die Menge benannt wenn sie nicht weiter verwendet wird?
+S.15 Zufällige Generierung Z.1: Satzstellung
+S.15 Suchalgorithmen… Z.1: würd -> wird
+S.15 Online/… Z.3: offleine -> offline
+S.15 Online/… Z.4: Testgenererung -> Testgenerierung
+S.15 4.3.3 Z.3: generieten -> generierten
+S.15 4.3.3: Sicht Ausführung -> Sicht der Ausführung
+S.16 4.4 Z.2: ME (Mobilesendgerät) -> mobilen Endgerätes (ME)
+S.16 4.4.1 Z.2: nach Konstanten fehlt ein Verb
+S.16 4.4.1 Z.4f: nach gelesen -> nachgelesen
+S.19 4.5.4 Punkt 1: Filter -> Filtere
+S.21 Z.8: nocht -> nicht
+
+Fehlende Kommas:
+S.2 Level 1
+S.13 4.2 Z.9
+S.15 Online/… Z.4
+
+Review 2:
+In seiner Seminararbeit bearbeitet Stephan Mielke das Thema der Modellbasierten Testfallgenerierung.
+Nach einer kurzen Einleitung mit abgegrenzter Zielsetzung befasst er sich mit Modellen und erklärt deren
+Spezifikationslevel, Pre/Post und Transitionsbasierte Notationen und deren Auswahl anhand von
+datenorientierten oder kontrollorientierten Systemen. Außerdem gibt er einen Überblick über die Klasse der
+transitionsbasierten Modelle und den Aufbau des Pre/Post Modells in B.
+Im dritten Kapitel behandelt er das Testen, wobei er zuerst die Schwerpunkte des klassischen Testens
+erläutert und danach die verschieden Testarten Manuelles Testen, Capture/Replay Testen, Scriptbasiertes
+Testen und Keyword-Driven automatisiertes Testen mit Abbildungen und einem kurzen Text erklärt. Im Anschluss
+werden durch eine Tabelle, für jede Testart, die jeweiligen Probleme und Lösungen aufgeführt die diese mit
+sich bringt und die drei Anforderungen für eine bessere Testvariante aufgezählt.
+
+Kapitel 4 behandelt das Modellbasierte Testen wobei es anhand einer Abbildung den Testprozess verdeutlicht
+und die einzelnen Schritte  Modellieren des realen Systems in ein einfacheres Modell, Generieren von
+abstrakten Testfällen anhand des Modells, Konkretisieren der Testfälle um sie ausführbar zu machen,
+Ausführen der konkreten Testfälle und Analysieren der Ergebnisse der Ausführung und dessen Deutung. Im
+folgenden Unterkapitel wird die Entwicklung von Testmodellen und der Einteilung in Module beschrieben.
+
+Die Module sollen nach aufgezählten Herleitungsvorschriften entwickelt werden. Anschliessend wird die
+Testfallgenerierung behandelt. Das strukturelle Testfallkriterium, das Datenabdeckungskriterium, das
+Fehlerbasierte Kriterium und das anforderumgsbasierte Kriterium grenzen dabei die Erzeugung von Testfällen
+ein. Außerdem werden die Generierungstechniken zufällige Generierung, automatisierte/manuelle Generierung,
+Suchalgorithmus auf Graphen und Online/Offline Generierung vorgestellt und näher erläutert. Die Jeweiligen
+Resultate der Generierung sind eine Menge von Testfällen, die in ausführbaren Varianten Testmodelle,
+Testskripte und Code vorliegen können. Im letzten Unterkapitel wird anhand des Beispiels GSM eine B Machine
+erläutert und auf die einzelnen Schritte dessen Erzäugung eingeganen. Die B-Machine wird im Anhang komplett
+mitgeliefert. Schritt 1 beschreibt das Datenmodell und Schritt 2 das Aktionsmodell mit seinen 6 Operationen,
+wobei nur auf die Aktion "VERIFY_CHV", mit seinen 5 Anforderungen, eingegangen wird.  Die Generierung der
+Testfälle wird mit LTG/B stichwortartig erläutert und anhand von Tabellen erklärt. Im Anschluss wird auf
+die Generierung von Testskripten eingegangen. Die vorher erstellten Testfälle sind ausnahmslos nicht
+ausführbar. Um diese Ausführbar zu machen wird das LTG Tool benutzt, welches den ersten Testfall in die
+Sprache C übersetzt. Das Resultat wird ebenfalls in einer Abbildung aufgezeigt.
+
+Im Fazit, dem letzten Kapitel, wird die Wichtigkeit von Modellbasiertem Testen bei großen und längerfristigen
+Entwicklungsprozessen im Gegensatz zu anderen Testverfahren genannt. Es ist das kostengünstigste, da die
+Implementierung von den Testfällen unabhängig ist. Das hat den Nachteil, dass man von speziellen Tools zur
+Testfall- und Tetsskriptgenerierung abhängig ist und die benötigten Modelle im Voraus entwickeln muss.
+Deshalb ist es für kleine, kurzfristige Projekte nicht geeignet, da es sehr zeitaufwendig ist.
+
+Die Lesbarkeit und Verständlichkeit ist im Allgemeinen gut. Allerdings hat der Autor an ein paar Stellen
+Abkürzungen genommen, ohne sie vorher zu definieren (S.4 OCL für Object Constraint Language, S.10 SUT für
+system under test). Außerdem hat er in manchen Sätzen Wörter stehen, die nicht in den Satzbau passen
+(S.10 "Beim Data-Driven Test wird eine Menge an für unterschiedliche Daten parametrisieren Testskripen
+verwendet.", S.14 "Er ist definert durch den das Testszenario und den Ergebnissen der Testfallerzeugung.").
+
+Oft werden in Fußnoten Erklärungen zu, im Text stehenden, Begriffen oder Übersetzungen von Fremdwörtern oder
+Abkürzungen geliefert. Die Literaturverweise sind mit passender, griffiger Abkürzung versehen, jedoch zu
+wenig angegeben. Teilweise wird auch nicht klar, ob die Angabe für eine Abbildung, den Text oder beides gilt,
+wie zum Beispiel auf Seite 12 wo eine Literaturangabe für 2 Seiten Text und eine Abbildung steht. Die
+Abbildungen sind, wie auch die tabellarischen Aufführungen, im Schwarz/Weiß Druck lesbar und
+anschaulich. Die Kapitel sind angemessen, jedoch in Anbetracht der Größe der Arbeit von 21 Seiten,
+kürzungsbedürftig. 
+
+Kürzungen empfehle ich in dem Kapitel 2.1 bei der Aufzählung der Einzelnen
+Spezifikationslevel. Eine Nennung ohne Erläuterung ist, meiner Meinung nach, ausreichend. Das Kapitel 3.2
+kann eventuell auch gekürzt werden, da evolutionäre Aufzählung anderer Testverfahren nicht unbedingt großer
+Punkt vom Modellbasierten Testen ist.  Außerdem ist das Beispiel mit Kürzungen direkt aus dem Buch [UL07]
+übernommen. Bei den Kürzungen wird auf das Buch verwiesen, falls man Genaueres haben möchte. Die Frage ist
+dann, warum man das Beispiel nicht direkt weglässt und auf das Buch verweist. Erst recht, wenn die Arbeit
+insgesamt 21 Seiten plus komplettem Beispiel der B Machine mit 5 Seiten auf 26 Seiten kommt. Ein kürzeres
+oder einfacheres Beispiel wäre besser gewesen.Generell wurde viel aus [UL07] übernommen, wie zum Beispiel
+beim Keyword-Driven automatisiertem Testen. Den vorher schon, auf Seite 10 stehenden, erwähnten Satz findet
+man dort exakt gleich in englisch geschrieben("Data-driven testing uses a fixed set of test scripts, which are parameterized
+by different data values from each test case. This makes the test scripts more generic and allows them to be
+reused in many test cases, which reduces the test script maintenance problem." Buch [UL07] S.24).
+Minors:
+Rechtschreib- und Grammatikfehler ( Seiten v, 1,2, 5, 7, 9, 10, 12, 13, 14, 15, 16, 19, 21)
+Wortwahl
+ S.11 "im Gegensatz zu ein paar hunderten" Besser hundert
+ S.14 "außer die Werte lassen sich als Orakel verwenden" Besser Vorhersage
