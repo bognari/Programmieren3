@@ -56,7 +56,7 @@ In diesem Fall erhält der Konstruktor keine Parameter.
 \lstinline!data Color = Blue | Cyan | Yellow | Orange | Green!
 \end{block}
 \pause
-\only<2>{Wie werden die Konstuktoren aussehen ?}
+\only<2>{Wie werden die Konstuktoren aussehen?}
 \pause
 Konstruktoren:
 \begin{lstlisting}
@@ -74,7 +74,7 @@ Green  :: Color
 \begin{block}{\vspace*{-3ex}}
 \begin{itemize}
   \item Produkttyp ist ein Tupel der einzelnen Attribute
-  \item Tupel fassen Gruppen von Daten zusammen, die logisch zusammen gehören und gemeinsam etwas Neues und Eigenständiges bilden
+  \item Tupel fassen Gruppen von Daten zusammen, die logisch zusammengehören und gemeinsam etwas Neues und Eigenständiges bilden
 \end{itemize}
 \end{block}
 }
@@ -121,7 +121,7 @@ Green  :: Color
 }
 
 \only<2>{\begin{alertblock}{Kurz Schreibweise}
-Bei der kurz Schreibweise werden keine Selektoren erstellt
+Bei der Kurz-Schreibweise werden keine Selektoren erstellt
 \end{alertblock}}
 \end{frame}
 
@@ -350,7 +350,7 @@ data [a] = []
 \begin{itemize}
   \item Listen sind Folgen von Elementen gleichen Types
   \item \lstinline|a| ist hier der Platzhalter für einen Typ\\
-  		somit kann das \lstinline|a| für \lstinline|Int|, \lstinline|Integer| usw stehen
+  		somit kann das \lstinline|a| für \lstinline|Int|, \lstinline|Integer| usw. stehen
 \end{itemize}
 \end{block}  		
 Konstruktoren: \only<1>{?}
@@ -465,8 +465,8 @@ primes = sieves [2..]
 \frametitle{Wichtige Liste} 
 \begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-  \item Ihr erinnert euch noch an \lstinline|Char|?
-  \item Ihr erinnert euch noch an \lstinline|type|?
+  \item Erinnert ihr euch noch an \lstinline|Char|?
+  \item Erinnert ihr euch noch an \lstinline|type|?
   \item Wie wird wohl \lstinline|String| definiert sein?
 \end{itemize}
 \end{block}
@@ -479,7 +479,7 @@ type String = [Char]
 \frame{\frametitle{String}
 \begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-  \item Strings sind Listen von Chars
+  \item Strings sind Listen von \lstinline|Char|s
   \item Alle Funktionen die generisch für Listen definiert sind, sind auch für Strings definiert
   \item Strings werden intern nicht anders als normale Listen behandelt
   \item Also kein Stringspool, keine Unabänderbarkeit von Strings usw. \ldots
@@ -501,7 +501,7 @@ wochenTag 7 = "Sonntag"
 wochenTag _ = undefined
 \end{lstlisting}
 \begin{alertblock}{"`Bottom Element"'}
-jeder Wert außer 1, 2, 3, 4, 5, 6, 7 führt zum "`Bottom Element"' und führt zu einer \lstinline|Prelude.undefined| Exception
+jeder Wert außer 1, 2, 3, 4, 5, 6, 7 führt zum "`Bottom Element"' und führt zu einer Exception vom Typ \lstinline|Prelude.undefined|
 \end{alertblock}
 \end{frame}
 
@@ -509,7 +509,7 @@ jeder Wert außer 1, 2, 3, 4, 5, 6, 7 führt zum "`Bottom Element"' und führt z
 \frame{\frametitle{Typüberprüfung}
 \begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-  \item Es sind nur Typengleich, welche auch gleich sind!
+  \item Es sind nur typengleich, welche auch gleich sind!
   \item \lstinline|Int| ist kompatibel zu \lstinline|Int|
   \item Aber \lstinline|Int| ist nicht kompatibel zu \lstinline|Integer|
 \end{itemize}
@@ -532,16 +532,16 @@ jeder Wert außer 1, 2, 3, 4, 5, 6, 7 führt zum "`Bottom Element"' und führt z
 \begin{itemize}
   \item Wenn keine Typen angegeben wurden, wird der passende Typ berechnet
   \item Bei Eingaben im GHCi wird der richtige Typ "`erraten"'
-  \only<2>{\item Ok statt "`raten"' wird der Typcheck Algorithmus von Robin Milner verwendet}
+  \only<2>{\item Ok statt "`zu raten"' wird der Typcheck-Algorithmus von Robin Milner verwendet}
 \end{itemize}
 \end{block}
 }
 
-\section{Typkonversion (Cast Anweisungen)}
+\section{Typkonversion (Cast-Anweisungen)}
 \frame{\frametitle{Typkonversion}
 \begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-  \item In Haskell existieren keine Cast Anweisungen wie in Java
+  \item In Haskell existieren keine Cast-Anweisungen wie in Java
   \item Jeder Cast wird über eine Funktion realisiert
   \item \lstinline|toInteger :: a -> Integer|
   \item \lstinline|fromInteger :: Integer -> a|
@@ -620,7 +620,7 @@ append (x:xs) ys = x : append xs ys
 \begin{block}{\vspace*{-3ex}}
 \begin{itemize}
   \item Typklassen fassen Typen zusammen, die ähnliche Operationen unterstützen
-  \item Alle Ausprägungen einer Funktion einer Typklassen tragen dann den gleichen Namen.
+  \item Alle Ausprägungen einer Funktion einer Typklassen tragen dann den gleichen Namen
   \item $\to$ Overloading, d.h. der gleiche Funktionsname steht für unterschiedliche Implementierungen
 \end{itemize}
 \end{block}
@@ -662,7 +662,7 @@ data Circle = Circle{center :: Point,
   radius :: Double}
   deriving (Eq, Show)
 \end{lstlisting}
-mit \lstinline|deriving| wird geraten wie die Implementierung von \lstinline|Eq|, \lstinline|Ord|, \lstinline|Show| usw. sein sollen
+mit \lstinline|deriving| wird geraten, wie die Implementierung von \lstinline|Eq|, \lstinline|Ord|, \lstinline|Show| usw. sein sollen
 \end{block}
 \end{frame}
 
@@ -715,7 +715,7 @@ Die Definition ist zirkulär!
 
 \begin{frame}[fragile]
 \frametitle{Typklassen}
-\begin{block}{Instance von \lstinline|Eq| und \lstinline|Ord| für Buch}
+\begin{block}{\lstinline|instance| von \lstinline|Eq| und \lstinline|Ord| für \lstinline|Buch|}
 \begin{lstlisting}
 data Buch = Buch Int [String] String deriving (Show)
 
@@ -732,7 +732,7 @@ instance Ord Buch where
 
 \begin{frame}[fragile]
 \frametitle{Typklassen}
-\begin{block}{Instance von \lstinline|Eq|}
+\begin{block}{\lstinline|instance| von \lstinline|Eq|}
 \begin{lstlisting}
 instance Eq Buch where 
   (Buch isbn1 _ _) == (Buch isbn2 _ _) 
@@ -749,7 +749,7 @@ instance Eq Buch where
 
 \begin{frame}[fragile]
 \frametitle{Typklassen}
-\begin{block}{Instance von \lstinline|Ord|}
+\begin{block}{\lstinline|instance| von \lstinline|Ord|}
 \begin{lstlisting}
 instance Ord Buch where
    (Buch isbn1 _ _) `compare` (Buch isbn2 _ _) 

@@ -23,9 +23,7 @@
 
 \section{Datentypen}
 \subsection{}
-Geben Sie für die folgenden Typdeklarationen die Namen und 
-Typen der automatisch generierten Konstruktoren und Selektoren 
-an:
+Geben Sie für die folgenden Typdeklarationen die Namen und Typen der automatisch generierten Konstruktoren und Selektoren an:
 \begin{lstlisting}
 data Ampelfarbe = Rot | Gelb | Gruen
 data Menge = Stueck Integer | Kilogramm Double | Liter Double
@@ -43,9 +41,9 @@ data Adresse = Adresse {
   }
 \end{lstlisting}
 \subsection{}
-Geben Sie für den Datentyp \lstinline|Menge| eine äquivalente Deklaration an, bei der automatisch Selektorfunktionen generiert werden. Wählen Sie sinnvolle Namen für die Selektorfunktionen.
+Geben Sie für den Datentyp Menge eine äquivalente Deklaration an, bei der automatisch Selektorfunktionen generiert werden. Wählen Sie sinnvolle Namen für die Selektorfunktionen.
 \subsection{}
-Geben Sie für die Datentypen \lstinline|HausOderPostfach| und \lstinline|Adresse| äquivalente Deklarationen an, bei denen nicht automatisch Selektoren generiert werden.
+Geben Sie für die Datentypen HausOderPostfach und Adresse äquivalente Deklarationen an, bei denen nicht automatisch Selektoren generiert werden.
 \subsection{}
 Programmieren Sie aufbauend auf den Typdeklarationen aus Teilaufgabe 1 Selektorfunktionen mit den folgenden Signaturen:\\
 \begin{lstlisting}
@@ -81,7 +79,7 @@ findeAnIdx m (NichtLeer n o) | m == 0    = Doch n
                              | otherwise = findeAnIdx ( pred m) o
 \end{lstlisting}
 Hinweis:\\
-Das $@$ bindet den "`zerlegten"' Datentyp an den vorstehenden Bezeichner, damit dieser nicht wieder zusammengesetzt werden muss.
+Das $@$ bindet den "`zerlegten"' Datentyp an den vorstehenden Bezeichner, damit dieser nicht wieder zusammen gesetzt werden muss.
 \subsection{}
 Gegeben sind folgende Definitionen:
 \begin{lstlisting}
@@ -158,7 +156,7 @@ Zum Aneinanderhängen von Zeichenfolgen kann der Operator \lstinline|++| verwend
 (++) :: String -> String -> String
 \end{lstlisting}
 Ganzzahlen können durch Anwenden der Funktion \lstinline|show| in
-ihre Zifferndarstellung konvertiert werden. Es ergibt sich beispielsweise:
+ihre Zifferndarstellung konvertiert werden. Es ergibt sich beispielsweise
 \begin{lstlisting}
 show 325 = "325"
 \end{lstlisting}
@@ -169,7 +167,7 @@ show 325 = "325"
   \vskip10pt
   \leftskip10pt\rightskip10pt
   Mit dem Wissen aus der heutigen Vorlesung können Sie von nun an die Aufgabe von dem 
-  vorherigen Blatt richtig lösen. Wir möchten uns nochmals für das Übersehen des
+  vorherigen Blatt richtig lösen. Ich möchte mich nochmals für das übersehen des
   \lstinline|el| entschuldigen.
   \vskip10pt
  }
@@ -177,7 +175,7 @@ show 325 = "325"
 
 Die folgenden Teilaufgaben sollen ohne Verwendung vordefinierter Bibliotheksfunktionen gelöst werden. Berücksichtigen Sie, dass die zu programmierenden Funktionen nicht für alle Eingaben sinnvoll definiert sind. In diesen Fällen sollen entsprechende Fehlermeldungen ausgegeben werden.
 \subsection{}	
-Programmieren Sie eine Haskell-Funktion \lstinline|elementAnIdx :: Integer -> [el] -> el|, die zu einem Index \lstinline|i| und einer Liste das i-te Element dieser Liste bestimmt. Das erste Element einer nichtleeren Liste habe dabei den Index $0$.  sich zum Beispiel:\\
+Programmieren Sie eine Haskell-Funktion \lstinline|elementAnIdx :: Integer -> [el] -> el|, die zu einem Index \lstinline|i| und einer Liste das i-te Element dieser Liste bestimmt. Das erste Element einer nichtleeren Liste habe dabei den Index $0$. Es ergibt sich zum Beispiel:\\
 \lstinline|elementAnIdx 2 [3, 4, 5, 6] = 5|
 \subsection{}
 Programmieren Sie eine Haskell-Funktion \lstinline|snoc :: [el] -> el -> [el]|, die an eine Liste ein weiteres Element anhängt. Es ergibt sich zum Beispiel:\\
@@ -189,6 +187,52 @@ Programmieren Sie eine Haskell-Funktion \lstinline|praefix :: Integer -> [el] ->
 \subsection{}
 Programmieren Sie eine Haskell-Funktion \lstinline|suffix :: Integer -> [el] -> [el]|, die für eine Zahl $n$ und eine Liste $l$ die Liste der letzten $n$ Elemente von $l$ zurückgibt.
 
+\section{Mengen als Listen}
+Mengen können in Haskell durch Listen repräsentiert werden. Allerdings unterscheiden
+sich Mengen und Listen in zwei Punkten:
+\begin{itemize}
+  \item Die Elemente einer Liste besitzen eine Reihenfolge, die Elemente von Mengen
+nicht.
+\item Derselbe Wert darf in einer Liste mehrfach vorkommen, in einer Menge nicht.
+\end{itemize}
+Zur Darstellung von Mengen verwenden wir daher nur solche Listen, deren Elemente
+streng monoton wachsen. Die Reihenfolge der Elemente ist damit festgelegt und eine
+Dopplung von Werten ist nicht möglich.\\
+
+Es sollen nun Mengenoperationen auf Basis von Listen implementiert werden. Geben Sie
+für folgende Funktionen deren allgemeinste Typen an. Implementieren Sie anschließend
+die Funktionen. Sie können davon ausgehen, dass als Argumente übergebene Mengendarstellungen
+immer die oben genannte Eigenschaft erfüllen. Sie müssen aber sicher
+stellen, dass Sie keine ungültigen Mengendarstellungen als Resultate generieren.
+\subsection{}
+Die Funktion \lstinline|istElement| entscheidet, ob eine Wert in einer
+Menge enthalten ist und implementiert damit die Relation 2. Es ergibt sich z.B.
+\begin{center}
+\begin{tabular}{ll}
+\lstinline|4 `istElement` [1, 3, 5, 7]| & $\leadsto$ \lstinline|False|\\
+\lstinline|5 `istElement` [1, 3, 5, 7]| & $\leadsto$ \lstinline|True|
+\end{tabular}
+\end{center}
+\subsection{}
+Die Funktion \lstinline|istTeilmenge| entscheidet, ob eine Menge Teilmenge einer anderen Menge ist und implementiert damit die Relation $\subseteq$. Es ergibt sich z.B.
+\begin{center}
+\begin{tabular}{ll}
+\lstinline|[1, 3] `istTeilmenge` [1, 2, 3, 4, 5]| & $\leadsto$ \lstinline|True|\\
+\lstinline|[1, 3, 6] `istTeilmenge` [1, 2, 3, 4, 5]| & $\leadsto$ \lstinline|False|
+\end{tabular}
+\end{center}
+\subsection{}
+Die Funktion \lstinline|vereinigung| bestimmt die Vereinigungsmenge zweier Mengen und
+implementiert damit die Funktion $\cup$. Es ergibt sich z.B.
+\begin{center}
+\lstinline|[1, 2, 4] `vereinigung` [3, 4, 5]|  $\leadsto$ \lstinline|[1, 2, 3, 4, 5]|
+\end{center}
+\subsection{}
+Die Funktion \lstinline|schnitt| bestimmt die Schnittmenge zweier Mengen und implementiert
+damit die Funktion $\cap$. Es ergibt sich z.B.
+\begin{center}
+\lstinline|[1, 2, 4] `schnitt` [3, 4, 5]| $\leadsto$ \lstinline|[4]|
+\end{center}
 \section{Funktionen als Listen}
 Wir stellen Funktionen als Listen von Paaren dar. Die Liste zu einer Funktion $f$ enthält
 für jedes $x$, für das $f (x)$ definiert ist, das Paar $(x, f(x))$. Die Paare sind innerhalb der Liste
@@ -197,7 +241,7 @@ aufsteigend nach den Funktionsargumenten sortiert. Kein Paar kommt mehrfach vor.
 Programmieren Sie eine Haskell-Funktion \lstinline|resultat|, welche zu
 einer als Liste dargestellten Funktion $f$ und einem Wert $x$ des Definitionsbereichs
 den entsprechenden Funktionswert $f(x)$ liefert. Ist $f(x)$ nicht definiert, soll $resultat$
-mit einer Fehlermeldung abbrechen. Es ergibt sich z.B.:
+mit einer Fehlermeldung abbrechen. Es ergibt sich z.B.
 \begin{center}
 \lstinline|resultat [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)] 2| $\leadsto$ \lstinline|4|
 \end{center}
@@ -211,7 +255,8 @@ Stattdessen werden oft Werte des Datentyps \lstinline|Maybe| als Funktionsresult
 
 Der Wert \lstinline|Nothing| signalisiert einen Fehler, während ein Wert \lstinline|Just x| die erfolgreiche
 Berechnung des Wertes $x$ darstellt. Modifizieren Sie die Funktion \lstinline|resultat| zu einer
-Funktion \lstinline|evtlResultat|, welche nicht mit Fehlermeldungen abbricht, sondern \lstinline|Maybe|-Werte liefert. Es ergibt sich z.B.
+Funktion \lstinline|evtlResultat|, welche nicht mit Fehlermeldungen abbricht, sondern \lstinline|Maybe|-
+Werte liefert. Es ergibt sich z.B.
 \begin{center}
 \begin{tabular}{ll}
 \lstinline|evtlResultat [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)] 3| & $\leadsto$ \lstinline|Nothing|\\
@@ -221,14 +266,14 @@ Funktion \lstinline|evtlResultat|, welche nicht mit Fehlermeldungen abbricht, so
 \subsection{}
 Programmieren Sie eine Haskell-Funktion \lstinline|urbilder|, die zu einer gegebenen Funktion
 $f$ und einem gegebenen Wert $y$ die Menge $\{x | f(x) = y\}$ berechnet. Diese Menge
-soll wie in Aufgabe 1 beschrieben dargestellt werden. Es ergibt sich z.B.:
+soll wie in Aufgabe 1 beschrieben dargestellt werden. Es ergibt sich z.B.
 \begin{center}
 \lstinline|urbilder [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)] 4| $\leadsto$ \lstinline|[-2, 2]| 
 \end{center}
 \subsection{}
 Programmieren sie eine Haskell-Funktion \lstinline|echteArgumente|, welche zu einer gegebenen
 Funktion $f$ die Menge aller $x$ liefert, für die es einen Funktionswert $f(x)$ gibt.
-Verwenden Sie wieder die Mengendarstellung aus Aufgabe 1. Es ergibt sich z.B.:
+Verwenden Sie wieder die Mengendarstellung aus Aufgabe 1. Es ergibt sich z.B.
 \begin{center}
 \lstinline|echteArgumente [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)]| $\leadsto$ \lstinline|[-2,-1, 0, 1, 2]|
 \end{center}
@@ -237,13 +282,13 @@ Wir betrachten nun Funktionen, deren Definitions- und Wertebereich identisch sin
 Ein Wert $x$ ist Fixpunkt einer solchen Funktion $f$ , wenn $f(x) = x$ gilt. Programmieren
 Sie eine Haskell-Funktion \lstinline|fixpunkte|, die zu einer gegebenen Funktion die Menge
 aller Fixpunkte berechnet. Diese Menge soll wieder wie in Aufgabe 1 beschrieben
-dargestellt werden. Es ergibt sich z.B.:
+dargestellt werden. Es ergibt sich z.B.
 \begin{center}
 \lstinline|fixpunkte [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)]| $\leadsto$ \lstinline|[0, 1]|
 \end{center}
 \subsection{}
 Programmieren Sie eine Haskell-Funktion \lstinline|funKomposition|, die aus zwei Funktionen
-$f$ und $g$ deren Komposition $f \circ g$ berechnet. Es ergibt sich z.B.:
+$f$ und $g$ deren Komposition $f \circ g$ berechnet. Es ergibt sich z.B.
 \begin{center}
 \lstinline|[(1, 0), (2, 1)] `funKomposition` [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)]| $\leadsto$ \lstinline|[(-1, 0), (1, 0)]|
 \end{center}
@@ -261,7 +306,7 @@ ist wie folgt definiert:
 R_2 \circ R_1 = \left\{(a, c)\;| \exists\;b : (a, b) \in R_1 \wedge (b, c) \in R_2 \right\}
 \end{align*}
 Definieren Sie eine Funktion \lstinline|relKomposition|, die die Relationskomposition umsetzt.
-Verwenden Sie dafür eine List-Comprehension. Es ergibt sich z.B.:
+Verwenden Sie dafür eine List-Comprehension. Es ergibt sich z.B.
 \begin{center}
 \lstinline|[(4,-2), (1,-1), (0, 0), (1, 1), (4, 2)] `relKomposition` [(0, 1), (1, 2)]| $\leadsto$ \lstinline|[(0,-1), (0, 1)]|
 \end{center}
@@ -282,8 +327,9 @@ sollen nur dann als gleich gelten, wenn sie strukturgleich sind. Die Ausdrücke
 $x$ und $x + 0$ gelten z.B. als ungleich.
 \subsection{}
 Machen Sie \lstinline|Ausdruck| zu einer Instanz von \lstinline|Show|. Es genügt dabei, die Funktion \lstinline|show|
-zu implementieren, welche Ausdrücke in Zeichenketten umwandelt. Ihre \lstinline|show|-Implementierung soll die gleichen Resultate liefern, wie die \lstinline|show|-Implementierung,
-welche durch \lstinline|deriving (Show)| automatisch erzeugt wird. Es ergibt sich z.B.:
+zu implementieren, welche Ausdrücke in Zeichenketten umwandelt. Ihre \lstinline|show|-
+Implementierung soll die gleichen Resultate liefern, wie die \lstinline|show|-Implementierung,
+welche durch \lstinline|deriving(Show)| automatisch erzeugt wird. Es ergibt sich z.B.
 \begin{center}
 \lstinline|show (Differenz (Konstante 5) (Variable "x"))|\\
 $\leadsto$ \lstinline|"Differenz (Konstante 5) (Variable \"x\")"|
@@ -291,7 +337,7 @@ $\leadsto$ \lstinline|"Differenz (Konstante 5) (Variable \"x\")"|
 Beachten Sie, dass Anführungsstriche (") in Zeichenkettenliteralen als (\textbackslash") dargestellt
 werden.
 \section{eigene Klasse}
-Wir betrachten folgende Klassendeklaration:
+Wie betrachten folgende Klassendeklaration:
 \begin{lstlisting}
 class Spiegelbar wert where
 	gespiegelt :: wert -> wert
@@ -310,7 +356,7 @@ Der Typ blattmarkierter Binärbäume lässt sich folgendermaßen definieren:
 
 Auch blattmarkierte Bäume lassen sich spiegeln, nämlich indem man für jeden
 inneren Knoten dessen beide Unterbäume vertauscht. Schreiben Sie eine entsprechende
-\lstinline|instance|-Deklaration.
+instance-Deklaration.
 
 \section{Babylonisches Wurzelziehen}
 Das Babylonische Wurzelziehen ist eine Methode zur Berechnung von Quadratwurzeln.
@@ -332,14 +378,14 @@ daraus die entsprechende Wurzelnäherung berechnet.
 
 \section{abstrakter Datentyp für Mengen}
 Implementieren Sie einen abstrakten Datentyp \lstinline|Menge|. Verwenden Sie intern die Darstellung von Mengen als aufsteigend sortierte Listen aus Aufgabe 1.
-Der abstrakte Datentyp soll folgende Operationen bereitstellen:
+Der abstrakte Datentyp soll folgende Operationen bereit stellen:
 
 \begin{table}[H]
     \begin{tabular}{lp{5.5cm}p{6.5cm}} %\hline
         Bezeichner & Typ & Bedeutung         \\ \hline
 		leer & \lstinline|Menge a| & die leere Menge \\
 		einfuegen & \lstinline|a -> Menge a -> Menge a| & Einfügen eines Elements in eine Menge\\
-		loeschen & \lstinline|a -> Menge a -> Menge a| & Löschen eines Werts aus einer Menge\\
+		loeschen & \lstinline|a -> Menge a -> Menge a| & Löschen einesWerts aus einer Menge\\
 		vereinigung & \lstinline|Menge a -> Menge a -> Menge a| & Vereinigung zweier Mengen\\
 		schnitt & \lstinline|Menge a -> Menge a -> Menge a| & Schnitt zweier Mengen\\
 		differenz & \lstinline|Menge a -> Menge a -> Menge a| & Differenz zweier Mengen\\
@@ -360,12 +406,206 @@ Legen Sie ein Modul \lstinline|Menge| für den abstrakten Datentyp
 an. Fügen Sie in dieses Modul die Deklaration des Datentyps \lstinline|Menge| sowie die
 Typsignaturen der Mengenoperationen ein. Legen Sie eine geeignete Exportliste
 an. Es soll außerdem möglich sein, Mengen auf Gleichheit zu testen und in der
-üblichen Notation $\{x_1, \ldots , x_n\}$ auszugeben. Sorgen Sie für entsprechende Typklassen-Instanziierungen.
+üblichen Notation $\{x_1, \ldots , x_n\}$ auszugeben. Sorgen Sie für entsprechende Typklassen Instanziierungen.
 
 \subsection{}
-Implementieren Sie die Mengenoperationen. Sie können dazu Ihre Lösung (Menge als Liste oder Menge mit Currying) von
-Blatt 2 verwenden.
+Implementieren Sie die Mengenoperationen. Sie können dazu Ihre Lösung von
+Aufgabe 1 verwenden.
 
+\section{Funktionen höherer Ordnung}
+\subsection{}
+Programmieren Sie eine Haskell-Funktion 
+
+\begin{center}
+\lstinline!summe :: (Num zahl) => [zahl] -> zahl!
+\end{center}
+welche die Summe der Elemente einer Liste von Zahlen berechnet. Verwenden Sie
+dazu die vordefinierte Funktion \lstinline|foldr|.\\
+
+\begin{center}
+\lstinline!foldr :: (a -> b -> b) -> b -> [a] -> b!
+\end{center}
+$a$ und $b$ können gleiche Typen sein.\\
+alles Weitere finden Sie unter: www.haskell.org/hoogle
+\subsection{}
+Programmieren Sie eine Haskell-Funktion 
+\begin{center}
+\lstinline!produkte :: (Num zahl) => [zahl] -> [zahl] -> [zahl]!
+\end{center}
+welche zu zwei Listen $[x_1, x_2, \ldots , x_n]$ und $[y_1, y_2, \ldots, y_n]$ die Liste der Produkte
+$[x_1 \cdot y_1, x_2 \cdot y_2, \ldots, x_n \cdot y_n]$
+berechnet. Geben Sie zwei Lösungen an. Die erste Lösung soll die vordefinierten
+Funktionen \lstinline|zip|, \lstinline|map| und \lstinline|uncurry| verwenden, die zweite Lösung die vordefinierte
+Funktion \lstinline|zipWith|.
+\begin{lstlisting}
+zip :: [a] -> [b] -> [(a,b)]
+map :: (a -> b) -> [a] -> [b]
+uncurry :: (a -> b -> c) -> (a, b) -> c
+
+zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
+\end{lstlisting}
+\subsection{}
+Wir stellen einen Vektor als Liste seiner kartesischen Koordinaten dar:
+\begin{center}
+\lstinline!type Vektor koord = [koord]!
+\end{center}
+Programmieren Sie eine Haskell-Funktion
+\begin{center}
+\lstinline!skalarProdukt :: (Num koord) => Vektor koord -> Vektor koord -> koord!
+\end{center}
+welche zu zwei Vektoren $(x_1, \ldots , x_n)$ und $(y_1, \ldots ,y_n)$ das Skalarprodukt
+$\sum^n_{i=1}{x_i \cdot y_i}$ berechnet. Verwenden Sie die in den Teilaufgaben 1 und 2 definierten Funktionen.
+\subsection{}
+Wir stellen eine Matrix als Liste ihrer Zeilen dar:
+\begin{center}
+\lstinline!type Matrix koord = [Vektor koord]!
+\end{center}
+Programmieren Sie eine Haskell-Funktion
+\begin{center}
+\lstinline!lineareAbb :: (Num koord) => Matrix koord -> (Vektor koord -> Vektor koord)!
+\end{center}
+
+die zu einer gegebenen $(n \times m)$-Matrix die durch sie dargestellte lineare Abbildung
+ermittelt, welche m-dimensionale in n-dimensionale Vektoren überführt.
+
+\section{Falten von Listen}
+\subsection{}
+Im Prelude sind die folgenden Funktionen definiert:
+\begin{lstlisting}
+(++)   :: [el] -> [el] -> [el]
+concat :: [[el]] -> [el]
+length :: [el] -> Int
+filter :: (el -> Bool) -> [el] -> [el]
+\end{lstlisting}
+Geben Sie zu jeder dieser Funktionen einen äquivalenten Haskell-Ausdruck an,
+der keine \textbf{let}-Ausdrücke enthält und höchstens die folgenden vordefinierten
+Funktionen benutzt:
+\begin{lstlisting}
+succ  :: Int -> Int
+(:)   :: el -> [el] -> [el]
+foldr :: (el -> accu -> accu) -> accu -> [el] -> accu
+\end{lstlisting}
+\subsection{}
+Geben Sie einen zu der Funktion \lstinline|concat| äquivalenten Haskell-Ausdruck an, der keine
+\textbf{let}-Ausdrücke enthält und höchstens die folgenden vordefinierten Funktionen
+benutzt:
+\begin{lstlisting}
+(:)   :: el -> [el] -> [el]
+foldl :: (accu -> el -> accu) -> accu -> [el] -> accu
+\end{lstlisting}
+\section{Varianten von \lstinline|map| und \lstinline|foldr| für Bäume}
+Die Listenfunktionen \lstinline|map| und \lstinline|foldr| sind im \lstinline|Prelude| vordefiniert. Varianten dieser
+Funktionen gibt es auch für viele andere algebraische Datentypen, so z.B. auch für den
+Typ \lstinline|Baum|. Dieser wird wie folgt definiert:
+\begin{center}
+\lstinline!data Baum el = Blatt el | Verzweigung (Baum el) (Baum el)!
+\end{center}
+Die Typsignaturen der \lstinline|map|- und der \lstinline|foldr|-Variante für \lstinline|Baum| lauten folgendermaßen:
+
+\begin{center}
+\lstinline|baumMap  :: (el -> el') -> Baum el -> Baum el'|
+\lstinline|baumFold :: (el -> accu) -> (accu -> accu -> accu) -> Baum el -> accu|
+\end{center}
+
+Einen Baum \lstinline|baumMap f baum| erhält man, indem man in  \lstinline|baum| jede Blattmarkierung \lstinline|el|
+durch \lstinline|f el| ersetzt. Einen Baum \lstinline|baumFold accuBlatt accuVerzweigung baum| erhält man,
+indem man in \lstinline|baum| jedes Vorkommen des Datenkonstruktors \lstinline|Blatt| durch \lstinline|accuBlatt| und
+jedes Vorkommen des Datenkonstruktors \lstinline|Verzweigung| durch \lstinline|accuVerzweigung| ersetzt.
+Zum Beispiel liefert
+\begin{center}
+\lstinline|baumFold (\el -> [el]) (++) ((Blatt  2  `Verzweigung` Blatt 3) `Verzweigung` Blatt 5)|
+\end{center}
+die Liste \lstinline|([2] ++ [3]) ++ [5]|, also \lstinline|[2, 3, 5]|. Allgemein stellt \lstinline|baumFold  (\el -> [el])  (++)  baum|
+die Liste aller Blattmarkierungen von \lstinline|baum| dar.
+\subsection{}
+Implementieren Sie die beschriebenen Haskell-Funktionen \lstinline|baumMap| und \lstinline|baumFold|.
+\subsection{}
+Programmieren Sie eine Haskell-Funktion 
+\begin{center}
+\lstinline|hoehe :: Baum el -> Int|
+\end{center}
+welche die Höhe
+eines Baums bestimmt. Die Höhe eines Baums, der nur aus einem Blatt besteht, sei
+dabei $0$, nicht $1$. Verwenden Sie für Ihre Implementierung keine \textbf{explizite Rekursion},
+sondern die Funktion \lstinline|baumFold|.
+
+\section{Sortieren mit variabler Ordnung}
+Es soll eine Haskell-Funktion \lstinline|mergeSort| programmiert werden, welche nach verschiedenen
+Kriterien sortieren kann. Dazu soll ihr neben der zu sortierenden Liste eine
+Vergleichsfunktion als Argument übergeben werden. Die Vergleichsfunktion soll eine
+irreflexive Ordnung darstellen.
+\subsection{}
+Welchen Typ hat eine \lstinline|Vergleichsfunktion| für einen Typ \lstinline|el|?\\
+Welchen Typ hat dann die Funktion \lstinline|mergeSort|, die als zusätzliches Argument die
+zu verwendende Vergleichsfunktion erhält?
+\subsection{}
+Implementieren Sie die Funktion \lstinline|mergeSort|, welche eine Vergleichsfunktion sowie die zu sortierende Liste als Argumente bekommt.\\
+als Tipp die "`divide and conquer"' Implementierung.
+\begin{lstlisting}
+dc :: ([a] -> Bool) -> ([a] -> [b]) -> ([a] -> ([a],[a])) -> 
+  (([b],[b]) -> [b]) -> [a] -> [b]
+dc simple solve split combine q 
+      | simple q 	= solve q
+      | otherwise 	= 	combine (l1, l2)
+        where 
+          (p1, p2) = split q
+          l1 = dc simple solve split combine p1
+          l2 = dc simple solve split combine p2	
+\end{lstlisting}
+\subsection{}
+Betrachten Sie den folgenden Datentyp zur Repräsentation von Büchern:
+\begin{lstlisting}
+data Buch = Buch {
+    autor :: String,
+    titel :: String,
+    jahr :: Integer,
+    verlag :: String
+  } deriving (Show)
+\end{lstlisting}
+Programmieren Sie die Vergleichsfunktionen \lstinline|autorVergleich|, \lstinline|titelVergleich| und
+\lstinline|jahrVergleich|, mit denen eine Liste von Büchern nach Autor, Titel bzw. Erscheinungsjahr
+sortiert werden kann.
+\subsection{}
+Programmieren Sie eine Haskell-Funktion \lstinline|und| zur Komposition von Vergleichsfunktionen.
+Es seien $vergleich_1$ und $vergleich_2$ zwei Vergleichsfunktionen. Dann soll
+\lstinline|vergleich1 `und` vergleich2| eine Vergleichsfunktion sein, mittels der zuerst nach dem
+durch $vergleich_1$ dargestellten Kriterium und bei äquivalenten Einträgen nach dem
+durch $vergleich_2$ dargestellten Kriterium sortiert wird. So soll z.B.
+\begin{center}
+\lstinline|mergeSort (autorVergleich `und` titelVergleich) [Liste]|
+\end{center}
+Bücher zunächst nach Autor und bei gleichem Autor nach Titel sortieren.
+\section{Binäre Suchbäume}
+Wir betrachten den folgenden Datentyp für binäre Suchbäume:
+\begin{center}
+\lstinline!data Suchbaum el = Blatt | Knoten (Suchbaum el) el (Suchbaum el)!
+\end{center}
+Natürlich koönnen wir mit diesem Datentyp beliebige binäre Bäume darstellen, deren innere Knoten markiert sind. Wir wollen aber nur solche Bäume aufbauen, die auch tatsächlich Suchbäume sind. Dabei gilt folgendes:
+\begin{itemize}
+\item Der leere Baum \lstinline|Blatt| ist ein Suchbaum 
+\item Ein Baum "\lstinline|Knoten links wurzel rechts|" ist nur dann ein Suchbaum, wenn folgendes gilt:
+\begin{itemize}
+\item Die Unterbäume \lstinline|links| und \lstinline|rechts| sind Suchbäume.
+\item Alle Markierungen von \lstinline|links| sind kleiner und alle Markierungen von \lstinline|rechts| sind größer als \lstinline|wurzel|.
+\end{itemize}
+\end{itemize}
+\subsection{}
+Programmieren Sie eine Haskell-Funktion
+\begin{center}
+\lstinline|istElement :: (Ord el) => el -> Suchbaum el -> Bool|,
+\end{center}
+welche testet, ob ein angegebener Wert in einem Suchbaum vorkommt. Nutzen Sie dabei die oben genannten Eigenschaften von Suchbäumen aus, um den Zeitaufwand möglichst gering zu halten.
+
+\subsection{}
+Ein Faltungsoperator für den Typ Suchbaum kann wie folgt definiert werden: 
+\begin{lstlisting}
+suchbaumFold :: accu -> (accu -> el -> accu -> accu) -> Suchbaum el -> accu
+suchbaumFold accuBlatt accuKnoten = fold where
+    fold Blatt = accuBlatt
+    fold (Knoten links wurzel rechts) = accuKnoten ( fold links)
+                                        wurzel ( fold rechts)
+\end{lstlisting}
+Wandeln Sie Ihre Implementierung von \lstinline|istElement| aus der vorigen Teilaufgabe in eine Implementierung um, welche statt einer expliziten Rekursion \lstinline|suchbaumFold| verwendet.
 
 \section{AVL-Bäume}
 Wir betrachten den folgenden Datentyp für AVL-Bäume:
