@@ -1,0 +1,156 @@
+\documentclass[
+  10pt,                   % Schriftgröße
+  DIV12,
+  german,                 % für Umlaute, Silbentrennung etc.
+  oneside,                % einseitiges Dokument
+  %titlepage,              % es wird eine Titelseite verwendet
+  parskip=half,           % Abstand zwischen Absätzen (halbe Zeile)
+  headings=normal,        % Größe der Überschriften verkleinern
+  captions=tableheading,  % Beschriftung von Tabellen unterhalb ausgeben
+  %final                   % Status des Dokuments (final/draft)
+]{scrartcl}      
+
+\input{blattHeader.tex}
+
+%\lehead{\bfseries\pagemark}    %% Top left on even pages
+%\lohead{\bfseries\headmark}    %% Top left on odd pages
+%\rehead{\bfseries\headmark}    %% Top right on even pages
+%\rohead{\bfseries\pagemark}    %% Top right on odd pages
+\chead{Programmieren für Fortgeschrittene \\ Aufgabenblatt 2} 
+
+\begin{document}
+\section{Rekursion über Listen}
+Die folgenden Teilaufgaben sollen ohne Verwendung vordefinierter Bibliotheksfunktionen gelöst werden. Berücksichtigen Sie, dass die zu programmierenden Funktionen nicht für alle Eingaben sinnvoll definiert sind. In diesen Fällen sollen entsprechende Fehlermeldungen ausgegeben werden.
+\subsection{}	
+Programmieren Sie eine Haskell-Funktion \lstinline|elementAnIdx :: Integer -> [el] -> el|, die zu einem Index \lstinline|i| und einer Liste das i-te Element dieser Liste bestimmt. Das erste Element einer nichtleeren Liste habe dabei den Index $0$. Es ergibt sich zum Beispiel:\\
+\lstinline|elementAnIdx 2 [3, 4, 5, 6] = 5|
+\subsection{}
+Programmieren Sie eine Haskell-Funktion \lstinline|snoc :: [el] -> el -> [el]|, die an eine Liste ein weiteres Element anhängt. Es ergibt sich zum Beispiel:\\
+\lstinline|snoc [1, 2, 3] 5 = [1, 2, 3, 5]|
+\subsection{}
+Programmieren Sie eine Haskell-Funktion \lstinline|rueckwaerts :: [el] -> [el]|, welche eine Liste umdreht, die Elemente der Liste also in umgekehrter Reihenfolge zurück gibt.
+\subsection{}
+Programmieren Sie eine Haskell-Funktion \lstinline|praefix :: Integer -> [el] -> [el]|, die für eine gegebene Zahl $n$ und eine Liste $l$ die Liste der ersten $n$ Elemente von $l$ zurück gibt.
+\subsection{}
+Programmieren Sie eine Haskell-Funktion \lstinline|suffix :: Integer -> [el] -> [el]|, die für eine Zahl $n$ und eine Liste $l$ die Liste der letzten $n$ Elemente von $l$ zurückgibt.
+\newpage
+\section{Mengen als Listen}
+Mengen können in Haskell durch Listen repräsentiert werden. Allerdings unterscheiden
+sich Mengen und Listen in zwei Punkten:
+\begin{itemize}
+  \item Die Elemente einer Liste besitzen eine Reihenfolge, die Elemente von Mengen
+nicht.
+\item Derselbe Wert darf in einer Liste mehrfach vorkommen, in einer Menge nicht.
+\end{itemize}
+Zur Darstellung von Mengen verwenden wir daher nur solche Listen, deren Elemente
+streng monoton wachsen. Die Reihenfolge der Elemente ist damit festgelegt und eine
+Dopplung von Werten ist nicht möglich.\\
+
+Es sollen nun Mengenoperationen auf Basis von Listen implementiert werden. Geben Sie
+für folgende Funktionen deren allgemeinste Typen an. Implementieren Sie anschließend
+die Funktionen. Sie können davon ausgehen, dass als Argumente übergebene Mengendarstellungen
+immer die oben genannte Eigenschaft erfüllen. Sie müssen aber sicherstellen, dass Sie keine ungültigen Mengendarstellungen als Resultate generieren.
+\subsection{}
+Die Funktion \lstinline|istElement| entscheidet, ob eine Wert in einer
+Menge enthalten ist und implementiert damit die Relation $\in$. Es ergibt sich z.B.
+\begin{center}
+\begin{tabular}{ll}
+\lstinline|4 `istElement` [1, 3, 5, 7]| & $\leadsto$ \lstinline|False|\\
+\lstinline|5 `istElement` [1, 3, 5, 7]| & $\leadsto$ \lstinline|True|
+\end{tabular}
+\end{center}
+\subsection{}
+Die Funktion \lstinline|istTeilmenge| entscheidet, ob eine Menge Teilmenge einer anderen Menge ist und implementiert damit die Relation $\subseteq$. Es ergibt sich z.B.
+\begin{center}
+\begin{tabular}{ll}
+\lstinline|[1, 3] `istTeilmenge` [1, 2, 3, 4, 5]| & $\leadsto$ \lstinline|True|\\
+\lstinline|[1, 3, 6] `istTeilmenge` [1, 2, 3, 4, 5]| & $\leadsto$ \lstinline|False|
+\end{tabular}
+\end{center}
+\subsection{}
+Die Funktion \lstinline|vereinigung| bestimmt die Vereinigungsmenge zweier Mengen und
+implementiert damit die Funktion $\cup$. Es ergibt sich z.B.
+\begin{center}
+\lstinline|[1, 2, 4] `vereinigung` [3, 4, 5]|  $\leadsto$ \lstinline|[1, 2, 3, 4, 5]|
+\end{center}
+\subsection{}
+Die Funktion \lstinline|schnitt| bestimmt die Schnittmenge zweier Mengen und implementiert
+damit die Funktion $\cap$. Es ergibt sich z.B.
+\begin{center}
+\lstinline|[1, 2, 4] `schnitt` [3, 4, 5]| $\leadsto$ \lstinline|[4]|
+\end{center}
+\newpage
+\section{Mengen mit Currying}
+Anders als in der letzten Aufgabe wollen wir nun Mengen nicht als Listen sondern 
+durch ihre Eigenschaften definieren.
+Gegeben seinen die Typdefinition \lstinline|Set| sowie die Funktion \lstinline|myelem|:
+\begin{lstlisting}
+type Set = (Integer -> Bool)
+
+myElem :: Set -> Integer  -> Bool
+myElem    s      e         = s e
+\end{lstlisting}
+Der Typ \lstinline|Set| ist eine Funktion von Integer nach Bool, die entscheidet ob ein Element in der
+Menge liegt oder nicht. Die Funktion \lstinline|myElem| werdet den Typ \lstinline|Set| aus. 
+
+Denken Sie für die folgenden Teilaufgaben an Lambda-Ausdrücke und das Currying!
+
+Damit Sie ihre Menge Ausgeben können, wird Ihnen die folgende Funktion \lstinline|myPrint| gestellt:
+\begin{lstlisting}
+myPrint :: Set -> Integer -> Integer -> [Integer]
+myPrint s min max | min > max    = []
+                  | myElem s min = min : (myPrint s (min + 1) max)
+                  | otherwise    = myPrint s (min + 1) max
+\end{lstlisting}
+Ihr wird eine Menge sowie ein Start- und Endwert übergeben und gibt eine Liste von 
+Integer-Werten zurück.
+
+\subsection{Einelementige Mengen}
+Schreiben Sie die Funktion \lstinline|mySingleSet :: Integer    -> Set|, welche einen 
+Integerwert erhält und aus diesem eine Menge erstellt. 
+
+\subsection{Mengen durch Eigenschaften}
+Schreiben Sie die Funktion \lstinline|myBoolSet :: (Integer -> Bool) -> Set|, welche eine 
+die Eigenschaften einer Menge als Lambda-Ausdrücke erhält und eine Menge zurück gibt.
+
+\subsection{Vereinigung}
+Schreiben Sie die Funktion \lstinline|myUnion :: Set -> Set -> Set|, welche zwei Mengen
+logisch vereinigt. Denken Sie an die mathematische Definition der Vereinigung.
+
+\subsection{Hinzufügen}
+Schreiben Sie die Funktion \lstinline|myAdd :: Set -> Integer -> Set|, welche einen Integer-Wert 
+zu einer Menge hinzufügt.
+
+\subsection{Durchschnitt}
+Schreiben Sie die Funktion \lstinline|myIntersect :: Set -> Set -> Set|, welche zwei Mengen
+logisch schneidet. Denken Sie an die mathematische Definition des Durchschnitts.
+
+\subsection{Differenz}
+Schreiben Sie die Funktion \lstinline|myDiff :: Set -> Set -> Set|, welche zwei Mengen
+erhält und die zweite von der ersten Menge abzieht. Denken Sie an die mathematische Definition der Differenz.
+
+\subsection{Mehrelementige Mengen (nicht so einfach)}
+Schreiben Sie die Funktion \lstinline|myListSet :: [Integer] -> Set|, welche eine Liste von Integer-Werten erhält und 
+aus dieser eine Funktion erstellt. 
+
+\subsection{Quantoren}
+Da wir nun Mengen besitzen können wir nun auch Beweise auf ihnen führen.
+Schreiben Sie dazu die Funktion \lstinline|myForAll :: Set -> (Integer -> Bool) -> Integer -> Integer -> Bool|, welche eine Menge
+auf eine Eigenschaft prüft und nur dann wahr ausgibt, wenn alle Elemente diese Eigenschaft besitzen also den $\forall$ Quantor.
+Die letzten beiden Integer-werte sind das Intervall. Die können die Funktion in Anlehnung an die Funktion
+\lstinline|myprint| erstellen.
+
+Nach dem Sie den $\forall$ Quantor erstellt haben, erstellen Sie nun die Funktion \lstinline|myExists :: Set -> (Integer -> Bool) -> Integer -> Integer -> Bool| 
+die den $\exists$ Quantor repräsentiert. Denken Sie an die mathematischen Zusammenhang zwischen den beiden Quantoren.
+
+\subsection{Filter}
+Schreiben Sie die Funktion \lstinline|myFilter :: Set -> (Integer -> Bool) -> Set|, welche ein positiv Filter für eine Menge
+realisiert. Somit wenn ein Element in der Menge ist und den Filter erfüllt, dann ist dies auch in der zurück gegebenen Menge.
+
+\subsection{Teilmenge}
+Schreiben Sie die Funktion \lstinline|mySubset :: Set -> Set -> Bool|, welche bestimmt ob die erste Menge eine Teilmenge der zweiten ist.
+Die Intervallgrenzen können Sie beliebig festlegen.
+
+\subsection{Äquivalenz}
+Schreiben Sie die Funktion \lstinline|myEquals :: Set -> Set -> Bool|, welche bestimmt ob zwei Mengen identisch sind.
+\end{document}
