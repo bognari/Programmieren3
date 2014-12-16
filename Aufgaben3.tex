@@ -177,11 +177,10 @@ show 325 = "325"
 
 Die folgenden Teilaufgaben sollen ohne Verwendung vordefinierter Bibliotheksfunktionen gelöst werden. Berücksichtigen Sie, dass die zu programmierenden Funktionen nicht für alle Eingaben sinnvoll definiert sind. In diesen Fällen sollen entsprechende Fehlermeldungen ausgegeben werden.
 \subsection{}	
-Programmieren Sie eine Haskell-Funktion \lstinline|elementAnIdx :: Integer -> [el] -> el|, die zu einem Index \lstinline|i| und einer Liste das i-te Element dieser Liste bestimmt. Das erste Element einer nichtleeren Liste habe dabei den Index $0$.  sich zum Beispiel:\\
-\lstinline|elementAnIdx 2 [3, 4, 5, 6] = 5|
+Programmieren Sie eine Haskell-Funktion \lstinline|elementAnIdx :: Integer -> [el] -> el|, die zu einem Index \lstinline|i| und einer Liste das i-te Element dieser Liste bestimmt. Das erste Element einer nichtleeren Liste habe dabei den Index $0$. 
+Es ergibt sich zum Beispiel: \lstinline|elementAnIdx 2 [3, 4, 5, 6] = 5|
 \subsection{}
-Programmieren Sie eine Haskell-Funktion \lstinline|snoc :: [el] -> el -> [el]|, die an eine Liste ein weiteres Element anhängt. Es ergibt sich zum Beispiel:\\
-\lstinline|snoc [1, 2, 3] 5 = [1, 2, 3, 5]|
+Programmieren Sie eine Haskell-Funktion \lstinline|snoc :: [el] -> el -> [el]|, die an eine Liste ein weiteres Element anhängt. Es ergibt sich zum Beispiel: \lstinline|snoc [1, 2, 3] 5 = [1, 2, 3, 5]|
 \subsection{}
 Programmieren Sie eine Haskell-Funktion \lstinline|rueckwaerts :: [el] -> [el]|, welche eine Liste umdreht, die Elemente der Liste also in umgekehrter Reihenfolge zurück gibt.
 \subsection{}
@@ -211,7 +210,7 @@ Stattdessen werden oft Werte des Datentyps \lstinline|Maybe| als Funktionsresult
 
 Der Wert \lstinline|Nothing| signalisiert einen Fehler, während ein Wert \lstinline|Just x| die erfolgreiche
 Berechnung des Wertes $x$ darstellt. Modifizieren Sie die Funktion \lstinline|resultat| zu einer
-Funktion \lstinline|evtlResultat|, welche nicht mit Fehlermeldungen abbricht, sondern \lstinline|Maybe|-Werte liefert. Es ergibt sich z.B.
+Funktion \lstinline|evtlResultat|, welche nicht mit Fehlermeldungen abbricht, sondern \lstinline|Maybe|-Werte liefert. Es ergibt sich z.B.:
 \begin{center}
 \begin{tabular}{ll}
 \lstinline|evtlResultat [(-2, 4), (-1, 1), (0, 0), (1, 1), (2, 4)] 3| & $\leadsto$ \lstinline|Nothing|\\
@@ -290,7 +289,7 @@ $\leadsto$ \lstinline|"Differenz (Konstante 5) (Variable \"x\")"|
 \end{center}
 Beachten Sie, dass Anführungsstriche (") in Zeichenkettenliteralen als (\textbackslash") dargestellt
 werden.
-\section{eigene Klasse}
+\section{Eigene Klasse}
 Wir betrachten folgende Klassendeklaration:
 \begin{lstlisting}
 class Spiegelbar wert where
@@ -330,7 +329,7 @@ $\epsilon$ ist, wobei $\epsilon$ eine positive reelle Zahl ist. Schreiben Sie ei
 \lstinline|wurzel|, die die Zahlen $\epsilon$, $x$, $y$ und $z_0$ in dieser Reihenfolge als Argumente erwartet und
 daraus die entsprechende Wurzelnäherung berechnet.
 
-\section{abstrakter Datentyp für Mengen}
+\section{Abstrakter Datentyp für Mengen}
 Implementieren Sie einen abstrakten Datentyp \lstinline|Menge|. Verwenden Sie intern die Darstellung von Mengen als aufsteigend sortierte Listen aus Aufgabe 1.
 Der abstrakte Datentyp soll folgende Operationen bereitstellen:
 
@@ -344,7 +343,7 @@ Der abstrakte Datentyp soll folgende Operationen bereitstellen:
 		schnitt & \lstinline|Menge a -> Menge a -> Menge a| & Schnitt zweier Mengen\\
 		differenz & \lstinline|Menge a -> Menge a -> Menge a| & Differenz zweier Mengen\\
 		istLeer & \lstinline|Menge a -> Bool| & Test, ob eine Menge leer ist\\
-		istElement & \lstinline|a -> Menge a -> Bool| & Test, ob einWert Element einer Menge ist\\
+		istElement & \lstinline|a -> Menge a -> Bool| & Test, ob ein Wert Element einer Menge ist\\
 		istTeilmenge & \lstinline|Menge a -> Menge a -> Bool| & Test, ob eine Menge Teilmenge einer \newline zweiten Menge ist\\
 		istEchteTeilmenge & \lstinline|Menge a -> Menge a -> Bool| & Test, ob eine Menge echte Teilmenge einer \newline zweiten Menge ist\\
 		minimalesElement & \lstinline|Menge a -> Maybe a| \newline \lstinline|Menge a -> a| & das minimale Element einer Menge\\
