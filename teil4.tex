@@ -1,5 +1,15 @@
-\subtitle{Tag vier - ein bisschen noch} 
-\date{27.03.2014}
+\documentclass[fleqn,11pt,aspectratio=43]{beamer}
+\input{beamerHeader}
+
+\title{Programmieren für Fortgeschrittene - \\eine Einführung in Haskell}
+
+\author[Stephan Mielke]{\emph{Stephan Mielke}}
+\institute[TU Braunschweig, IPS]{Technische Universität Braunschweig, IPS}
+
+
+\begin{document}
+\subtitle{Tag 4 --- ein bisschen noch} 
+\date{12.01.2015}
 
 \begin{frame}[plain]
 \titlepage
@@ -52,28 +62,34 @@ Terminiert die Funktion?
 \end{block}
 }
 
-\frame{\frametitle{Lazy - unendliche Listen}
+\begin{frame}[fragile]
+\frametitle{Lazy --- unendliche Listen}
 \begin{block}{\vspace*{-3ex}}
 \begin{itemize}
   \item Es werden vom Start an eine bestimmte Anzahl an Elemente erstellt
-  \item Wenn weitere Elemente benötigt werden, werden diese neu Erstellt
-  \item Wird immer nur ein Abschnitt benötigt wird der Start wieder gelöscht\\
+  \item Wenn weitere Elemente benötigt werden, werden diese neu erstellt
+  \item Wird immer nur ein Abschnitt benötigt, wird der Start wieder gelöscht\\
   		stellt es euch als "`Ringpuffer"' vor
   \item Wenn jedoch alle Elemente benötigt werden $\to$ bis Speicher voll 
+  \item z.B.: für die Liste \lstinline![x**x | x <- [1..]]! sind wir bei Element $42$, die Elemente $32$--$52$ sind bereits berechnet
 \end{itemize}
+\begin{lstlisting}[basicstyle=\tiny]
+drop 32 $ take 52 [x**x | x <- [1..]]
+[1.2911004008776103e50,1.1756638905368616e52,1.1025074993541487e54,1.0638735892371651e56,1.0555134955777783e58,1.075911801979994e60,1.125951474620712e62,1.2089258196146292e64,1.330877630632712e66,1.5013093754529656e68,1.7343773367030268e70,2.05077382356061e72,2.4806364445134117e74,3.068034630079427e76,3.877924263464449e78,5.007020782634593e80,6.600972468621954e82,8.881784197001252e84,1.2192113050946485e87,1.7067655527413216e89]
+\end{lstlisting}
 \end{block}
-}
+\end{frame}
 
-\frame{\frametitle{Lazy - Parameter und Ausdrücke}
+\frame{\frametitle{Lazy --- Parameter und Ausdrücke}
 \begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-  \item Haskell verwendet Call-by-need
-  \item Call-by-need ist Form es Call-by-name
+  \item Haskell verwendet Call-by-Need
+  \item Call-by-Need ist eine Form des Call-by-Name
 \end{itemize}
 \end{block}
 }
 
-\frame{\frametitle{Lazy - Call-by-name}
+\frame{\frametitle{Lazy --- Call-by-Name}
 \begin{block}{\vspace*{-3ex}}
 \begin{itemize}
   \item Ausdrücke werden nicht sofort ausgewertet sondern nur übergeben
@@ -87,14 +103,22 @@ Terminiert die Funktion?
 }
 
 
-\frame{\frametitle{Lazy - Call-by-need}
+\begin{frame}[fragile]
+\frametitle{Lazy --- Call-by-Need}
 \begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-  \item Bei Call-by-need erweitert Call-by-name um Sharing
+  \item Call-by-Need erweitert Call-by-Name um Sharing
   \item Sharing: gleiche Ausdrücke werden nur einmal ausgewertet
 \end{itemize}
 \end{block}
-}
+\begin{lstlisting}
+(product [1..50000]) - (product [1..49999])
+...
+
+take 9 [div 100 (10 - x) | x <- [1..]]
+[11,12,14,16,20,25,33,50,100]
+\end{lstlisting}
+\end{frame}
 
 \section{Funktionen höherer Ordnung (HOF)}
 \subsection{Allgemeines zu HOF}
@@ -143,7 +167,7 @@ filter do (x:xs) | do x      = x : filter do xs
 (.) :: (b -> c) -> (a -> b) -> a -> c
 (.) outerFunc innerFunc x = outerFunc (innerFunc x)
 \end{lstlisting}
-Das Resultat der inneren Funktion wird auf die äußere angewendet.
+Das Resultat der inneren Funktion wird auf die äußere angewandt
 \end{block}
 \end{frame}
 
@@ -154,7 +178,7 @@ Das Resultat der inneren Funktion wird auf die äußere angewendet.
 ($) :: (a -> b) -> a -> b
 ($) func x = func x
 \end{lstlisting}
-Die Funktion wird auf das Resultat von dem Ausdruck der "`rechts"' vom Operator steht angewandt.
+Die Funktion wird auf das Resultat von dem Ausdruck der "`rechts"' vom Operator steht angewandt
 \end{block}
 \end{frame}
 
@@ -165,11 +189,11 @@ Die Funktion wird auf das Resultat von dem Ausdruck der "`rechts"' vom Operator 
 \begin{block}{\vspace*{-3ex}}
 \begin{itemize}
   \item Haskell unterstützt anonyme Funktionen in Form von $\lambda$-Ausdrücken
-  \item das $\lambda$-Symbol wird durch "`$\backslash$"' repräsentiert.\\ $\lambda x \leadsto$ \lstinline|\x|
+  \item Das $\lambda$-Symbol wird durch "`$\backslash$"' repräsentiert\\ $\lambda x \leadsto$ \lstinline|\x|
   \item Aufbau: \\
   %\item {} $\backslash <Parameter_1> \ldots <Parameter_n>\; ->\; <Ausdruck>$
-  \item durch das currying können $\lambda$-Ausdrücke mehrere Argumente besitzen
-  \item es gelten alle bekannten Regeln für die $\lambda$-Notation
+  \item Durch das Currying können $\lambda$-Ausdrücke mehrere Argumente besitzen
+  \item Es gelten alle bekannten Regeln für die $\lambda$-Notation
 \end{itemize}
 \begin{center}
 \scalebox{0.8}{\input{images/lambda.tex}}
@@ -189,7 +213,7 @@ g = \x -> \y -> (\y -> \x -> (y,x)) y x
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Beispiele - Lambda-Ausdrücke}
+\frametitle{Beispiele --- Lambda-Ausdrücke}
 \begin{lstlisting}
 -- y "Operator"
 y f = f (y f)
@@ -206,8 +230,178 @@ fac = y (\f n -> if n > 0 then n * f (n - 1) else 1)
 \end{exampleblock}}
 \end{frame}
 
-%\begin{frame}
-%\begin{center}
-%\rotatebox{30}{\textcolor{red}{{\fontsize{100}{40} \selectfont Ende}}}
-%\end{center}
-%\end{frame}
+\section{Beispiele für Currying, Lambda und HOF}
+
+\begin{frame}[allowframebreaks,fragile]
+\frametitle{Menge}
+\begin{lstlisting}
+module MySet(myPrint, myElem, mySingleSet, myBoolSet, myListSet, myAdd, myUnion, myIntersect, myDiff, myFilter, myForAll, myExists, mySubset, myEquals) where
+
+type Set = Int -> Bool
+
+myStart = -10000
+myEnd   = 10000
+
+myPrint :: Set -> [Int]
+myPrint set = myPrint' set myStart myEnd
+  where
+    myPrint' s min max | min > max    = []
+      | myElem s min = min : (myPrint' s (min + 1) max)
+      | otherwise    = myPrint' s (min + 1) max
+myElem :: Set -> Int -> Bool
+myElem s e = s e
+
+mySingleSet :: Int -> Set
+mySingleSet e = (==) e
+
+myBoolSet :: (Int -> Bool) -> Set
+myBoolSet p = p
+
+myListSet :: [Int] -> Set
+myListSet list = \x -> myFind list x
+  where
+    myFind :: [Int] -> Int -> Bool
+    myFind []     _ = False
+    myFind (y:ys) x = x == y || myFind ys x
+
+myAdd :: Set -> Int -> Set
+myAdd s i = (mySingleSet i) `myUnion` s
+
+myUnion :: Set -> Set -> Set
+myUnion a b = \x -> ((myElem a x) || (myElem b x))
+
+myIntersect :: Set -> Set -> Set
+myIntersect a b = \x -> ((myElem a x) && (myElem b x))
+
+myDiff :: Set -> Set -> Set
+myDiff a b = \x -> ((myElem a x) && not (myElem b x))
+
+myFilter :: Set -> (Int -> Bool) -> Set
+myFilter s f = \x -> (f x && s x)
+
+
+myForAll :: Set -> (Int -> Bool) -> Int -> Int -> Bool
+myForAll s p min max 
+     | min > max    = True
+     | myElem s min = p min && myForAll s p (min + 1) max
+     | otherwise    = myForAll s p (min + 1) max
+
+myExists :: Set -> (Int -> Bool) -> Int -> Int -> Bool
+myExists s p min max = not (myForAll s (not.p) min max)
+
+mySubset :: Set -> Set -> Bool
+mySubset a b = myForAll a (\x -> myExists b (\y -> x == y) myStart myEnd) myStart myEnd 
+
+myEquals :: Set -> Set -> Bool
+myEquals a b = (mySubset a b) && (mySubset b a)
+\end{lstlisting}
+\end{frame}
+
+\section{Listen API}
+
+\begin{frame}[fragile]{Listen API}
+\begin{block}{Basis Funktionen}
+\begin{itemize}
+\item \lstinline|(++) :: [a] -> [a] -> [a]| \\ hängt die zweite an die erste Liste 
+\item \lstinline|last :: [a] -> a| \\ letztes Element
+\item \lstinline|init :: [a] -> [a]| \\ ohne das letzte Element
+\item \lstinline|null :: [a] -> Bool| \\ testet, ob leer
+\item \lstinline|length :: [a] -> Int| \\ Länge der Liste
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Listen API}
+\begin{block}{transformations Funktionen}
+\begin{itemize}
+\item \lstinline|map :: (a -> b) -> [a] -> [b]| \\ wendet die Funktion \lstinline|a -> b| auf jedes Element an
+\item \lstinline|reverse :: [a] -> [a]| \\ dreht die Liste um
+\item \lstinline|subsequences :: [a] -> [[a]]| \\ berechnet die Potenzmenge
+\item \lstinline|permutations :: [a] -> [[a]]| \\ berechnet alle Permutationen
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Listen API}
+\begin{lstlisting}
+map (^2) [1..10]
+[1,4,9,16,25,36,49,64,81,100]
+
+reverse [-x | x <- [1,,10]]
+[-10,-9,-8,-7,-6,-5,-4,-3,-2,-1]
+
+Data.List.subsequences "123"
+["","1","2","12","3","13","23","123"]
+
+Data.List.permutations "123"
+["123","213","321","231","312","132"]
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Listen API}
+\begin{block}{Auflösungs-Funktionen}
+\begin{itemize}
+\item \lstinline|foldl :: (b -> a -> b) -> b -> [a] -> b| \\ wendet die Funktion \lstinline|(b -> a -> b)| mit dem übergebenen Element von links nach rechts an
+\item \lstinline|foldr :: (a -> b -> b) -> b -> [a] -> b| \\ wendet die Funktion \lstinline|(a -> b -> b)| mit dem übergebenen Element von rechts nach links an
+\end{itemize}
+\end{block}
+\begin{lstlisting}
+foldl (-) 10 [1..5]
+10-1-2-3-4-5 = -15
+
+foldr (-) 10 [1..5]
+1-(2-(3-(4-(5-10)))) = -7
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Listen API}
+\begin{block}{Abschnitts-Funktionen}
+\begin{itemize}
+\item \lstinline|take :: Int -> [a] -> [a]| \\ nimmt die ersten $n$ Elemente
+\item \lstinline|drop :: Int -> [a] -> [a]| \\ löscht die ersten $n$ Elemente
+\item \lstinline|span :: (a -> Bool) -> [a] -> ([a], [a])| \\ spaltet eine Liste in zwei Teile
+\item \lstinline|group :: Eq a => [a] -> [[a]]| \\ gruppiert gleiche Elemente zu eigenen Listen in einer Liste
+\item \lstinline|inits :: [a] -> [[a]]| \\ gibt alle möglichen Restlisten zurück
+\item \lstinline|tails :: [a] -> [[a]]| \\ gibt alle möglichen Startlisten zurück
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Listen API}
+\begin{block}{Such-Funktionen}
+\begin{itemize}
+\item \lstinline|elem :: Eq a => a -> [a] -> Bool | \\ prüft, ob enthalten
+\item \lstinline|lookup :: Eq a => a -> [(a, b)] -> Maybe b| \\ gibt den Value einer Key-Value-Liste
+\item \lstinline|find :: (a -> Bool) -> [a] -> Maybe a| \\ gibt das erste Element zurück, das die Bedingung erfüllt
+\item \lstinline|filter :: (a -> Bool) -> [a] -> [a]| \\ filtert die Liste (Positiv-Filter)
+\item \lstinline|partition :: (a -> Bool) -> [a] -> ([a], [a])| \\ teilt eine Liste in zwei Listen mit "`erfüllt"' und "`erfüllt nicht"'
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Listen API}
+\begin{block}{ZIP-Funktionen}
+\begin{itemize}
+\item \lstinline|zip :: [a] -> [b] -> [(a, b)]| \\ bildet Tupel aus den Elementen, Anzahl ist beschränkt nach der kürzesten
+\item \lstinline|zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]| \\ statt Tupel zu bilden werden die Elemente an die Funktion übergeben
+\item \lstinline|unzip :: [(a, b)] -> ([a], [b])| \\ statt Tupel zu bilden werden die Elemente an die Funktion übergeben
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Listen API}
+\begin{lstlisting}
+zip [42..] [5..10]
+[(42,5),(43,6),(44,7),(45,8),(46,9),(47,10)]
+
+zipWith (*)  [42..] [5..10]
+[210,258,308,360,414,470]
+
+unzip [(x, x^x) | x <- [3..5]]
+([3,4,5],[27,256,3125])
+\end{lstlisting}
+\end{frame}
+
+\input{danke}
+
+\end{document}
