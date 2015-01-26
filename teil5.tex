@@ -1,5 +1,15 @@
-\subtitle{Tag vier - ein bisschen noch} 
-\date{28.03.2014}
+\documentclass[fleqn,11pt,aspectratio=43]{beamer}
+\input{beamerHeader}
+
+\title{Programmieren für Fortgeschrittene - \\eine Einführung in Haskell}
+
+\author[Stephan Mielke]{\emph{Stephan Mielke}}
+\institute[TU Braunschweig, IPS]{Technische Universität Braunschweig, IPS}
+
+
+\begin{document}
+\subtitle{Tag fünf - geschafft} 
+\date{26.01.2015}
 
 \begin{frame}[plain]
 \titlepage
@@ -21,7 +31,7 @@
 \begin{block}{\vspace*{-3ex}}
 \begin{itemize}
 	\item Es muss das Modul \lstinline|Data.Array.IArray| importiert werden
-	\item Die einzelnen Elemente eines Arrays werden mit dem \lstinline|!| Operator angesprochen\\ z.B. \lstinline|a!5| gibt das Element mit dem Index $5$ aus dem Array $a$ wieder 
+	\item Die einzelnen Elemente eines Arrays werden mit dem \lstinline|!| Operator angesprochen\\ z.B. \lstinline|a!5| gibt das Element mit dem Index 5 aus dem Array \lstinline|a| wieder 
 \end{itemize}
 \only<2>{
 \begin{center}
@@ -77,10 +87,10 @@ myArray3 = (accumArray (+) 0 (0,4) [(i `mod` 5
 \frametitle{Wichtige Array Funktionen}
 \begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-\item \lstinline|amap| ist die Array-Form der $map$ Funktion für Listen
+\item \lstinline|amap| ist die Array-Variante der \item \lstinline|map| Funktion für Listen
 \item \lstinline|elems| wandelt das Array in eine Liste um (nur die Werte)
 \item \lstinline|assocs| wandelt das Array in eine Liste von Tupeln der Form $(k, v)$ um
-\item Der \textbackslash\textbackslash$\;$Operator (update) ändert in einem Array die gegebenen Wertpaare.
+\item Der Operator \lstinline|\\\\| (update) ändert in einem Array die gegebenen Wertpaare.
 \end{itemize}
 \end{block}
 \end{frame}
@@ -89,7 +99,7 @@ myArray3 = (accumArray (+) 0 (0,4) [(i `mod` 5
 \frametitle{Statische vs. dynamische Arrays}
 \begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-\item Bei einem Update mit dem \textbackslash\textbackslash$\;$Operator (update) wird bei statischen das gesamte Array kopiert und die Änderungen vorgenommen
+\item Bei einem Update mit dem \lstinline|\\\\| Operator (update) wird bei statischen das gesamte Array kopiert und die Änderungen vorgenommen
 \item Somit dauert es bei statischen länger als bei dynamischen
 \end{itemize}
 \end{block}
@@ -111,14 +121,14 @@ myArray3 = (accumArray (+) 0 (0,4) [(i `mod` 5
 \begin{frame}[fragile]
 \frametitle{Haskell API}
 \begin{block}{\vspace*{-3ex}}
-für weitere Datentypen und deren Funktionen siehe:\\
-haskell.org/hoogle
+Für weitere Datentypen und deren Funktionen siehe:\\
+\url{haskell.org/hoogle}
 \end{block}
 \end{frame}
 
 \section{Monaden}
 \begin{frame}
-\frametitle{Monaten}
+\frametitle{Monaden}
 \begin{block}{\vspace*{-3ex}}
 \begin{itemize}
 \item Monaden sind ein mathematisches Konzept aus der Kategorientheorie
@@ -126,7 +136,7 @@ haskell.org/hoogle
 \item Ist in Haskell eine polymorphe Datenstruktur mit speziellen Funktionen
 \item Das Prinzip ist:
 \begin{itemize}
-\item Sequenzialisierung gemäß des Continuation-style Programming \\
+\item Sequenzialisierung gemäß des Continuation-Style Programming \\
 	der Kontrollfluss kehrt nicht zum Aufrufer zurück sondern geht zur Nachfolgefunktion 
 \item Darstellung und Transformation eines versteckten Zustands (Hiding)
 \item Sicherung von Single-Threadedness dadurch, weil keine dagegen verstoßende Funktion benutzt werden kann
@@ -177,9 +187,9 @@ add' mA mB = mA >>= (\a ->
 \frametitle{Do-Notation}
 \begin{block}{\vspace*{-3ex}}
 \begin{itemize}
-\item Mit der do-Notation werden Monaden (\lstinline|>>=|) zusammengefasst \\ pro Zeile
+\item Mit der \lstinline|do|-Notation werden Monaden (\lstinline|>>=|) zusammengefasst \\ pro Zeile
 \item Somit ist es syntaktischer Zucker
-\item Für die Verwendung der do-Notation sind 4 Regeln zu beachten
+\item Für die Verwendung der \lstinline|do|-Notation sind 4 Regeln zu beachten
 \end{itemize}
 \end{block}
 \end{frame}
@@ -249,7 +259,7 @@ in e >>= ok
 \begin{block}{\vspace*{-3ex}}
 \begin{itemize}
 \item Wird ein Wert mit \lstinline|let| gespeichert, kann dies vor das \lstinline|do| gezogen werden
-\item Das \lstinline|in| ist im do-Block optional
+\item Das \lstinline|in| ist im \lstinline|do|-Block optional
 \end{itemize}
 \end{block}
 \begin{lstlisting}
@@ -312,15 +322,14 @@ add mA mB = do
 \begin{itemize}
 \item Writer - für Debug / Logging / Tracing
 \item Reader - zum Lesen von gemeinsamen Zuständen (global)
-\item State - Verknüpfung von Writer und Reader für gemeinsame Zustände
-\\ für zustandsbasierte Rechnungen
+\item State - Verknüpfung von Writer und Reader für gemeinsame Zustände für zustandsbasierte Rechnungen
 \end{itemize}
 \end{block}
 \end{frame}
 
 \section{IO}
 
-\begin{frame}[fragile]
+\begin{frame}[fragile,allowframebreaks]
 \frametitle{Hangman}
 \begin{lstlisting}
 import Data.Char
@@ -333,12 +342,12 @@ hangman :: String -> Int -> IO ()
 hangman cs i | i > maxI = putStrLn "\nverloren"
              | all (`elem` cs) (map toLower w) = 
                putStrLn "\ngewonnen"
-\end{lstlisting}	
-\end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Hangman}
-\begin{lstlisting}
+
+
+
+
+
 hangman cs i = 
   do
     putStrLn " "
@@ -350,12 +359,10 @@ hangman cs i =
     else do
       putStrLn $ "\n" ++ (show (i+1)) ++ " falsch\n"
       hangman cs (i+1)
-\end{lstlisting}	
-\end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Hangman}
-\begin{lstlisting}
+
+
+
 printWord :: String -> IO ()
 printWord cs = mapM_ pC w 
   where
@@ -387,7 +394,7 @@ main = do
 \begin{itemize}
   \item \lstinline|writeFile :: FilePath -> String -> IO()| 
   \item \lstinline|type Filepath = String|
-  \item Schreibt den \lstinline|String| mittels Textstrom in eine Datei
+  \item Schreibt den \lstinline|String| mittels Stream in eine Datei
 \end{itemize}
 \end{block}
 \end{frame}
@@ -446,7 +453,7 @@ main = do
 \begin{frame}
 \frametitle{Zusammenfassung}
 \begin{block}{\vspace*{-3ex}}
-Ab jetzt seid ihr auf dem Wissenstand, auf dem ich bin.
+Ab jetzt seid Ihr auf dem gleichen Wissenstand, auf dem ich bin.
 
 % The following outlook is optional.
 \vskip0pt plus.5fill
@@ -454,9 +461,10 @@ Ab jetzt seid ihr auf dem Wissenstand, auf dem ich bin.
   \item Nun seid ihr dran
   \begin{itemize}
     \item Stellt Fragen
-    \item Schlagt auf www.haskell.org/hoogle nach 
+    \item Schlagt auf \url{www.haskell.org/hoogle} nach 
     \item Oder vergesst alles schnell wieder
   \end{itemize}
 \end{itemize}
 \end{block}
 \end{frame}
+\end{document}

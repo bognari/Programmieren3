@@ -20,7 +20,7 @@
 module Top10000 where
 
 top10000de :: [String]
-top10000de = ["der","die","und","in","den","von","zu","das","mit","sich","des",
+top10000de = ["hallo","der","die","und","in","den","von","zu","das","mit","sich","des",
               "auf","f\252r","ist","im","dem","nicht","ein","eine","als","auch",
               "es","an","werden","aus","er","hat","da\223","sie","nach","wird",
               "bei","einer","um","am","sind","noch","wie","einem","\252ber","einen",

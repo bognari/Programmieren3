@@ -15,6 +15,7 @@ module T9 (
     find
 ) where
 
+import System.IO
 import Data.Char (toLower)
 import qualified Trie
 import Top10000
@@ -73,3 +74,15 @@ find :: T9String -> T9Trie -> [String]
 find as t =  case Trie.find as t of
                  Nothing  -> []
                  Just bs  -> bs
+
+baum = generate top10000de
+
+main = do
+    eingabe 
+    where 
+        eingabe = do
+            line <- getLine
+            putStrLn "\ESC[2J\n"
+            putStrLn line
+            putStrLn $ show $ find (fromString line) baum
+            eingabe

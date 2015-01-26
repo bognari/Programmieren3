@@ -3,7 +3,7 @@ module Hangman where
 import Data.Char
 import System.IO
 
-w = "Haskell ist toll"
+w = "essen gehen?"
 maxI = 5
 
 hangman :: String -> Int -> IO ()
